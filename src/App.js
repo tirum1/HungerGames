@@ -1,6 +1,6 @@
 import { useState } from "react";
 import './App.css';
-import"./Check";
+import Check from "./Check";
 
 import { Flex} from '@chakra-ui/react';
 
@@ -11,7 +11,6 @@ function App() {
   return (
   <div> overlay
   <div className="App">
-    
 
 
 
