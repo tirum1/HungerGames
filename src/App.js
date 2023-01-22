@@ -1,25 +1,34 @@
-import logo from './logo.svg';
+import { useState } from "react";
 import './App.css';
+import"./Check";
+
+import { Flex} from '@chakra-ui/react';
+
+
 
 function App() {
+  
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload Commit Test.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
+  <div> overlay
+  <div className="App">
+    
+
+
+
+
+
+  </div>
+      <div  className="moving-background">
+        <Flex
+        justify="space-around"
+        align="center"
+        width="18%"
+        padding="2%"
         >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+      </Flex>
+  
+      </div>
+      </div>);
 }
 
 export default App;
