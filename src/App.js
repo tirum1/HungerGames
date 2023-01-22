@@ -21,6 +21,7 @@ function App() {
         align="center"
         width="18%"
         padding="2%"
+        
         >
       </Flex>
   
