@@ -12,7 +12,7 @@ function App() {
   <div> overlay
   <div className="App">
 
-{/* <Check /> */}
+<Check />
 
   </div>
       <div  className="moving-background">

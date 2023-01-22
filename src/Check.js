@@ -3,6 +3,8 @@ import"./App.css";
 import { Box, Button, Flex, Input, Text, Link} from '@chakra-ui/react';
 import Creatures from "./assets/sound/1.mp3";
 import {Howl,Howler} from "howler";
+import { Buffer } from "buffer/";
+window.Buffer = window.Buffer || Buffer;
 
 const {MerkleTree} = require('merkletreejs');
 const keccak256 = require('keccak256');
