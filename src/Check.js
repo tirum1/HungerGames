@@ -173,10 +173,10 @@ class Check extends Component {
     padding="10px"
     margin="0 50px"
     key={index} 
-    onClick={() => this.SoundPause()} 
+    onClick={() => {this.SoundPause(); this.HoverPlay()}} 
     onMouseEnter={() => this.setState({buttonText: "Music"})} 
     onMouseLeave={() => this.setState({buttonText: this.state.isPlaying ? "Stop" : "Play"})}
-    onClick={() => this.HoverPlay()} 
+    
 >
     {this.state.buttonText}
 </ButtonElement>
