@@ -84,3 +84,21 @@ body {
   position: absolute;
 }
 
+.sound-container {
+  position: absolute;
+  bottom: 10px;
+  right: 10px;
+}
+
+.button-container {
+  position: absolute;
+  right: 50px;
+  top: 50px;
+}
+
+@media (max-width: 768px) {
+  .button-container {
+    right: 5px;
+    top: 5px;
+  }
+}

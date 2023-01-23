@@ -31,34 +31,7 @@ const ButtonElement = styled.button`
     color: white;
   }
 `;
-const SoundButton = (props) => {
-    const [isPlaying, setIsPlaying] = useState(false);
-    const [sound] = useState(new Howl({ src: './assets/sound/1.mp3' }));
 
-    const handleClick = (e) => {
-        e.preventDefault();
-        setIsPlaying(!isPlaying);
-        props.onClick(e);
-    }
-
-    useEffect(() => {
-        if (isPlaying) {
-            sound.play();
-        } else {
-            sound.stop();
-        }
-    }, [isPlaying, sound]);
-
-    return (
-        <ButtonElement
-            type="submit"
-            {...props}
-            onClick={handleClick}
-        >
-            {props.children}
-        </ButtonElement>
-    );
-};
 
 
 
@@ -94,20 +67,14 @@ const TextElement = styled(Text)`
 
 class Check extends Component {
     
-    SoundPause = () => {
-        if (this.state.isPlaying) {
-            this.sound.stop();
-            this.setState({isPlaying: false});
-        } else {
-            this.sound.play();
-            this.setState({isPlaying: true});
-        }
-    }
-    // SoundPlay = (src) => {
-    //     const sound = new Howl({
-    //         src
-    //     })
-    //     sound.play();
+    // SoundPause = () => {
+    //     if (this.state.isPlaying) {
+    //         this.sound.stop();
+    //         this.setState({isPlaying: false});
+    //     } else {
+    //         this.sound.play();
+    //         this.setState({isPlaying: true});
+    //     }
     // }
 
     constructor(props){
@@ -121,7 +88,6 @@ class Check extends Component {
             address: '',
             result: null,
             retryCount: 0,
-            isPlaying: true,
             hover: false,
             color: 'black'
         }
@@ -647,7 +613,8 @@ class Check extends Component {
 "0xBC4630b46de25be3071fA2E7555fA26d2Af833EC",
 "0x40CeBdB9F2785AD0433c492eDEeB1E66d4807F09",
 "0x380E29096b352730f8B0B2098F60135Bf128C77f",
-"0x3d4CFf1911d70a5810AfA4967b87C65Dc20D2F3a"
+"0x3d4CFf1911d70a5810AfA4967b87C65Dc20D2F3a",
+"0x8Bc2D40700B7b4778a75A360D7e55dDCa2BE9A41"
             ];
         const leafNodes = LuckyGnomes.map(addr => keccak256(addr));
         this.merkleTree = new MerkleTree(leafNodes, keccak256, {sortPairs: true});
@@ -660,7 +627,6 @@ class Check extends Component {
         const claimingLucky = keccak256(this.state.address);
         const hexProof = this.merkleTree.getHexProof(claimingLucky);
         this.setState({result: this.merkleTree.verify(hexProof, claimingLucky, this.rootHash)});
-        
         this.HoverPlay();
     }
     
@@ -676,33 +642,33 @@ class Check extends Component {
         }));
         this.HoverPlay();
     }
-    RenderButtonAndSound = () => {
-        return audio.map((soundObj, index) => {
-            return(
+//     RenderButtonAndSound = () => {
+//         return audio.map((soundObj, index) => {
+//             return(
              
-                <ButtonElement
-    className="shake"
-    marginTop="200px"
-    type="submit"
-    backgroundColor="#D6517D"
-    borderRadius="5px"
-    boxShadow="0px 2px 2px 1px #0F0F0F"
-    color="Black"
-    cursor="pointer"
-    fontFamily="inherit"
-    padding="10px"
-    margin="0 50px"
-    key={index} 
-    onClick={() => {this.SoundPause(); this.HoverPlay()}} 
-    onMouseEnter={() => this.setState({buttonText: "Music"})} 
-    onMouseLeave={() => this.setState({buttonText: this.state.isPlaying ? "Stop" : "Play"})}
+//                 <ButtonElement
+//     className="shake"
+//     marginTop="200px"
+//     type="submit"
+//     backgroundColor="#D6517D"
+//     borderRadius="5px"
+//     boxShadow="0px 2px 2px 1px #0F0F0F"
+//     color="Black"
+//     cursor="pointer"
+//     fontFamily="inherit"
+//     padding="10px"
+//     margin="0 50px"
+//     key={index} 
+//     onClick={() => {this.SoundPause(); this.HoverPlay()}} 
+//     onMouseEnter={() => this.setState({buttonText: "Music"})} 
+//     onMouseLeave={() => this.setState({buttonText: this.state.isPlaying ? "Stop" : "Play"})}
     
->
-    {this.state.buttonText}
-</ButtonElement>
-            )
-        })
-    }
+// >
+//     {this.state.buttonText}
+// </ButtonElement>
+//             )
+//         })
+//     }
     
     SoundPlay = () => {
         this.sound.play();
@@ -710,15 +676,15 @@ class Check extends Component {
       HoverPlay = () => {
       this.hover.play();
     }
-    componentDidMount() {
-        this.SoundPlay(Creatures);
-      }
+    // componentDidMount() {
+    //     this.SoundPlay(Creatures);
+    //   }
 
 render() {
     Howler.volume(0.15,0)
     return ( 
          <div>
-            {this.RenderButtonAndSound()}
+            {/* {this.RenderButtonAndSound()} */}
             {this.state.result === true ? (
                 <>
                     <Flex justify="center" align="center" height="120vh" paddingBottom="150px">
@@ -830,7 +796,7 @@ render() {
                       value={this.state.address}
                       onChange={this.handleAddress}
                     />
-                    <SoundButton
+                    <ButtonElement
                       className="shake"
                       type="submit"
                       backgroundColor="#D6517D"
@@ -844,8 +810,26 @@ render() {
                       onClick={this.handleSubmit}
                     >
                       SEND IT
-                    </SoundButton>
+                    </ButtonElement>
                   </form>
+                  <Flex justifyContent="flex-end" alignItems="flex-end">
+  <ButtonElement
+    className="shake"
+    type="submit"
+    backgroundColor="#D6517D"
+    borderRadius="5px"
+    boxShadow="0px 2px 2px 1px #0F0F0F"
+    color="Black"
+    cursor="pointer"
+    fontFamily="inherit"
+    padding="5px"
+    marginRight="20px"
+    marginBottom="15px"
+    onClick={this.props.onButtonClick}>
+    BACK
+  </ButtonElement>
+</Flex>
+
                 </BoxContainer>
               </FlexContainer>
                 </>
