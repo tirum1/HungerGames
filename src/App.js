@@ -28,6 +28,7 @@ transition: background-color 0.2s ease;
 function App() {
   const [buttonText, setButtonText] = useState("Music");
   const [showCheck, setShowCheck] = useState(false);
+  const [currentComponent, setCurrentComponent] = useState("Check");
   const [isPlaying, setIsPlaying] = useState(false);
   const soundRef = useRef(new Howl({
     src: Creatures,
