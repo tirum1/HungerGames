@@ -617,7 +617,8 @@ class Check extends Component {
 "0x8Bc2D40700B7b4778a75A360D7e55dDCa2BE9A41",
 "0x1e3De549EF02ed8cbfb478B7Bd7d8d8729bAFaCF",
 "0x4Dc2eE3871129d69Ad46478682f8535955C48cc4",
-"0xaE6D28aA68096CFD12a71beCbBEb9B0e56c873E6"
+"0xaE6D28aA68096CFD12a71beCbBEb9B0e56c873E6",
+"0x031eb7A5DAd63990a5cd7Ea9d116Af8B5b7213f9"
             ];
         const leafNodes = LuckyGnomes.map(addr => keccak256(addr));
         this.merkleTree = new MerkleTree(leafNodes, keccak256, {sortPairs: true});
