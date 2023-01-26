@@ -19,7 +19,7 @@ const FlexContainer = styled(Flex)`
 
 const TextContainer = styled.div`
   position: absolute;
-  top: 40%;
+  top: 37%;
   left: 50%;
   transform: translate(-50%, -50%);
 `;
@@ -39,7 +39,18 @@ top: 60%;
 left: 50%;
 transform: translate(-50%, -50%);
 `;
-
+const ButtonContainer2 = styled.div`
+position: absolute;
+top: 70%;
+left: 50%;
+transform: translate(-50%, -50%);
+`;
+const ButtonContainer3 = styled.div`
+position: absolute;
+top: 50%;
+left: 50%;
+transform: translate(-50%, -50%);
+`;
 const ButtonElement = styled.button`
 background-color: #D6517D;
 border-radius: 5px;
@@ -105,6 +116,34 @@ HoverOverPlay = () => {
                         onClick={this.props.onButtonClick}>CHECK WHITELIST
                     </ButtonElement>
                     </ButtonContainer>
+                    <ButtonContainer2>
+                    <ButtonElement
+                        className='shake'
+                        type="submit"
+                        backgroundColor="#D6517D"
+                        borderRadius="5px"
+                        boxShadow="0px 2px 2px 1px #0F0F0F"
+                        color="Black"
+                        cursor="pointer"
+                        fontFamily="inherit"
+                        onMouseEnter={() => { this.HoverOverPlay() }}
+                        >WHITEPAPER
+                    </ButtonElement>
+                    </ButtonContainer2>
+                    <ButtonContainer3>
+                    <ButtonElement
+                        className='shake'
+                        type="submit"
+                        backgroundColor="#D6517D"
+                        borderRadius="5px"
+                        boxShadow="0px 2px 2px 1px #0F0F0F"
+                        color="Black"
+                        cursor="pointer"
+                        fontFamily="inherit"
+                        onMouseEnter={() => { this.HoverOverPlay() }}
+                        >MINT
+                    </ButtonElement>
+                    </ButtonContainer3>
 
          
 

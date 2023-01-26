@@ -822,6 +822,9 @@ class Check extends Component {
         const hexProof = this.merkleTree.getHexProof(claimingLucky);
         this.setState({result: this.merkleTree.verify(hexProof, claimingLucky, this.rootHash)});
         this.HoverPlay();
+
+        
+
     }
     handleAddress = (e) => {
         this.setState({
