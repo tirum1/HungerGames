@@ -127,7 +127,7 @@ HoverOverPlay = () => {
                         cursor="pointer"
                         fontFamily="inherit"
                         onMouseEnter={() => { this.HoverOverPlay() }}
-                        >WHITEPAPER
+                        onClick={this.props.onWhitepaperButtonClick}>WHITEPAPER
                     </ButtonElement>
                     </ButtonContainer2>
                     <ButtonContainer3>
@@ -141,7 +141,7 @@ HoverOverPlay = () => {
                         cursor="pointer"
                         fontFamily="inherit"
                         onMouseEnter={() => { this.HoverOverPlay() }}
-                        >MINT
+                        onClick={this.props.onMintButtonClick}>MINT
                     </ButtonElement>
                     </ButtonContainer3>
 

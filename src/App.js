@@ -5,6 +5,8 @@ import DiscordLogo from './assets/social-media-icons/discord2.png';
 import TwitterLogo from './assets/social-media-icons/twitter_32x32.png';
 import HeyMintLogo from './assets/social-media-icons/heymint.png';
 import Check from "./Check";
+import Mint from "./Mint";
+import Whitepaper from "./Whitepaper";
 import LandingPage from "./LandingPage";
 import { Flex } from "@chakra-ui/react";
 import { Howl } from "howler";
@@ -45,7 +47,7 @@ transition: background-color 0.2s ease;
 function App() {
   const [buttonText, setButtonText] = useState("Music");
   const [showCheck, setShowCheck] = useState(false);
-  const [currentComponent, setCurrentComponent] = useState("Check");
+  const [currentComponent, setCurrentComponent] = useState("LandingPage");
   const [shadow, setShadow] = useState("#FF000000");
   const [isPlaying, setIsPlaying] = useState(false);
   const [shake, setShake] = useState(false);
@@ -82,7 +84,9 @@ function App() {
     hoverSoundRef.current.play();
     setShadow("#FFFF00");
   }
-
+  function handlePageChange (pageName) {
+    setCurrentComponent(pageName);
+  }
   function handleMouseLeave() {
     setShake(false);
     setShadow("#FF000000");
@@ -121,7 +125,6 @@ function App() {
     </div>
 <div className="button-container">
 
-
   <ButtonElement
     className="shake"
     type="submit"
@@ -133,22 +136,38 @@ function App() {
   </ButtonElement>
 </div>
         </Flex>
-        {!showCheck ? (
-          <LandingPage
+    {currentComponent === "LandingPage" && <LandingPage
+                           onButtonClick={() => {
+                           clickSoundRef.current.play();
+                           handlePageChange("Check");
+                             }}
+                           onMintButtonClick={() => {
+                           clickSoundRef.current.play();
+                           handlePageChange("Mint");
+                             }}
+                             onWhitepaperButtonClick={() => {
+                             clickSoundRef.current.play();
+                             handlePageChange("Whitepaper");
+                                }}
+                           />}
+    {currentComponent === "Check" && <Check
             onButtonClick={() => {
               clickSoundRef.current.play();
-              
-              setShowCheck(true);
+              handlePageChange("LandingPage");
             }}
-          />
-        ) : (
-          <Check
+          />}
+    {currentComponent === "Mint" && <Mint
             onButtonClick={() => {
               clickSoundRef.current.play();
-              setShowCheck(false);
+              handlePageChange("LandingPage");
             }}
-          />
-        )}
+          />}
+    {currentComponent === "Whitepaper" && <Whitepaper
+            onButtonClick={() => {
+              clickSoundRef.current.play();
+              handlePageChange("LandingPage");
+            }}
+          />}
       </div>
       <div className="moving-background">
       

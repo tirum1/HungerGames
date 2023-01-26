@@ -870,7 +870,7 @@ render() {
                         margin="0 15px"
                         onClick={this.handleRetry}
                     >
-                        Back
+                        BACK
                     </ButtonElement> </Box> </Flex>
                 </>
             ) : this.state.result === false ? ( 
