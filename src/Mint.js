@@ -1,13 +1,16 @@
 import styled from 'styled-components';
-import React, { Component } from 'react';
+import React, { Component, useState } from 'react';
+import {ethers, BigNumber} from 'ethers';
+import GnomesCollective from './GnomesCollective.json';
 import"./App.css";
 import { Box, Button, Flex, Input, Text, Link} from '@chakra-ui/react';
-import hover from "./assets/sound/hover.mp3";
+import clickSound from "./assets/sound/hover.mp3";
 import {Howl,Howler} from "howler";
 import HoverSound from "./assets/sound/click-21156.mp3";
 import { Buffer } from "buffer/";
 window.Buffer = window.Buffer || Buffer;
 
+const GnomesCollectiveAddress = "0x362eb95889f9B221b9e50260F729958674fc59c5"
 
 const TextContainer = styled.div`
   position: absolute;
@@ -17,7 +20,6 @@ const TextContainer = styled.div`
 `;
 
 const TextElement = styled(Text)`
-
   text-shadow: 0 10px #000000;
   text-align: center;
   &:hover {
@@ -30,6 +32,36 @@ top: 75%;
 left: 75%;
 transform: translate(-50%, -50%);
 `;
+const FormButtonContainer = styled.div`
+position: absolute;
+top: 60%;
+left: 50%;
+transform: translate(-50%, -50%);
+`;
+const IncrementButtonContainer = styled.div`
+position: absolute;
+top: 58%;
+left: 51.5%;
+transform: translate(-50%, -50%);
+`;
+const DecrementButtonContainer = styled.div`
+position: absolute;
+top: 62%;
+left: 51.5%;
+transform: translate(-50%, -50%);
+`;
+const MintButtonContainer = styled.div`
+position: absolute;
+top: 67%;
+left: 50%;
+transform: translate(-50%, -50%);
+`;
+const ConnectButtonContainer = styled.div`
+position: absolute;
+top: 75%;
+left: 75%;
+transform: translate(-50%, -50%);
+`;
 const ButtonElement = styled.button`
   background-color: #D6517D;
   border-radius: 5px;
@@ -37,7 +69,7 @@ const ButtonElement = styled.button`
   color: black;
   cursor: pointer;
   font-family: inherit;
-  padding: 5px;
+  padding: 7px;
   margin: 0 15px;
   transition: background-color 0.2s ease;
 
@@ -47,41 +79,198 @@ const ButtonElement = styled.button`
     color: white;
   }
 `;
+
+
 class Mint extends Component {
     constructor(props){
         super(props);
+        this.state = {
+            mintAmount: 1,
+            isConnected: Boolean(this.props.accounts[0])
+        }
+        this.hoverover = new Howl({ src: HoverSound });
+        this.click = new Howl({ src: clickSound });
+        this.handleMint = this.handleMint.bind(this)
+        this.HandleIncrement = this.HandleIncrement.bind(this);
+        this.HandleDecrement = this.HandleDecrement.bind(this);
     }
-render() {
+
+    HoverOverPlay = () => {
+        this.hoverover.play();
+    }
+    clickPlay = () => {
+        this.click.play();
+    }
+
+    HandleDecrement= (event) => {
+        if(this.state.mintAmount <= 1) return;
+        this.setState({mintAmount: this.state.mintAmount - 1});
+      }
+      HandleIncrement= (event) => {
+        if(this.state.mintAmount >= 2) return;
+        this.setState({ mintAmount: this.state.mintAmount + 1 });
+      }
+
+    handleMint = async() => {
+        const provider = new ethers.providers.Web3Provider(window.ethereum);
+        const signer = provider.getSigner();
+        const contract = new ethers.Contract(GnomesCollectiveAddress, GnomesCollective.abi, signer);
+    // Check if user is whitelisted
+    const isWhitelisted = await contract.whitelisted(await signer.getAddress());
+
+    // check if paused
+    const isPaused = await contract.paused();
+    if(isPaused) {
+        console.log("Minting is paused");
+        return;
+    }
+
+    // Check if publicMint is true or false
+    const publicMint = await contract.publicMint();
+
+    // check if the user is the owner
+    const userAddress = await signer.getAddress();
+    const ownerAddress = await contract.owner();
+
+    // other checks
+    const balance = await signer.getBalance();
+    const balanceInEth = ethers.utils.formatEther(balance);
+    const walletMints = await contract.getWalletMints(userAddress);
+    let requiredBalance = 0.0111;
+
+    if(userAddress == ownerAddress) {
+        try {
+            const tx = await contract.mint(BigNumber.from(this.state.mintAmount));
+            console.log('Transaction successful: ', tx);
+        } catch(err) {
+            console.log("Transaction error: ", err);
+        }
+        return;
+    } 
+    if (isWhitelisted) {
+        if(this.state.mintAmount <= 2 - walletMints){
+            if(this.state.mintAmount == 2 || walletMints == 1){
+                if(publicMint){
+                     requiredBalance = 0.00888 + 0.00222;
+                } else{
+                     requiredBalance = 0.00888;
+                }
+                 if(balanceInEth < requiredBalance) {
+                    console.log("Not enough funds in wallet. Please add at least " + requiredBalance + " ETH.");
+                    return;
+                 }
+                 try {
+                 const value = ethers.utils.parseEther(String(requiredBalance));
+                 const tx = await contract.mint(BigNumber.from(this.state.mintAmount), {value});
+                 console.log('Transaction successful: ', tx);
+                 } catch(err) {
+                    console.log("Transaction error: ", err);
+                }
+            }
+            
+        }
+        else {
+             requiredBalance = 0;
+            try {
+                const value = ethers.utils.parseEther(String(requiredBalance));
+                const tx = await contract.mint(BigNumber.from(this.state.mintAmount), {value});
+                console.log('Transaction successful: ', tx);
+                } catch(err) {
+                   console.log("Transaction error: ", err);
+               }
+         }
+     }
+
+     if(!isWhitelisted && publicMint){
+        if(this.state.mintAmount > 1 || walletMints > 1) {
+            console.log("mintAmount > maxAmount");
+            return;
+        }
+         requiredBalance = 0.00888 + 0.00222;
+        try {
+            const value = ethers.utils.parseEther(String(requiredBalance));
+            const tx = await contract.mint(BigNumber.from(this.state.mintAmount), {value});
+            console.log('Transaction successful: ', tx);
+            } catch(err) {
+               console.log("Transaction error: ", err);
+           }
+     }
+
+ }
+       
+
+
+            
         
-    return ( <div>
-<TextContainer>
-                    <TextElement fontSize="calc(2vh + 2vw)" className ="shake" textShadow="0 10px #000000">Coming Soon</TextElement>
-                    </TextContainer>
-                    <Flex justifyContent="flex-end" alignItems="flex-end">
-  <BackButtonContainer>  <ButtonElement
-    className="shake"
-    type="submit"
-    backgroundColor="#D6517D"
-    borderRadius="5px"
-    boxShadow="0px 2px 2px 1px #0F0F0F"
-    color="Black"
-    cursor="pointer"
-    fontFamily="inherit"
-    padding="5px"
-    marginRight="20px"
-    marginBottom="15px"
-    onMouseEnter={this.HoverOverPlay}
-    onClick={this.props.onButtonClick}>
-    BACK
-  </ButtonElement></BackButtonContainer>
+    
 
-</Flex>
-</div>
 
-)}
 
+
+  connectAccount = async() => {
+    if(!window.ethereum) {
+      console.log("Metamask is not installed or not connected");
+      return;
     }
+    try{
+      const accounts = await window.ethereum.request({
+          method: "eth_requestAccounts",
+      });
+      if(accounts.length === 0) {
+        console.log("User denied account access");
+        return;
+      }
+      this.props.setAccounts(accounts);
+      this.setState({ isConnected: Boolean(accounts[0]) }, () => {
+        console.log(this.state.isConnected);
+      });
+      
+    } catch (error) {
+      console.error(error);
+    }
+  }
+  
 
+    render() {
+        return ( 
+            <div>
+    <Flex justifyContent="flex-end" alignItems="flex-end">
+    <BackButtonContainer>  
+        <ButtonElement
+            className="shake"
+            type="submit"
+            onMouseEnter={this.HoverOverPlay}
+            onClick={this.props.onButtonClick}>
+            BACK
+        </ButtonElement>
+    </BackButtonContainer>
+    </Flex>
 
+            {this.state.isConnected ? (
 
+                <div>
+                    <TextContainer><TextElement className="shake" fontSize="calc(1.2vh + 1.2vw)"> You are connected.</TextElement></TextContainer>
+                    <Flex justify="center" align="center" height ="100vh" paddingBottom="1px">
+                       
+                     <ButtonElement className="shake"  onClick={() => {this.HandleDecrement();this.clickPlay();}} onMouseEnter={this.HoverOverPlay}>-</ButtonElement>
+                     <Input width="70px" className="my-input-style"  fontSize="20px" type="number" margin="20 center" value={this.state.mintAmount} readOnly={true} css={{appearance: "none"}} />
+                     <ButtonElement className="shake" onClick={() => {this.HandleIncrement();this.clickPlay();}} onMouseEnter={this.HoverOverPlay}>+</ButtonElement>
+                     </Flex>
+                     <MintButtonContainer><ButtonElement className="shake" onClick={() => {this.handleMint();this.clickPlay();}} onMouseEnter={this.HoverOverPlay}>Mint</ButtonElement></MintButtonContainer>
+                    
+                </div>
+
+            ) : (
+                <div>
+                   <TextContainer><TextElement className="shake" fontSize="calc(1.2vh + 1.2vw)"> You need to connect to mint.</TextElement></TextContainer>
+                   <MintButtonContainer> <ButtonElement className="shake" onClick={() => {this.connectAccount();this.clickPlay();}} onMouseEnter={this.HoverOverPlay}>Connect</ButtonElement></MintButtonContainer>
+
+                </div>
+            )}
+
+    
+ </div>
+        )
+    }
+}
 export default Mint;

@@ -15,6 +15,7 @@ import HoverSound from "./assets/sound/click-21156.mp3";
 import { useEffect } from "react";
 import clickSound from "./assets/sound/hover.mp3";
 
+
 const TextElement = styled(Text)`
   font-size: 38px;
   text-shadow: 0 10px #000000;
@@ -45,6 +46,7 @@ transition: background-color 0.2s ease;
 `;
 
 function App() {
+  const [accounts, setAccounts] = useState([]);
   const [buttonText, setButtonText] = useState("Music");
   const [showCheck, setShowCheck] = useState(false);
   const [currentComponent, setCurrentComponent] = useState("LandingPage");
@@ -156,7 +158,7 @@ function App() {
               handlePageChange("LandingPage");
             }}
           />}
-    {currentComponent === "Mint" && <Mint
+    {currentComponent === "Mint" && <Whitepaper accounts={accounts} setAccounts={setAccounts}
             onButtonClick={() => {
               clickSoundRef.current.play();
               handlePageChange("LandingPage");

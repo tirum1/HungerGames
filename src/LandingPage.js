@@ -6,6 +6,7 @@ import hover from "./assets/sound/hover.mp3";
 import {Howl,Howler} from "howler";
 import HoverSound from "./assets/sound/click-21156.mp3";
 import { Buffer } from "buffer/";
+
 window.Buffer = window.Buffer || Buffer;
 
 const FlexContainer = styled(Flex)`

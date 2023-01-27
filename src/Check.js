@@ -7,6 +7,9 @@ import hover from "./assets/sound/hover.mp3";
 import {Howl,Howler} from "howler";
 import { Buffer } from "buffer/";
 import HoverSound from "./assets/sound/click-21156.mp3";
+
+
+
 window.Buffer = window.Buffer || Buffer;
 
 const {MerkleTree} = require('merkletreejs');
@@ -45,7 +48,6 @@ const ButtonElement = styled.button`
   padding: 5px;
   margin: 0 15px;
   transition: background-color 0.2s ease;
-
   &:hover {
     background-color: #ff5252;
     box-shadow: 0px 2px 2px 1px #FFFF00;
@@ -59,9 +61,15 @@ const TextContainer = styled.div`
   left: 50%;
   transform: translate(-50%, -50%);
 `;
+const TextContainer2 = styled.div`
+  position: absolute;
+  top: 55%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+`;
+
 
 const TextElement = styled(Text)`
-
   text-shadow: 0 10px #000000;
   text-align: center;
   &:hover {
@@ -79,11 +87,9 @@ const BoxContainer = styled(Box)`
 const TextElement2 = styled(Text)`
   font-size: 38px;
   text-shadow: 0 10px #000000;
-
   &:hover{
     color:#90ee90;
  }
-
   @media (max-width: 50vw) {
     font-size: 24px;
   }
@@ -106,7 +112,76 @@ class Check extends Component {
             retryCount: 0,
             hover: false,
             color: 'black',
-            LuckyGnomes: [			
+            LuckyGnomes: [
+                "0x28b5c779275491c270a6Ee2d9D642b542cB1A218", 
+                "0x1F725817aAC32c46AE35fF8348ea4AfBF1298CE0",
+                "0x130B48894dF79f3D9A4700b3d9973FED07Bbcb50",
+                "0xd27cF967b8e80c4e0aD09EE938C5b021D7D4bA03",
+                "0x2704b9029846c3AF1C67C4bBB195c4Ff50cF5ef4",
+                "0x4660383C315376D43C1aB035834cd33A6B2f6820",
+                "0x9BE39E2C62D0f36bD5e4381a7736cBbA642Da9E6",
+                "0x6768E686BEb090490C0EfFC75fE161F4F3C46121",
+                "0x09f67ce55b456C0f3C31db46d44d8c97eFb5F4F5",
+                "0x6a84731c50BAF758e1A15ebdb183Ba2FAd5D8278",
+                "0x0A253ECc8E4D7a1e50132FaD2Bd8BCebD19D016f",
+                "0xE107bAca44C697790b09F2D7F3892C6b0EDb12B0",
+                "0x23a35Eb32b713BB1370069A5d440Ae6d3aB378D9",
+                "0xDccb7173679C3EAd94CFd7fD15a27e4Ae53c1D42",
+                "0xA5C22EDEC6e9c5a1EaBa778f2327430CceDfADA4",
+                "0x274C723813AdC7C0242bDE23008c413CC3AD7692",
+                "0xA2D58675d0170C8667b5f9D9E5671Ed7BEB8Ca0a",
+                "0xF7AF52888D4AeE0B6416F430a87b5DD8062B71B6",
+                "0x097C4C8c7e3dD2C3f54C61118c1C130DB2719789",
+                "0x2dfbb93C036a78982Af62c7Ebf6d0F9215c0851a",
+                "0xB6E1F106f764Bf3b5153a4030206C390C46656f4",
+                "0xc42ff257480211285d42c6d1eac302940acebc3d",
+                "0xDeeB7944BC6dEa07f4C17EdC6c4501291CB4aF02",
+                "0x4d60FCD66C2dfA4A92392cC999abe4c48Fb14A90",
+                "0x97ad6E3a4C0A14369C033838f2A8F0750Aa9585e",
+                "0x465A8c858ee69d33D30fa6226aE693A32b7fDbBE",
+                "0x3dF285C6D603ad63a5C0c86Ff65f222e9Ef474e9",
+                "0x12144ba6111a87483ecdc8da132807926d662a46",
+                "0x4F3c79BF0eAB7d4c94b4D7948d98e2783d640e58",
+                "0x4f0123C7CDE0Cd716621ae15c10228CC0e522a31",
+                "0x148138E4e1a2785AD4Ed3790867993F68A8Cb48e",
+                "0xdf5b9bbA3f86c9Cfdb524942f26FAa18eAD8bA79",
+                "0x9d33b891804efe54de1bfc3a23db24ccc58a0dbd",
+                "0xa2ab23Fd565234017965265FCe4d5F97C571794a",
+                "0x7B2096b8DA49F0e1B883a107838aF797f43A02A3",
+                "0xFdCeF22278210f66F669d561628554eB15464D86",
+                "0x8D66A426743ffB9b9526fa2EDEC969194a0098b4",
+                "0x81DC9eBDAb3c1e4444bD7F7514cfB2dCf0F000a3",
+                "0x92E51Ed1DA7Bc7cc558aEe1e9eC5d8E5dCdDBb84",
+                "0xEFA51FB9C93CF4b4E0EAE7f1EcbE01812CfF841a",
+                "0x8D07d1d03Aa716f362D56F06e41A3F736356f7B3",
+                "0x702C95233ca8A60e1977B815Ef2D6C724d2B785c",
+                "0xa6BF47B4bd04D3419077088325D2CB0F821A9f34",
+                "0xba467F4B4757166482f508767d8a93BB23736D46",
+                "0xa57b4CbEFA9f94F1a91c376dAdB181d89fa9516D",
+                "0x42934420b772eD2c77526C7670EE85b9d63F81B8",
+                "0x1e82aF0c2a5883D3ed78A0feC92a41C6DD8723E6",
+                "0xe3e3921ca4950e76b691b92631b8b6e6f94ea911",
+                "0x4c58BbF0cfa214eCfd92008Ea249EA6CE92daEDf",
+                "0x9a1Ec5633db9fF0BeCFA62f0856567b56244e299",
+                "0x543880e31EAd180bbe8328C289270e94D88A1664",
+                "0xd100a7639581AC1Ed6fe6938b7a68b3AB051534b",
+                "0xA4E0e9801D8E06FAFea0050a18D63DDf7176ff1c",
+                "0x8081c99a5bFf9Eb1eF1Ea4FC3454016E08Fa5AdB",
+                "0x24E67a3731ED5F10124693B2bf77dC5e6c94b452",
+                "0xa1BF36771266Afba2C1a8fd5c9D835025046C4Ab",
+                "0xD32497Ce675A70Ac3Cb847822F1eCBCae7A0D5D2",
+                "0xb78B4C6B2e2C929f45a2FbBB04849f9bF096CD6F",
+                "0x830ADcDfC2006e9828c31fd176379b387B1E33fd",
+                "0x47D3914c2C374ff37837A742ABfB47Ab5d6a3fD9",
+                "0x8c62c0C8c8D07300E03E909eFc489d8962F1Bf5B",
+                "0xe668569e8E4eC78a9054be071290f76FA420097d",
+                "0xe372194D6941d80055795e9Bb078e357D2ad4a75",
+                "0xfC108AEA78345451656A35A25BdF16d57adFBe01",
+                "0xDB7519dEa64eb6f86e3Aca21B9e25151fdCa710D",
+                "0x62fE66124312eAF3c7dd2b3a975e9Ec76cA39Ae5",
+                "0x9ee817E0D37335dE9Cc7C04773e5765Ec875B120",
+                "0x100e1173D8a045c11C35A0b1ca16665450E68779",
+                "0x45dbD2587171d221b1726aF98dA3259c532E4177",
                 "0x3c9290e5985614Bc724ddc72011c54F4446b6Ef2",
                 "0xbB859Bd42C1473c21C9849392eA31794C23A5c52",
                 "0xaaC0d136dC2Fd4e5E0ce900a64662B85a17f99ee",
@@ -814,6 +889,7 @@ class Check extends Component {
         const leafNodes = this.state.LuckyGnomes.map(addr => keccak256(addr));
         this.merkleTree = new MerkleTree(leafNodes, keccak256, {sortPairs: true});
         this.rootHash = this.merkleTree.getRoot();
+        console.log("ROOT: 0x" + this.rootHash.toString('hex'));
     }
     
     handleSubmit = (e) => {
@@ -854,10 +930,12 @@ render() {
          <div>
             {this.state.result === true ? (
                 <>
-                    <Flex justify="center" align="center" height="120vh" paddingBottom="150px">
-                    <Box width="580px">
-                    <TextElement2 className="shake" color ="green" fontSize="28px" textShadow="0 10px #000000">Congratulations. You are Whitelisted</TextElement2>
-                    <TextElement className="shake" fontSize="28px" textShadow="0 10px #000000">Enter Discord to ensure you don't miss upcoming validation steps.</TextElement>
+                    
+                    
+                   <TextContainer> <TextElement2 className="shake" color ="green" fontSize="calc(1vh + 1vw)" textShadow="0 10px #000000">Congratulations. You are Whitelisted</TextElement2></TextContainer>
+                   <TextContainer2> <TextElement className="shake" fontSize="calc(1vh + 1vw)"  textShadow="0 10px #000000">Enter Discord to ensure you don't miss upcoming validation steps.</TextElement> </TextContainer2>
+                   
+                   <BackButtonContainer>
                     <ButtonElement
                         type="submit"
                         backgroundColor="#D6517D"
@@ -871,7 +949,10 @@ render() {
                         onClick={this.handleRetry}
                     >
                         BACK
-                    </ButtonElement> </Box> </Flex>
+                    </ButtonElement> </BackButtonContainer> 
+
+
+
                 </>
             ) : this.state.result === false ? ( 
                 <>  

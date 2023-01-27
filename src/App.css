@@ -92,3 +92,10 @@ body {
 
 
 
+.my-input-style {
+  text-align: center;
+  font-size: 20px;
+}
+input[type='number'] {
+  appearance: textfield;
+}
