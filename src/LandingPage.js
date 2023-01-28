@@ -80,16 +80,11 @@ class LandingPage extends Component {
         }
     }
 
-handleSubmit = (e) => {
-    e.preventDefault();
-    this.HoverPlay();
-}
+
 SoundPlay = () => {
     this.sound.play();
   }
-  HoverPlay = () => {
-  this.hover.play();
-}
+
 HoverOverPlay = () => {
     this.hoverover.play();
   }
@@ -103,7 +98,7 @@ HoverOverPlay = () => {
                     </TextContainer>
             </div>
             <div>
-                    <ButtonContainer>
+                    <ButtonContainer2>
                     <ButtonElement
                         className='shake'
                         type="submit"
@@ -116,8 +111,8 @@ HoverOverPlay = () => {
                         onMouseEnter={() => { this.HoverOverPlay() }}
                         onClick={this.props.onButtonClick}>CHECK WHITELIST
                     </ButtonElement>
-                    </ButtonContainer>
-                    <ButtonContainer2>
+                    </ButtonContainer2>
+                    <ButtonContainer>
                     <ButtonElement
                         className='shake'
                         type="submit"
@@ -130,7 +125,7 @@ HoverOverPlay = () => {
                         onMouseEnter={() => { this.HoverOverPlay() }}
                         onClick={this.props.onWhitepaperButtonClick}>WHITEPAPER
                     </ButtonElement>
-                    </ButtonContainer2>
+                    </ButtonContainer>
                     <ButtonContainer3>
                     <ButtonElement
                         className='shake'

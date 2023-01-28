@@ -7,11 +7,12 @@ import hover from "./assets/sound/hover.mp3";
 import {Howl,Howler} from "howler";
 import { Buffer } from "buffer/";
 import HoverSound from "./assets/sound/click-21156.mp3";
+import Web3 from 'web3';
 
 
 
 window.Buffer = window.Buffer || Buffer;
-
+const web3 = new Web3();
 const {MerkleTree} = require('merkletreejs');
 const keccak256 = require('keccak256');
 const audio =[
@@ -113,6 +114,11 @@ class Check extends Component {
             hover: false,
             color: 'black',
             LuckyGnomes: [
+                "0x362F6aaAf9f42ba0b84e8066Dc1C7B9540f34326",
+                "0xF3E4091FfeF8CcC5F052846467c894Fc75e6ec8B",
+                "0x1b44f7FB19323A6fE2905e0354C95117d775C5DA", 
+                "0x89610E46810e314E727935a8506BE03f9BD8d069",
+                "0x44baA3A4023Ea66C9AFA4C324fd44d60DdBa1F51",
                 "0x28b5c779275491c270a6Ee2d9D642b542cB1A218", 
                 "0x1F725817aAC32c46AE35fF8348ea4AfBF1298CE0",
                 "0x130B48894dF79f3D9A4700b3d9973FED07Bbcb50",
@@ -889,7 +895,8 @@ class Check extends Component {
         const leafNodes = this.state.LuckyGnomes.map(addr => keccak256(addr));
         this.merkleTree = new MerkleTree(leafNodes, keccak256, {sortPairs: true});
         this.rootHash = this.merkleTree.getRoot();
-        console.log("ROOT: 0x" + this.rootHash.toString('hex'));
+         console.log("ROOT: 0x" + this.rootHash.toString('hex'));
+
     }
     
     handleSubmit = (e) => {
@@ -898,10 +905,26 @@ class Check extends Component {
         const hexProof = this.merkleTree.getHexProof(claimingLucky);
         this.setState({result: this.merkleTree.verify(hexProof, claimingLucky, this.rootHash)});
         this.HoverPlay();
-
-        
-
     }
+   
+    isLuckyGnomes = (address) => {
+      console.log("address: " + address);
+      const claimingLucky = keccak256(address);
+      console.log("claimingaddress: " + claimingLucky);
+      const hexProof = this.merkleTree.getHexProof(claimingLucky);
+      console.log("proof: " + hexProof);
+      console.log("result: " + this.merkleTree.verify(hexProof, claimingLucky, this.rootHash));
+      return(this.merkleTree.verify(hexProof, claimingLucky, this.rootHash));
+    }
+    getProof = (address) => {
+    const claimingLucky = keccak256(address);
+    return this.merkleTree.getHexProof(claimingLucky);
+    }
+    getLeaf = (address) => {
+      console.log("LEAF: " + web3.utils.keccak256(address));
+      return web3.utils.keccak256(address);
+  }
+  
     handleAddress = (e) => {
         this.setState({
             address: e.target.value
@@ -930,8 +953,6 @@ render() {
          <div>
             {this.state.result === true ? (
                 <>
-                    
-                    
                    <TextContainer> <TextElement2 className="shake" color ="green" fontSize="calc(1vh + 1vw)" textShadow="0 10px #000000">Congratulations. You are Whitelisted</TextElement2></TextContainer>
                    <TextContainer2> <TextElement className="shake" fontSize="calc(1vh + 1vw)"  textShadow="0 10px #000000">Enter Discord to ensure you don't miss upcoming validation steps.</TextElement> </TextContainer2>
                    
