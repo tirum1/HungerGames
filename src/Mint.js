@@ -140,7 +140,7 @@ class Mint extends Component {
   
   componentDidMount() {
     const check = new Check();
-    const whitelistedUsers = check.getWLAmount() + 1250;
+    const whitelistedUsers = check.getWLAmount() + 625;
     const provider = new ethers.providers.Web3Provider(window.ethereum);
     const signer = provider.getSigner();
     const contract = new ethers.Contract(GnomesCollectiveAddress, GnomesCollective.abi, signer);
