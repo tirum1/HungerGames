@@ -3,8 +3,11 @@ import { useState, useRef } from "react";
 import "./App.css";
 import DiscordLogo from './assets/social-media-icons/discord2.png';
 import TwitterLogo from './assets/social-media-icons/twitter_32x32.png';
-import HeyMintLogo from './assets/social-media-icons/heymint.png';
+import HeyMintLogo from './assets/social-media-icons/heymint2.png';
+import OpenseaLogo from './assets/social-media-icons/opensea2.png';
+import EtherscanLogo from './assets/social-media-icons/etherscan2.png';
 import Check from "./Check";
+import Rules from "./Rules";
 import Mint from "./Mint";
 import Whitepaper from "./Whitepaper";
 import LandingPage from "./LandingPage";
@@ -125,6 +128,24 @@ function App() {
       <img src={HeyMintLogo} alt="Join our Discord server" width="50px" height="50px" style={{marginRight: "15px"}}/>
 </a>
     </div>
+    <div
+      className={`Opensea-logo-container ${shake ? 'shake' : ''}`}
+      onMouseEnter={handleMouseEnter}
+      onMouseLeave={handleMouseLeave}
+    >
+      <a href="https://opensea.io" target="_blank">
+      <img src={OpenseaLogo} alt="Join our Discord server" width="50px" height="50px" style={{marginRight: "15px"}}/>
+</a>
+    </div>
+    <div
+      className={`Etherscan-logo-container ${shake ? 'shake' : ''}`}
+      onMouseEnter={handleMouseEnter}
+      onMouseLeave={handleMouseLeave}
+    >
+      <a href="https://etherscan.io" target="_blank">
+      <img src={EtherscanLogo} alt="Join our Discord server" width="50px" height="50px" style={{marginRight: "15px"}}/>
+</a>
+    </div>
 <div className="button-container">
 
   <ButtonElement
@@ -147,9 +168,9 @@ function App() {
                            clickSoundRef.current.play();
                            handlePageChange("Mint");
                              }}
-                             onWhitepaperButtonClick={() => {
-                             clickSoundRef.current.play();
-                             handlePageChange("Whitepaper");
+                           onWhitepaperButtonClick={() => {
+                           clickSoundRef.current.play();
+                           handlePageChange("Whitepaper");
                                 }}
                            />}
     {currentComponent === "Check" && <Check
@@ -158,10 +179,20 @@ function App() {
               handlePageChange("LandingPage");
             }}
           />}
+    {currentComponent === "Rules" && <Rules
+              onButtonClick={() => {
+              clickSoundRef.current.play();
+              handlePageChange("Mint");
+            }}
+          />}
     {currentComponent === "Mint" && <Whitepaper accounts={accounts} setAccounts={setAccounts}
-            onButtonClick={() => {
+             onButtonClick={() => {
               clickSoundRef.current.play();
               handlePageChange("LandingPage");
+            }}
+            onRulesButtonClick={() => {
+              clickSoundRef.current.play();
+              handlePageChange("Rules");
             }}
           />}
     {currentComponent === "Whitepaper" && <Whitepaper
@@ -171,9 +202,11 @@ function App() {
             }}
           />}
       </div>
+      
       <div className="moving-background">
       
       </div>
+      
     </div>
   );
 

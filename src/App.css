@@ -83,6 +83,20 @@ body {
   top: 5vh;
 }
 
+.Opensea-logo-container {
+  transform: scale(0.85);
+  position: absolute;
+  left: 5vw;
+  top: 20vh;
+}
+.Etherscan-logo-container {
+  transform: scale(0.85);
+  position: absolute;
+  left: 5vw;
+  top: 35vh;
+}
+
+
 .HeyMint-logo-container {
   transform: scale(0.85);
   position: absolute;
@@ -99,3 +113,4 @@ body {
 input[type='number'] {
   appearance: textfield;
 }
+

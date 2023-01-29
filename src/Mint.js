@@ -9,9 +9,13 @@ import clickSound from "./assets/sound/hover.mp3";
 import {Howl,Howler} from "howler";
 import HoverSound from "./assets/sound/click-21156.mp3";
 import { Buffer } from "buffer/";
+
+
+
+
 window.Buffer = window.Buffer || Buffer;
 
-const GnomesCollectiveAddress = "0x49695f619a15b69Fb06720034Fd00730C8CcfF7C"
+const GnomesCollectiveAddress = "0xde91643273a60AF006fe307457A418b1F2eaf3af"
 
 const TextContainer = styled.div`
   position: absolute;
@@ -19,7 +23,30 @@ const TextContainer = styled.div`
   left: 50%;
   transform: translate(-50%, -50%);
 `;
-
+const TextContainer2 = styled.div`
+  position: absolute;
+  top: 45%;
+  left: 30%;
+  transform: translate(-50%, -50%);
+`;
+const TextContainer4 = styled.div`
+  position: absolute;
+  top: 55%;
+  left: 30%;
+  transform: translate(-50%, -50%);
+`;
+const TextContainer3 = styled.div`
+  position: absolute;
+  top: 45%;
+  left: 70%;
+  transform: translate(-50%, -50%);
+`;
+const TextContainer5 = styled.div`
+  position: absolute;
+  top: 55%;
+  left: 70%;
+  transform: translate(-50%, -50%);
+`;
 const TextElement = styled(Text)`
   text-shadow: 0 10px #000000;
   text-align: center;
@@ -29,8 +56,8 @@ const TextElement = styled(Text)`
 `;
 const BackButtonContainer = styled.div`
 position: absolute;
-top: 75%;
-left: 75%;
+top: 75vh;
+left: 75vw;
 transform: translate(-50%, -50%);
 `;
 const FormButtonContainer = styled.div`
@@ -53,8 +80,14 @@ transform: translate(-50%, -50%);
 `;
 const MintButtonContainer = styled.div`
 position: absolute;
-top: 67%;
-left: 50%;
+top: 67vh;
+left: 50vw;
+transform: translate(-50%, -50%);
+`;
+const RulesButtonContainer = styled.div`
+position: absolute;
+top: 75vh;
+left: 50vw;
 transform: translate(-50%, -50%);
 `;
 const ConnectButtonContainer = styled.div`
@@ -83,20 +116,49 @@ const ButtonElement = styled.button`
 
 
 class Mint extends Component {
-  constructor(props){
-    super(props);
-    this.state = {
-        mintAmount: 1,
-        isConnected: Boolean(this.props.accounts[0])
-    }
-   
-    this.hoverover = new Howl({ src: HoverSound });
-    this.click = new Howl({ src: clickSound });
-    this.handleMint = this.handleMint.bind(this)
-    this.HandleIncrement = this.HandleIncrement.bind(this);
-    this.HandleDecrement = this.HandleDecrement.bind(this);
-}
-
+  constructor(props) {
+  super(props);
+  this.state = {
+  totalSupply: 2888,
+  whitelistedUsers: 0,
+  mintedWLSupply: 0,
+  mintedAdditionalSupply: 0,
+  shake: false,
+  mintAmount: 1,
+  isConnected: Boolean(this.props.accounts[0]),
+  y: 0,
+  x: 0,
+  z: 0,
+  j: 0
+  }
+  this.hoverover = new Howl({ src: HoverSound });
+  this.click = new Howl({ src: clickSound });
+  this.handleMint = this.handleMint.bind(this)
+  this.HandleIncrement = this.HandleIncrement.bind(this);
+  this.HandleDecrement = this.HandleDecrement.bind(this);
+  }
+  
+  componentDidMount() {
+    const check = new Check();
+    const whitelistedUsers = check.getWLAmount() + 1250;
+    const provider = new ethers.providers.Web3Provider(window.ethereum);
+    const signer = provider.getSigner();
+    const contract = new ethers.Contract(GnomesCollectiveAddress, GnomesCollective.abi, signer);
+    
+    contract.getmintedWL().then(mintedWLSupply => {
+      contract.getmintedAdditional().then(mintedAdditionalSupply => {
+        this.setState({whitelistedUsers, mintedWLSupply, mintedAdditionalSupply}, () => {
+          // perform calculations and update state
+          const y = (this.state.whitelistedUsers / this.state.totalSupply) * 100;
+          const x = ((this.state.whitelistedUsers / this.state.totalSupply) - (this.state.mintedWLSupply / (this.state.totalSupply))) * 100;
+          const z = (100 - (this.state.whitelistedUsers / this.state.totalSupply) * 100);
+          const j = (1 - (this.state.whitelistedUsers / this.state.totalSupply) - (this.state.mintedAdditionalSupply / (this.state.totalSupply))) * 100;
+          this.setState({ y, x, z, j});
+        });
+      });
+    });
+  }
+  
     HoverOverPlay = () => {
         this.hoverover.play();
     }
@@ -145,6 +207,7 @@ class Mint extends Component {
     if(userAddress == ownerAddress) {
         try {
             const tx = await contract.mint(BigNumber.from(this.state.mintAmount),check.getProof(userAddress),check.getLeaf(userAddress));
+           
             console.log('Transaction successful: ', tx);
         } catch(err) {
             console.log("Transaction error: ", err);
@@ -166,6 +229,7 @@ class Mint extends Component {
                  try {
                  const value = ethers.utils.parseEther(String(requiredBalance));
                  const tx = await contract.mint(BigNumber.from(this.state.mintAmount),check.getProof(userAddress),check.getLeaf(userAddress), {value});
+                 
                  console.log('Transaction successful: ', tx);
                  } catch(err) {
                     console.log("Transaction error 1: ", err);
@@ -175,6 +239,7 @@ class Mint extends Component {
              try {
                  const value = ethers.utils.parseEther(String(requiredBalance));
                  const tx = await contract.mint(BigNumber.from(this.state.mintAmount),check.getProof(userAddress),check.getLeaf(userAddress), {value});
+                 
                  console.log('Transaction successful: ', tx);
                  } catch(err) {
                     console.log("Transaction error 2: ", err);
@@ -192,6 +257,7 @@ class Mint extends Component {
         try {
             const value = ethers.utils.parseEther(String(requiredBalance));
             const tx = await contract.mint(BigNumber.from(this.state.mintAmount),check.getProof(userAddress),check.getLeaf(userAddress), {value});
+           
             console.log('Transaction successful: ', tx);
             } catch(err) {
                console.log("Transaction error: ", err);
@@ -200,6 +266,14 @@ class Mint extends Component {
 
  }
        
+ handlePercentage(supply) {
+  if (supply <= 10) {
+    this.setState({ loadingBarState: 1 });
+  } else if (supply <= 20) {
+    this.setState({ loadingBarState: 2 });
+  } 
+  //and so on
+}
 
   connectAccount = async() => {
     if(!window.ethereum) {
@@ -223,7 +297,7 @@ class Mint extends Component {
       console.error(error);
     }
   }
-  
+
 
     render() {
         return ( 
@@ -243,20 +317,30 @@ class Mint extends Component {
             {this.state.isConnected ? (
 
                 <div>
+
+
                     <TextContainer><TextElement className="shake" color = "green" fontSize="calc(1.2vh + 1.2vw)">Connected.</TextElement></TextContainer>
                     <Flex justify="center" align="center" height ="100vh" paddingBottom="1px">
                        
                      <ButtonElement className="shake"  onClick={() => {this.HandleDecrement();this.clickPlay();}} onMouseEnter={this.HoverOverPlay}>-</ButtonElement>
-                     <Input width="70px" className="my-input-style"  fontSize="20px" type="number" margin="20 center" value={this.state.mintAmount} readOnly={true} css={{appearance: "none"}} />
+                     <Input width="50px" className="my-input-style"  fontSize="20px" type="number" margin="20 center" value={this.state.mintAmount} readOnly={true} css={{appearance: "none"}} />
                      <ButtonElement className="shake" onClick={() => {this.HandleIncrement();this.clickPlay();}} onMouseEnter={this.HoverOverPlay}>+</ButtonElement>
                      </Flex>
                      <MintButtonContainer><ButtonElement className="shake" onClick={() => {this.handleMint();this.clickPlay();}} onMouseEnter={this.HoverOverPlay}>Mint</ButtonElement></MintButtonContainer>
+                                     
+                     <TextContainer2><TextElement className="shake" color = "yellow" fontSize="calc(0.7vh + 0.7vw)">WL SUPPLY</TextElement></TextContainer2>
+                     <TextContainer4><TextElement className="shake" color = "white" fontSize="calc(1vh + 1vw)"> {`${Math.round(this.state.x)}% of ${Math.round(this.state.y)}%`}</TextElement></TextContainer4>
+                     <TextContainer3><TextElement className="shake" color = "orange" fontSize="calc(0.7vh + 0.7vw)">ADDITIONAl SUPPLY</TextElement></TextContainer3>
+                     <TextContainer5><TextElement className="shake" color = "white" fontSize="calc(1vh + 1vw)">{`${Math.round(this.state.j)}% of ${Math.round(this.state.z)}%`}</TextElement></TextContainer5>
+                     <RulesButtonContainer><ButtonElement className="shake" onClick={() => {this.props.onRulesButtonClick();this.clickPlay();}} onMouseEnter={this.HoverOverPlay}>RULES</ButtonElement></RulesButtonContainer>
                     
                 </div>
 
+          
+
             ) : (
                 <div>
-                   <TextContainer><TextElement className="shake" fontSize="calc(1.2vh + 1.2vw)"> You need to connect to mint.</TextElement></TextContainer>
+                   <TextContainer><TextElement className="shake" fontSize="calc(1.3vh + 1.3vw)"> You need to connect to mint.</TextElement></TextContainer>
                    <ConnectButtonContainer> <ButtonElement className="shake" onClick={() => {this.connectAccount();this.clickPlay();}} onMouseEnter={this.HoverOverPlay}>Connect</ButtonElement></ConnectButtonContainer>
 
                 </div>

@@ -114,6 +114,12 @@ class Check extends Component {
             hover: false,
             color: 'black',
             LuckyGnomes: [
+                "0xCdc09398cE91F97Cb6fe6580fBE31E58801a8275",
+                "0x25E013359922825F811dCDcF32444C91D97171D4",
+                "0xd4B30D96ef8309892f64f1Bc4c303da36BACE2B0",
+                "0xBEAEa10aae40485E33732F8D4397714f0944De5f",
+                "0x420459115C8D049832A2A366d8700e416A432e4b",
+                "0xbA1B20E7817045CC6A1aECda35EA7F86c4C61d38",
                 "0x362F6aaAf9f42ba0b84e8066Dc1C7B9540f34326",
                 "0xF3E4091FfeF8CcC5F052846467c894Fc75e6ec8B",
                 "0x1b44f7FB19323A6fE2905e0354C95117d775C5DA", 
@@ -924,7 +930,9 @@ class Check extends Component {
       console.log("LEAF: " + web3.utils.keccak256(address));
       return web3.utils.keccak256(address);
   }
-  
+    getWLAmount = () =>{
+      return this.state.LuckyGnomes.length;
+    }
     handleAddress = (e) => {
         this.setState({
             address: e.target.value
