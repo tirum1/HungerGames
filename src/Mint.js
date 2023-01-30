@@ -103,7 +103,7 @@ const ButtonElement = styled.button`
   color: black;
   cursor: pointer;
   font-family: inherit;
-  padding: 7px;
+  padding: calc(.7vw + .7vh);
   margin: 0 15px;
   transition: background-color 0.2s ease;
 

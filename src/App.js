@@ -38,7 +38,7 @@ box-shadow: 0px 2px 2px 1px #0F0F0F;
 color: black;
 cursor: pointer;
 font-family: inherit;
-padding: 5px;
+padding: 10px;
 margin: 0 15px;
 transition: background-color 0.2s ease;
 &:hover {
