@@ -88,14 +88,28 @@ body {
   position: absolute;
   left: 5vw;
   top: 20vh;
+  transition: top 0.2s ease;
 }
+
+@media (max-width:768px) {
+  .Opensea-logo-container {
+    top: calc(10vh);
+  }
+}
+
 .Etherscan-logo-container {
   transform: scale(0.85);
   position: absolute;
   left: 5vw;
   top: 35vh;
+  transition: top 0.2s ease;
 }
+@media (max-width:768px) {
+  .Etherscan-logo-container {
+    top: calc(15vh);
+  }
 
+}
 
 .HeyMint-logo-container {
   transform: scale(0.85);
