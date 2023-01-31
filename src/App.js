@@ -116,25 +116,27 @@ function App() {
       onMouseLeave={handleMouseLeave}
     >
    <a href="https://discord.gg/wkRaMTRaZA" target="_blank">
-  <img src={DiscordLogo} alt="Join our Discord server" width="75vw" height="75vh" style={{marginRight: "15px"}}/>
+  <img src={DiscordLogo} alt="Join our Discord server" width="75vw" height="75vh" style={{marginRight: "15px", transition: "width 0.5s ease, height 0.5s ease"}}/>
 </a>
     </div>
     <div
-      className={`Twitter-logo-container ${shake ? 'shake' : ''}`}
-      onMouseEnter={() => { handleMouseEnter() }}
-      onMouseLeave={handleMouseLeave}
-    >
-      <a href="https://twitter.com/HungerGamesNFT" target="_blank">
-      <img src={TwitterLogo} alt="Join our Discord server" width="75vw" height="75vh" style={{marginRight: "15px"}}/>
-      </a>
-    </div>
+  className={`Twitter-logo-container ${shake ? 'shake' : ''}`}
+  onMouseEnter={() => { handleMouseEnter() }}
+  onMouseLeave={handleMouseLeave}
+>
+  <a href="https://twitter.com/HungerGamesNFT" target="_blank">
+    <img src={TwitterLogo} alt="Join our Discord server" width="75vw" height="75vh" style={{marginRight: "15px", transition: "width 0.5s ease, height 0.5s ease"}} />
+  </a>
+</div>
+
+    
     <div
       className={`HeyMint-logo-container ${shake ? 'shake' : ''}`}
       onMouseEnter={handleMouseEnter}
       onMouseLeave={handleMouseLeave}
     >
       <a href="https://heymint.xyz/luckygnomes" target="_blank">
-      <img src={HeyMintLogo} alt="Join our Discord server" width="75vw" height="75vh" style={{marginRight: "15px"}}/>
+      <img src={HeyMintLogo} alt="Join our Discord server" width="75vw" height="75vh" style={{marginRight: "15px", transition: "width 0.5s ease, height 0.5s ease"}}/>
 </a>
     </div>
     <div
@@ -143,7 +145,7 @@ function App() {
       onMouseLeave={handleMouseLeave}
     >
       <a href="https://opensea.io" target="_blank">
-      <img src={OpenseaLogo} alt="Join our Discord server" width="75vw" height="75vh" style={{marginRight: "15px"}}/>
+      <img src={OpenseaLogo} alt="Join our Discord server" width="75vw" height="75vh" style={{marginRight: "15px", transition: "width 0.5s ease, height 0.5s ease"}}/>
 </a>
     </div>
     <div
@@ -152,7 +154,7 @@ function App() {
       onMouseLeave={handleMouseLeave}
     >
       <a href="https://etherscan.io" target="_blank">
-      <img src={EtherscanLogo} alt="Join our Discord server" width="75vw" height="75vh" style={{marginRight: "15px"}}/>
+      <img src={EtherscanLogo} alt="Join our Discord server" width="75vw" height="75vh" style={{marginRight: "15px", transition: "width 0.5s ease, height 0.5s ease"}}/>
 </a>
     </div>
 <div className="button-container">

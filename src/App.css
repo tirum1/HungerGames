@@ -76,7 +76,12 @@ body {
   top: 5vh;
   transition: top 0.2s ease;
 }
-
+@media (max-width:768px) {
+  .logo-container img {
+    width: 10vw;
+    height: 10vh;
+  }
+}
 .Twitter-logo-container {
   transform: scale(0.85);
   position: absolute;
@@ -84,7 +89,12 @@ body {
   top: 5vh;
   transition: top 0.2s ease;
 }
-
+@media (max-width:768px) {
+  .Twitter-logo-container img {
+    width: 10vw;
+    height: 10vh;
+  }
+}
 .Opensea-logo-container {
   transform: scale(0.85);
   position: absolute;
@@ -92,10 +102,15 @@ body {
   top: 20vh;
   transition: top 0.2s ease;
 }
-
+@media (max-width:768px) {
+  .Opensea-logo-container img {
+    width: 10vw;
+    height: 10vh;
+  }
+}
 @media (max-width:768px) {
   .Opensea-logo-container {
-    top: calc(10vh);
+    top: calc(15vh);
   }
 }
 
@@ -108,11 +123,16 @@ body {
 }
 @media (max-width:768px) {
   .Etherscan-logo-container {
-    top: calc(15vh);
+    top: calc(25vh);
   }
 
 }
-
+@media (max-width:768px) {
+  .Etherscan-logo-container img {
+    width: 10vw;
+    height: 10vh;
+  }
+}
 .HeyMint-logo-container {
   transform: scale(0.85);
   position: absolute;
@@ -120,7 +140,12 @@ body {
   top: 5vh;
   transition: top 0.2s ease;
 }
-
+@media (max-width:768px) {
+  .HeyMint-logo-container img {
+    width: 10vw;
+    height: 10vh;
+  }
+}
 
 
 .my-input-style {
