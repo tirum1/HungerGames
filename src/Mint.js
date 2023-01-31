@@ -106,7 +106,6 @@ const ButtonElement = styled.button`
   padding: calc(.7vw + .7vh);
   margin: 0 15px;
   transition: background-color 0.2s ease;
-
   &:hover {
     background-color: #ff5252;
     box-shadow: 0px 2px 2px 1px #FFFF00;
