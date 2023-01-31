@@ -98,7 +98,8 @@ HoverOverPlay = () => {
                     </TextContainer>
             </div>
             <div>
-                    <ButtonContainer2>
+
+            <ButtonContainer>
                     <ButtonElement
                         className='shake'
                         type="submit"
@@ -109,10 +110,10 @@ HoverOverPlay = () => {
                         cursor="pointer"
                         fontFamily="inherit"
                         onMouseEnter={() => { this.HoverOverPlay() }}
-                        onClick={this.props.onButtonClick}>CHECK WHITELIST
+                        onClick={this.props.onButtonClick}>WHITELIST
                     </ButtonElement>
-                    </ButtonContainer2>
-                    <ButtonContainer>
+                    </ButtonContainer>
+                    <ButtonContainer2>
                     <ButtonElement
                         className='shake'
                         type="submit"
@@ -125,7 +126,8 @@ HoverOverPlay = () => {
                         onMouseEnter={() => { this.HoverOverPlay() }}
                         onClick={this.props.onWhitepaperButtonClick}>WHITEPAPER
                     </ButtonElement>
-                    </ButtonContainer>
+                    </ButtonContainer2>
+
                     <ButtonContainer3>
                     <ButtonElement
                         className='shake'
