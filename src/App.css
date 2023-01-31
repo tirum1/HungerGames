@@ -33,13 +33,13 @@ body {
   left: 0;
   right: 0;
   bottom: 0;
-  background-image: 
-  url("./assets/background/5.png");
+  background-image: url("./assets/background/5.png");
   background-size: cover;
   background-repeat: no-repeat;
   background-attachment: fixed;
-  background-position: 40% 40%;
+  background-position: center center;
 }
+
 
 
 
@@ -74,6 +74,7 @@ body {
   position: absolute;
   left: 5vw;
   top: 5vh;
+  transition: top 0.2s ease;
 }
 
 .Twitter-logo-container {
@@ -81,6 +82,7 @@ body {
   position: absolute;
   left: 15vw;
   top: 5vh;
+  transition: top 0.2s ease;
 }
 
 .Opensea-logo-container {
@@ -116,6 +118,7 @@ body {
   position: absolute;
   left: 25vw;
   top: 5vh;
+  transition: top 0.2s ease;
 }
 
 
