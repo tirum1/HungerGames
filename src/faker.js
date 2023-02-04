@@ -7,7 +7,7 @@ const numRows = 100;
 const data = [];
 
 for (let i = 0; i < numRows; i++) {
-  const name = chance.first();
+  const name = chance.male();
   const desc = chance.sentence();
   const hp = chance.integer({ min: 40, max: 80 });
   const attack = chance.integer({ min: 40, max: 80 });
