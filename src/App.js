@@ -196,7 +196,7 @@ function App() {
               handlePageChange("Mint");
             }}
           />}
-    {currentComponent === "Mint" && <Mint accounts={accounts} setAccounts={setAccounts}
+    {currentComponent === "Mint" && <Whitepaper accounts={accounts} setAccounts={setAccounts}
              onButtonClick={() => {
               clickSoundRef.current.play();
               handlePageChange("LandingPage");
