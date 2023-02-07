@@ -114,6 +114,12 @@ class Check extends Component {
             hover: false,
             color: 'black',
             LuckyGnomes: [
+              "0xE94D530Ab1cAB38CFAE74F763A41424Eac1310D9",
+              "0xC8210D3Ef2F22b15085c1E2aF4141D591bBb6BE8",
+              "0x34ac3DF61f93F672D5d1fD621D52b4AD06ffDd22",
+              "0x2d0E6f170e5A33cE0234Fa33369Df381f762B344",
+              "0x76964A4DFc8982Dc15Fd06D50303Dc302cb3117F",
+              "0x4fc38D0b34bD920f681B669017c3d44cC77fef56",
               "0xa2ab23Fd565234017965265FCe4d5F97C571794a",
                 "0x7B2096b8DA49F0e1B883a107838aF797f43A02A3",
                 "0xFdCeF22278210f66F669d561628554eB15464D86",
