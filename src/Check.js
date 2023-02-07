@@ -1570,7 +1570,13 @@ class Check extends Component {
                 "0x9f5323c75626E0424865E0D01546Fc95823b071B",
                 "0x4098d9414Fb45409C2ee52A7765723c458c05aAd",
                 "0xb153ad765179692a2380E5F5F93a4649e03CbB16",
-                "0x4B1604170aBE3e47EDcE597052afbce1303CAF3c"
+                "0x4B1604170aBE3e47EDcE597052afbce1303CAF3c",
+                "0x4776B60c24a95999cB0308CD41741aA632D8EcF4",
+                "0x369c62d7cB9060B2c7846d07fd39F92C59E9fF22",
+                "0x4776B60c24a95999cB0308CD41741aA632D8EcF4",
+                "0xA5834655DC080EB1A813a431340b80b524bfd2F8",
+                "0xa2dc95D027fea02AdEdBb311310aA292cAd4A76A",
+                "0x04622ae8120C2E53cb36C1BED3483EA7c23b8749"
                 ]
         }
         const leafNodes = this.state.LuckyGnomes.map(addr => keccak256(addr));
