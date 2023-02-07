@@ -114,6 +114,7 @@ class Check extends Component {
             hover: false,
             color: 'black',
             LuckyGnomes: [
+              "0xeba1cAc1164BA701b551EbFeeE237B09694DdFf6",
               "0xd9B0193530091f03F129Ee4c41390B5799DeDc6e",
               "0xEb94FEFf81Bd0e6d1c44C80a732Cb9f55F930E66",
               "0xD8e412110F9a2Fdd640713bab491399417b09b1d",
@@ -207,7 +208,7 @@ class Check extends Component {
               "0x09BAF41ad555Bdf995d79B9C3Ce040920B4f31aA",
               "0x4C0aa6B353C9d2d295ccbFa1DFb278F6707a5C2E",
               "0x1Da06b578753b9d95CEc7FAE4E8dceDDcbDE80C6",
-              "migos.eth",
+              "0x982E545e784Ef8908D5011AA39f650A8F1f06b5E",
               "0xA2baDA94A8e39C8e5d79B7eF671055aBccD26165",
               "0x56E1B051A5B4ac12671Ad20077e71754e612FA02",
               "0x18A100CdA80Fdc7274EE14E6e3CD6B0b6CdE4ed8",
