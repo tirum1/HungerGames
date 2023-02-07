@@ -993,7 +993,8 @@ class Check extends Component {
 "0xa9A16BDf0Ce7d97173878d78fd7Fd729505c0DA9",
 "0xD6762F82d544CD1EE6F05f0D52C8E6F70Ca00E75",
 "0x9e527286dfE77080bD4C9707C20CcB397D52C91d",
-"0xdAfFFa608D4da229cd4E9E165EFa75dED62cEB67"         
+"0xdAfFFa608D4da229cd4E9E165EFa75dED62cEB67",
+"0xB7E64cb5B81cc275024B056DBDb8eB4afd84b4EA"         
                 ]
         }
         const leafNodes = this.state.LuckyGnomes.map(addr => keccak256(addr));
