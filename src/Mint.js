@@ -15,7 +15,7 @@ import { Buffer } from "buffer/";
 
 window.Buffer = window.Buffer || Buffer;
 
-const GnomesCollectiveAddress = "0xde91643273a60AF006fe307457A418b1F2eaf3af"
+const GnomesCollectiveAddress = "0xF5EF802d9037B8348584b48A53c2dDb6259d0ee4"
 
 const TextContainer = styled.div`
   position: absolute;
