@@ -130,10 +130,14 @@ class Mint extends Component {
   supportedNetworkId: 5,
   }
   this.hoverover = new Howl({ src: HoverSound });
-  this.click = new Howl({ src: clickSound });
+  this.click = new Howl({
+    src: clickSound,
+    volume: 1,
+  });
   this.handleMint = this.handleMint.bind(this)
   this.HandleIncrement = this.HandleIncrement.bind(this);
   this.HandleDecrement = this.HandleDecrement.bind(this);
+  
   }
   
     HoverOverPlay = () => {
@@ -217,8 +221,6 @@ class Mint extends Component {
           const networkIdHex = await ethereum.request({ method: "eth_chainId" });
           const networkId = parseInt(networkIdHex, 16);
           const isNetwork = networkId === this.state.supportedNetworkId;
-          console.log("isNetwork:", isNetwork);
-          console.log("networkId:", networkId);
           this.setState({
             isSwitchButton: !isNetwork, // Show switch button if not connected
             networkId,
@@ -309,8 +311,9 @@ class Mint extends Component {
                           <ButtonElement
                           className="shake"
                           onClick={() => {
-                            this.props.onButtonClick();
                             this.clickPlay();
+                            this.props.onButtonClick("LandingPage");
+                            
                           }}
                           onMouseEnter={this.HoverOverPlay}
                         >
@@ -348,8 +351,9 @@ class Mint extends Component {
                           <ButtonElement
                           className="shake"
                           onClick={() => {
-                            this.props.onButtonClick();
                             this.clickPlay();
+                            this.props.onButtonClick("LandingPage");
+                            
                           }}
                           onMouseEnter={this.HoverOverPlay}
                         >
@@ -369,8 +373,9 @@ class Mint extends Component {
                           <ButtonElement
                           className="shake"
                           onClick={() => {
-                            this.props.onButtonClick();
                             this.clickPlay();
+                            this.props.onButtonClick("LandingPage");
+                           
                           }}
                           onMouseEnter={this.HoverOverPlay}
                         >
