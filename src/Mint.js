@@ -129,10 +129,12 @@ class Mint extends Component {
   networkId: null,
   supportedNetworkId: 5,
   }
-  this.hoverover = new Howl({ src: HoverSound });
+  this.hoverover = new Howl({ src: HoverSound,
+    volume: 0.5
+  });
   this.click = new Howl({
     src: clickSound,
-    volume: 1,
+    volume: 0.3,
   });
   this.handleMint = this.handleMint.bind(this)
   this.HandleIncrement = this.HandleIncrement.bind(this);

@@ -106,10 +106,11 @@ const ButtonElement = styled.button`
 class LandingPage extends Component {
   constructor(props) {
     super(props);
-    this.hoverover = new Howl({ src: HoverSound });
+    this.hoverover = new Howl({ src: HoverSound,
+    volume: 0.5 });
     this.click = new Howl({
       src: clickSound,
-      volume: 1,
+      volume: 0.3,
     });
     // You can access props using this.props here or initialize state if needed
   }
@@ -123,6 +124,12 @@ clickPlay = () => {
     const { onButtonClick } = this.props;
     if (typeof onButtonClick === 'function') {
       onButtonClick('Mint');
+    }
+  };
+  handleFight = () => {
+    const { onButtonClick } = this.props;
+    if (typeof onButtonClick === 'function') {
+      onButtonClick('Fight');
     }
   };
   handleRead = () => {
@@ -150,7 +157,7 @@ clickPlay = () => {
                           this.clickPlay();
                         } }onMouseEnter={this.HoverOverPlay}>Mint</ButtonElement></MintButtonContainer>
           <PlayButtonContainer><ButtonElement onClick={() => {
-                          this.handleMint();
+                          this.handleFight();
                           this.clickPlay();
                         } }onMouseEnter={this.HoverOverPlay}>Fight</ButtonElement></PlayButtonContainer>
           <ReadMeButtonContainer><ButtonElement onClick={() => {

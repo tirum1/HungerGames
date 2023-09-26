@@ -2,7 +2,8 @@ import styled from "styled-components";
 import { useState, useRef } from "react";
 import "./App.css";
 import Mint from "./Mint";
-import Read from './Read'; // Import the Read component
+import Read from './Read'; 
+import Fight from './Fight'; 
 import { Flex } from "@chakra-ui/react";
 import { Howl } from "howler";
 import HoverSound from "./assets/sound/click-21156.mp3";
@@ -194,11 +195,12 @@ function App() {
   const clickSoundRef = useRef(new Howl({
     src: clickSound,
     loop: false,
-    volume: 1
+    volume: 0.3
   }));
   const hoverSoundRef = useRef(new Howl({
     src: HoverSound,
-    loop: false
+    loop: false,
+    volume: 0.5
   }));
 
   useEffect(() => {
@@ -277,6 +279,18 @@ function App() {
                 handlePageChange(pageName);
               }}
             />
+            
+          )}
+          
+          {currentComponent === 'Fight' && (
+            <Fight
+              accounts={accounts}
+              setAccounts={setAccounts}
+              onButtonClick={(pageName) => {
+                handlePageChange(pageName);
+              }}
+            />
+            
           )}
           {console.log("currentComponent:", currentComponent)}
         </div>
