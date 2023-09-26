@@ -1,6 +1,6 @@
 
 import React, { Component } from 'react';
-import styled from 'styled-components';
+import styled, { keyframes }  from 'styled-components';
 import NFTImage from './assets/background/1.png';
 import clickSound from "./assets/sound/hover.mp3";
 import {Howl,Howler} from "howler";
@@ -17,13 +17,13 @@ const Container = styled.div`
 const MintButtonContainer = styled.div`
   position: absolute;
   top: 98vh; /* Adjust the vertical position as needed */
-  left: 50vw;
+  left: calc(50vw - (8vw + 8vh));
   transform: translate(-50%, -50%);
 `;
 
 const PlayButtonContainer = styled.div`
   position: absolute;
-  top: 98vh; /* Adjust the vertical position as needed */
+  top: 90vh; /* Adjust the vertical position as needed */
   left: calc(50vw - (10vw + 10vh)); /* Adjust the value as needed */
   transform: translate(-50%, -50%);
 `;
@@ -31,6 +31,12 @@ const PlayButtonContainer = styled.div`
 const ReadMeButtonContainer = styled.div`
   position: absolute;
   top: 98vh; /* Adjust the vertical position as needed */
+  left: calc(50vw + (8vw + 8vh)); /* Adjust the value as needed */
+  transform: translate(-50%, -50%);
+`;
+const ShopButtonContainer = styled.div`
+  position: absolute;
+  top: 90vh; /* Adjust the vertical position as needed */
   left: calc(50vw + (10vw + 10vh)); /* Adjust the value as needed */
   transform: translate(-50%, -50%);
 `;
@@ -67,23 +73,39 @@ const Text = styled.p`
     color: red;
   }
 `;
+
+
+
+const shadowAnimation = keyframes`
+  0% {
+    box-shadow: 0px 0px 50px rgba(0, 0, 0, 0.3);
+  }
+  50% {
+    box-shadow: 0px 0px 70px rgba(0, 255, 0, 0.5);
+  }
+  100% {
+    box-shadow: 0px 0px 50px rgba(0, 0, 0, 0.3);
+  }
+`;
+
 const ImageContainer = styled.div`
-  width: calc(20vw + 20vh); /* Adjust the size as needed */
-  max-width: calc(20vw + 20vh); /* Adjust the size as needed */
+  width: calc(20vw + 20vh);
+  max-width: calc(20vw + 20vh);
   height: auto;
   max-height: auto;
   border: 2px solid #000;
-  box-shadow: 0px 0px 20px rgba(0, 0, 0, 0.3);
+  animation: ${shadowAnimation} 3s infinite alternate; /* Apply the animation to the shadow only */
 `;
-
-
 
 const Image = styled.img`
   max-width: 100%;
   height: auto;
   border: 2px solid #0000;
-  box-shadow: 0px 0px 20px rgba(0, 102, 255, 0.3);
+  box-shadow: 0px 0px 180px rgba(0, 102, 255, 0.3);
 `;
+
+
+
 const ButtonElement = styled.button`
   background-color: #833929;
   border-radius: 5px;
@@ -138,7 +160,12 @@ clickPlay = () => {
       onButtonClick('Read'); 
     }
   };
-  
+  handleShop = () => {
+    const { onButtonClick } = this.props;
+    if (typeof onButtonClick === 'function') {
+      onButtonClick('Shop'); 
+    }
+  };
   render() {
     return (
       
@@ -156,6 +183,10 @@ clickPlay = () => {
                           this.handleMint();
                           this.clickPlay();
                         } }onMouseEnter={this.HoverOverPlay}>Mint</ButtonElement></MintButtonContainer>
+          <ShopButtonContainer><ButtonElement onClick={() => {
+                          this.handleShop();
+                          this.clickPlay();
+                        } }onMouseEnter={this.HoverOverPlay}>Shop</ButtonElement></ShopButtonContainer>
           <PlayButtonContainer><ButtonElement onClick={() => {
                           this.handleFight();
                           this.clickPlay();

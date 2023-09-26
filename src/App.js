@@ -3,6 +3,7 @@ import { useState, useRef } from "react";
 import "./App.css";
 import Mint from "./Mint";
 import Read from './Read'; 
+import Shop from './Shop'; 
 import Fight from './Fight'; 
 import { Flex } from "@chakra-ui/react";
 import { Howl } from "howler";
@@ -24,7 +25,7 @@ const TwitterLogoContainer = styled.div`
   left:  calc(1vh + 1vw); /* Adjust the horizontal position as needed */
   cursor: pointer;
   transition: transform 0.2s ease; /* Add transition effect */
-
+  z-index: 1;
   img {
     width: calc(3vh + 3vw); /* Adjust the width as needed */
     height: calc(3vh + 3vw); /* Adjust the height as needed */
@@ -49,7 +50,7 @@ const HGLogoContainer = styled.div`
   right:  calc(1vh + 1vw); /* Adjust the horizontal position as needed */
   cursor: pointer;
   transition: transform 0.2s ease; /* Add transition effect */
-
+  z-index: 1;
   img {
     width: calc(7vh + 7vw); /* Adjust the width as needed */
     height: calc(4vh + 4vw); /* Adjust the height as needed */
@@ -74,7 +75,7 @@ const TelegramLogoContainer = styled.div`
   left:  calc(11vh + 11vw); /* Adjust the horizontal position as needed */
   cursor: pointer;
   transition: transform 0.2s ease; /* Add transition effect */
-
+  z-index: 1;
   img {
     width: calc(3vh + 3vw); /* Adjust the width as needed */
     height: calc(3vh + 3vw); /* Adjust the height as needed */
@@ -99,7 +100,7 @@ const OpenSeaLogoContainer = styled.div`
   left: calc(6vh + 6vw); /* Adjust the horizontal position as needed */
   cursor: pointer;
   transition: transform 0.2s ease; /* Add transition effect */
-
+  z-index: 1;
   img {
     width: calc(3vh + 3vw); /* Adjust the width as needed */
     height: calc(3vh + 3vw); /* Adjust the height as needed */
@@ -124,7 +125,7 @@ const EtherScanLogoContainer = styled.div`
   left:  calc(16vh + 16vw);px; /* Adjust the horizontal position as needed */
   cursor: pointer;
   transition: transform 0.2s ease; /* Add transition effect */
-
+  z-index: 1;
   img {
     width: calc(3vh + 3vw); /* Adjust the width as needed */
     height: calc(3vh + 3vw); /* Adjust the height as needed */
@@ -255,6 +256,15 @@ function App() {
           </Flex>
           {currentComponent === "Mint" && (
             <Mint
+              accounts={accounts}
+              setAccounts={setAccounts}
+              onButtonClick={(pageName) => {
+                handlePageChange(pageName);
+              }}
+            />
+          )}
+          {currentComponent === "Shop" && (
+            <Shop
               accounts={accounts}
               setAccounts={setAccounts}
               onButtonClick={(pageName) => {
