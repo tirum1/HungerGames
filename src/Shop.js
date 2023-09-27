@@ -282,6 +282,20 @@ const Text2 = styled.p`
     color: red;
   }
 `;
+const PriceText = styled.p`
+  font-size: calc(1vh + 1vw);
+  color: #fff;
+  margin-bottom: 20px;
+  text-align: center;
+  position: absolute;
+  z-index: 1;
+  top: 35%;
+  left: 42%;
+  white-space: pre-line;
+  &:hover {
+    color: red;
+  }
+`;
 const Title = styled.h1`
   font-size: calc(2vh + 2vw);
   font-weight: bold;
@@ -485,6 +499,7 @@ render() {
         <div>
             <ItemImage src={XTRAIMAGE} />
             <Text2>XTRA POTION</Text2>
+            <PriceText>10k $HGMS {"\n"} 0.001 $ETH</PriceText>
             <IncButtonElement
             onClick={() => {
                 this.clickPlay();
@@ -511,6 +526,7 @@ render() {
         <div>
             <ItemImage src={SKIPIMAGE} />
             <Text2>SKIP POTION</Text2>
+            <PriceText>5k $HGMS {"\n"} 0 $ETH</PriceText>
             <IncButtonElement onClick={() => {
             this.clickPlay();
             this.handleIncrement();
@@ -531,6 +547,7 @@ render() {
         <div>
             <ItemImage src={BOOSTIMAGE} />
             <Text2>BOOST POTION</Text2>
+            <PriceText>5k $HGMS {"\n"} 0 $ETH</PriceText>
             <IncButtonElement onClick={() => {
             this.clickPlay();
             this.handleIncrement();
@@ -551,6 +568,7 @@ render() {
         <div>
             <ItemImage src={VIMAGE} />
             <Text2>V POTION</Text2>
+            <PriceText>10k $HGMS {"\n"} 0.002 $ETH</PriceText>
             <IncButtonElement onClick={() => {
             this.clickPlay();
             this.handleIncrement();
