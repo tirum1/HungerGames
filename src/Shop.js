@@ -285,11 +285,10 @@ const Text2 = styled.p`
 const PriceText = styled.p`
   font-size: calc(1vh + 1vw);
   color: #fff;
-  margin-bottom: 20px;
   text-align: center;
   position: absolute;
   z-index: 1;
-  top: 35%;
+  top: 30%;
   left: 42%;
   white-space: pre-line;
   &:hover {
@@ -591,7 +590,7 @@ render() {
         {this.state.isDepositModalOpen && (
         <ModalOverlay>
             <ModalContent>
-            <h2>Deposit HGMS and ETH</h2>
+            <h2>Deposit</h2>
             <div className="form-group">
                 <label htmlFor="hgmsAmount">$HGMS Amount:</label>
                 <input
@@ -617,7 +616,7 @@ render() {
                 X
                 </button>
                 <button className="deposit-button" onClick={this.handleDeposit}>
-                Deposit
+                Confirm
                 </button>
             </div>
             </ModalContent>

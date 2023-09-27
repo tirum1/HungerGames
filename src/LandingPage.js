@@ -20,14 +20,50 @@ const MintButtonContainer = styled.div`
   left: calc(50vw - (8vw + 8vh));
   transform: translate(-50%, -50%);
 `;
+const radiantGlow = keyframes`
+  0% {
+    background-color: #833929;
+  }
+  50% {
+    background-color: #a3563d;
+  }
+  100% {
+    background-color: #833929;
+  }
+`;
 
-const PlayButtonContainer = styled.div`
+const FightButtonContainer = styled.div`
+  position: absolute;
+  top: 93vh;
+  left: calc(49vw);
+  transform: translate(-50%, -50%);
+  background-color: #833929;
+  border-radius: 5px;
+  box-shadow: 0px 2px 2px 1px #0F0F0F;
+  color: black;
+  cursor: pointer;
+  font-family: inherit;
+  padding: calc(.7vw + .7vh);
+  margin: 0 20px;
+  transition: background-color 0.2s ease, box-shadow 0.2s ease, color 0.2s ease;
+  animation: ${radiantGlow} 1s linear infinite;
+  
+  &:hover {
+    background-color: #ff5252;
+    box-shadow: 0px 2px 2px 1px #FFFF00;
+    color: white;
+    animation: none; /* Remove the radiant glow animation on hover */
+  }
+  
+
+`;
+
+const StakeButtonContainer = styled.div`
   position: absolute;
   top: 90vh; /* Adjust the vertical position as needed */
   left: calc(50vw - (10vw + 10vh)); /* Adjust the value as needed */
   transform: translate(-50%, -50%);
 `;
-
 const ReadMeButtonContainer = styled.div`
   position: absolute;
   top: 98vh; /* Adjust the vertical position as needed */
@@ -40,8 +76,6 @@ const ShopButtonContainer = styled.div`
   left: calc(50vw + (10vw + 10vh)); /* Adjust the value as needed */
   transform: translate(-50%, -50%);
 `;
-
-
 const Title = styled.h1`
   font-size: calc(2vh + 2vw);
   font-weight: bold;
@@ -52,7 +86,6 @@ const Title = styled.h1`
     color: red;
   }
 `;
-
 const Description = styled.p`
   font-size: 16px;
   color: #000;
@@ -73,9 +106,6 @@ const Text = styled.p`
     color: red;
   }
 `;
-
-
-
 const shadowAnimation = keyframes`
   0% {
     box-shadow: 0px 0px 50px rgba(0, 0, 0, 0.3);
@@ -87,7 +117,6 @@ const shadowAnimation = keyframes`
     box-shadow: 0px 0px 50px rgba(0, 0, 0, 0.3);
   }
 `;
-
 const ImageContainer = styled.div`
   width: calc(20vw + 20vh);
   max-width: calc(20vw + 20vh);
@@ -96,16 +125,12 @@ const ImageContainer = styled.div`
   border: 2px solid #000;
   animation: ${shadowAnimation} 3s infinite alternate; /* Apply the animation to the shadow only */
 `;
-
 const Image = styled.img`
   max-width: 100%;
   height: auto;
   border: 2px solid #0000;
   box-shadow: 0px 0px 180px rgba(0, 102, 255, 0.3);
 `;
-
-
-
 const ButtonElement = styled.button`
   background-color: #833929;
   border-radius: 5px;
@@ -123,8 +148,6 @@ const ButtonElement = styled.button`
   }
 `;
 
-
-
 class LandingPage extends Component {
   constructor(props) {
     super(props);
@@ -139,9 +162,9 @@ class LandingPage extends Component {
   HoverOverPlay = () => {
     this.hoverover.play();
 }
-clickPlay = () => {
-    this.click.play();
-}
+  clickPlay = () => {
+      this.click.play();
+  }
   handleMint = () => {
     const { onButtonClick } = this.props;
     if (typeof onButtonClick === 'function') {
@@ -166,6 +189,12 @@ clickPlay = () => {
       onButtonClick('Shop'); 
     }
   };
+  handleStake = () => {
+    const { onButtonClick } = this.props;
+    if (typeof onButtonClick === 'function') {
+      onButtonClick('Stake'); 
+    }
+  }
   render() {
     return (
       
@@ -187,16 +216,19 @@ clickPlay = () => {
                           this.handleShop();
                           this.clickPlay();
                         } }onMouseEnter={this.HoverOverPlay}>Shop</ButtonElement></ShopButtonContainer>
-          <PlayButtonContainer><ButtonElement onClick={() => {
+          <FightButtonContainer onClick={() => {
                           this.handleFight();
                           this.clickPlay();
-                        } }onMouseEnter={this.HoverOverPlay}>Fight</ButtonElement></PlayButtonContainer>
+                        } }onMouseEnter={this.HoverOverPlay}> FIGHT </FightButtonContainer>
           <ReadMeButtonContainer><ButtonElement onClick={() => {
                           this.handleRead();
                           this.clickPlay();
                         } }onMouseEnter={this.HoverOverPlay}>Read</ButtonElement></ReadMeButtonContainer>
-
-        </Container>
+          <StakeButtonContainer><ButtonElement onClick={() => {
+                          this.handleStake();
+                          this.clickPlay();
+                        } }onMouseEnter={this.HoverOverPlay}>Stake</ButtonElement></StakeButtonContainer>
+         </Container>
        
         
         

@@ -205,7 +205,7 @@ class Read extends Component {
                      1B $HGMS
                   </Text>
                   <Text>
-                     3/3 
+                     5/5 
                   </Text>
                   <Text>
                     {"1 - > Prizepool "}
@@ -214,7 +214,10 @@ class Read extends Component {
                   {" 1 - > Marketing "}
                   </Text>
                   <Text>
-                   {" 1 - > Maintanance "}
+                   {" 2 - > Maintanance "}
+                  </Text>
+                  <Text>
+                   {" 1 - > Deployment/Team "}
                   </Text>
                   <NextButtonContainer>
                     <ButtonElement
@@ -415,7 +418,17 @@ class Read extends Component {
                     <Text>{"All deposited $HGMS -> Burned"}</Text>
                     <Text>Rince & Repeat!</Text>
                     </TextContainer>
-                   
+                    <NextButtonContainer>
+                    <ButtonElement
+                      onClick={() => {
+                        this.clickPlay();
+                        this.handlePage("Page7"); 
+                      }}
+                      onMouseEnter={this.HoverOverPlay}
+                    >
+                      Next
+                    </ButtonElement>
+                  </NextButtonContainer>
                   <PrevButtonContainer>
                     <ButtonElement
                       onClick={() => {
@@ -430,6 +443,34 @@ class Read extends Component {
                 </div>
               )}
    
+   {this.state.currentComponent === "Page7" && (
+                <div>
+                  <TitleContainer>
+                    <Title>
+                      Stake
+                    </Title>
+                  </TitleContainer>
+            
+                    <TextContainer>
+                    <Text>Stake your $HGMS</Text>
+                    <Text>Earn on every Deposit</Text>
+
+                    <Text>TBD</Text>
+                    </TextContainer>
+                   
+                  <PrevButtonContainer>
+                    <ButtonElement
+                      onClick={() => {
+                        this.clickPlay();
+                        this.handlePage("Page6"); 
+                      }}
+                      onMouseEnter={this.HoverOverPlay}
+                    >
+                      Prev
+                    </ButtonElement>
+                  </PrevButtonContainer>
+                </div>
+              )}
             <BackButtonContainer>
                           <ButtonElement
                           className="shake"
