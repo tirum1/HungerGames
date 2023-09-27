@@ -208,13 +208,13 @@ class Read extends Component {
                      3/3 
                   </Text>
                   <Text>
-                    1 - > Prizepool
+                    {"1 - > Prizepool "}
                   </Text>
                   <Text>
-                    1 - > Marketing
+                  {" 1 - > Marketing "}
                   </Text>
                   <Text>
-                    1 - > Maintanance
+                   {" 1 - > Maintanance "}
                   </Text>
                   <NextButtonContainer>
                     <ButtonElement
@@ -373,8 +373,8 @@ class Read extends Component {
             
                     <TextContainer>
                     <Text>NFT Price = 100k $HGMS + 0.006 ETH</Text>
-                    <Text>$HGMS Tokens -> Burned </Text>
-                    <Text>$ETH -> Maintanance </Text>
+                    <Text>{"$HGMS Tokens -> Burned"} </Text>
+                    <Text>{"$ETH -> Maintanance"}</Text>
                     <Text>Rince & Repeat!</Text>
                     </TextContainer>
                     <NextButtonContainer>
@@ -412,7 +412,7 @@ class Read extends Component {
                     <TextContainer>
                     <Text>Deposit $HGMS</Text>
                     <Text>Buy Items with $HGMS</Text>
-                    <Text>All deposited $HGMS -> Burned</Text>
+                    <Text>{"All deposited $HGMS -> Burned"}</Text>
                     <Text>Rince & Repeat!</Text>
                     </TextContainer>
                    

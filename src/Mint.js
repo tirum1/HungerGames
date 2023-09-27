@@ -9,7 +9,6 @@ import {Howl,Howler} from "howler";
 import HoverSound from "./assets/sound/click-21156.mp3";
 import { Buffer } from "buffer/";
 
-
 window.Buffer = window.Buffer || Buffer;
 
 const NFT0066FFAddress = "0xeE594e309a4f49932e0421dA11AFd0a580EcB084"
@@ -53,15 +52,12 @@ const Image = styled.img`
   box-shadow: 0px 0px 20px rgba(0, 102, 255, 0.3);
 `;
 
-
-
 const TextContainer = styled.div`
   position: absolute;
   top: 37%;
   left: 50%;
   transform: translate(-50%, -50%);
 `;
-
 
 const TextElement = styled(Text)`
   text-shadow: 0 2px #000000;
@@ -138,8 +134,6 @@ class Mint extends Component {
   });
   this.handleMint = this.handleMint.bind(this)
   this.HandleIncrement = this.HandleIncrement.bind(this);
-  this.HandleDecrement = this.HandleDecrement.bind(this);
-  
   }
   
     HoverOverPlay = () => {
@@ -281,7 +275,7 @@ class Mint extends Component {
 
     render() {
       const { isConnected, isSwitchButton } = this.state;
-      console.log(this.state.isConnected)
+      
         return ( 
             <div>
             
