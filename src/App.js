@@ -238,7 +238,7 @@ function App() {
           </TwitterLogoContainer>
   
           <TelegramLogoContainer>
-            <a href="https://t.me/+TBX9U3jQEzg2ODcy">
+            <a href="https://t.me/HungerGameserc20">
               <img src={TelegramLogo} alt="Twitter Logo" />
             </a>
           </TelegramLogoContainer>

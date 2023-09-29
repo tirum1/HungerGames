@@ -9,6 +9,11 @@ import BOOSTIMAGE from './assets/Items/3.png';
 import VIMAGE from './assets/Items/4.png';
 import clickSound from './assets/sound/hover.mp3';
 import "./App.css";
+import Web3 from 'web3';
+import hgmTokenAbi from './assets/ABI/HungerGames.json';
+import {ethers} from 'ethers';
+
+const hgmTokenAddress = '0x295D4B93f6fD0890d5111C02AE6d74c4C4B10518'; 
 
 const ModalOverlay = styled.div`
   position: fixed;
@@ -18,6 +23,65 @@ const ModalOverlay = styled.div`
   height: 100%;
   background-color: rgba(0, 0, 0, 0.5); /* Semi-transparent black background */
   z-index: 1000; /* Ensure it appears on top of everything */
+`;
+const BalanceModalOverlay = styled.div`
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+  z-index: 1000;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+`;
+const BalanceModalContainer = styled.div`
+  position: relative;
+  text-align: center;
+`;
+const BalanceModalContent = styled.div`
+  background-color: #fff;
+  padding: 20px;
+  border-radius: 5px;
+  box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.2);
+  text-align: center;
+  width: 100%; 
+`;
+const BalanceTable = styled.div`
+  margin-top: 20px;
+`;
+const BalanceRow = styled.div`
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 10px;
+`;
+const BalanceLabel = styled.p`
+  font-size: calc(0.7vh + 0.7vw);
+  color: #000;
+`;
+const BalanceValue = styled.p`
+  font-size: calc(0.7vh + 0.7vw);
+  color: #000;
+  font-weight: bold;
+`;
+const CloseButton = styled.button`
+  position: absolute;
+  top: -10px;
+  right: -20px;
+  font-size: 2vw;
+  padding: 1vh 1vw;
+  background-color: #ff5252;
+  border: none;
+  border-radius: 5px;
+  color: white;
+  cursor: pointer;
+  font-family: inherit;
+  transition: background-color 0.2s ease;
+
+  &:hover {
+    background-color: #ff3333;
+  }
 `;
 const ModalContent = styled.div`
   background-color: #fff;
@@ -96,6 +160,25 @@ const ButtonElement = styled.button`
   border-radius: 5px;
   position: absolute;
   top: 63vh;
+  left: 18%;
+  box-shadow: 0px 2px 2px 1px #0f0f0f;
+  color: black;
+  cursor: pointer;
+  font-family: inherit;
+  padding: calc(0.7vw + 0.7vh);
+  transition: background-color 0.2s ease;
+
+  &:hover {
+    background-color: #ff5252;
+    box-shadow: 0px 2px 2px 1px #ffff00;
+    color: white;
+    }
+  }`;
+  const BalButtonElement = styled.button`
+  background-color: #833929;
+  border-radius: 5px;
+  position: absolute;
+  top: 50vh;
   left: 18%;
   box-shadow: 0px 2px 2px 1px #0f0f0f;
   color: black;
@@ -330,6 +413,7 @@ const ImageContainer = styled.div`
   position: relative;
 `;
 class Shop extends Component {
+
   constructor(props) {
     super(props);
     this.state = {
@@ -339,8 +423,21 @@ class Shop extends Component {
         networkId: null,
         supportedNetworkId: 5,
         isDepositModalOpen: false,
+        isBalanceModalOpen: false,
         hgmsAmount: "",
         ethAmount: "",
+        balanceHGMS: 0, 
+        balanceETH: 2.5,  
+        balanceXtraPotions: 5, 
+        balanceSkipPotions: 10, 
+        balanceBoostPotions: 3, 
+        balanceVPotions: 8, 
+    };
+    if (window.ethereum) {
+      this.web3 = new Web3(window.ethereum);
+      window.ethereum.request({ method: 'eth_requestAccounts' });
+    } else {
+      console.error('MetaMask not found');
     }
     this.hoverover = new Howl({
       src: HoverSound,
@@ -355,7 +452,26 @@ class Shop extends Component {
         this.setState((prevState) => ({
           isDepositModalOpen: !prevState.isDepositModalOpen,
         }));
-      };      
+      };
+
+    toggleBalanceModal = () => {
+        this.setState((prevState) => ({
+          isBalanceModalOpen: !prevState.isBalanceModalOpen,
+        }));
+    };      
+    async fetchHGMSBalance() {
+      try {
+        const connectedAccount = this.web3.eth.accounts[0]; 
+        const provider = new ethers.providers.Web3Provider(window.ethereum);
+        const signer = provider.getSigner();
+        const contract = new ethers.Contract(hgmTokenAddress, hgmTokenAbi.abi, signer);
+    
+        const balance = await contract.methods.balanceOf(connectedAccount).call();
+        this.setState({ balanceHGMS: balance });
+      } catch (error) {
+        console.error('Error reading HGMS balance:', error);
+      }
+    }
     handleHgmsAmountChange = (event) => {
         this.setState({ hgmsAmount: event.target.value });
       };
@@ -367,6 +483,11 @@ class Shop extends Component {
     handleDeposit = () => {
         this.toggleDepositModal()
     }
+    handleBalance = () => {
+      console.log(this.isBalanceModalOpen);
+      this.toggleBalanceModal()
+    }
+
     handleIncrement = () => {
         if (this.state.currentItem === "XTRA") {
           this.setState({ currentItem: "SKIP" });
@@ -465,7 +586,8 @@ class Shop extends Component {
       };
     componentDidMount() {
         this.checkNetwork();
-        setInterval(this.checkNetwork, 1000); // Check network every 3 seconds
+        setInterval(this.checkNetwork, 1000); 
+        this.fetchHGMSBalance();
     }
 
 
@@ -476,15 +598,11 @@ render() {
       <div>
         <Title>SHOP</Title>
         <Image src={backgroundImage} alt="Image Description" />
-        <Text>BALANCE</Text>
-        <TextHGMS>X $HGMS</TextHGMS>
-        <TextETH>X $ETH</TextETH>
-        <TextPOTIONS>X XTRA POTIONS </TextPOTIONS>
-        <TextSKIP>X SKIP POTIONS </TextSKIP>
-        <TextBOOST>X BOOST POTIONS </TextBOOST>
-        <TextV>X V POTIONS </TextV>
-        {isConnected && !isSwitchButton ? (
-        <DepButtonElement onClick={this.handleDeposit}>Deposit</DepButtonElement>
+        
+        {isConnected && !isSwitchButton ? (<div>
+        <BalButtonElement onClick={this.handleBalance} onMouseEnter={this.HoverOverPlay}>Balance</BalButtonElement>
+        <DepButtonElement onClick={this.handleDeposit} onMouseEnter={this.HoverOverPlay}>Deposit</DepButtonElement>
+        </div>
       ) : (
         <DepButtonElement onClick={isConnected ? this.handleNetwork : this.connectAccount}>
           {isConnected ? "Switch Network" : "Connect"}
@@ -498,7 +616,7 @@ render() {
         <div>
             <ItemImage src={XTRAIMAGE} />
             <Text2>XTRA POTION</Text2>
-            <PriceText>10k $HGMS {"\n"} 0.001 $ETH</PriceText>
+            <PriceText>15k $HGMS {"\n"} 0.001 $ETH</PriceText>
             <IncButtonElement
             onClick={() => {
                 this.clickPlay();
@@ -525,7 +643,7 @@ render() {
         <div>
             <ItemImage src={SKIPIMAGE} />
             <Text2>SKIP POTION</Text2>
-            <PriceText>5k $HGMS {"\n"} 0 $ETH</PriceText>
+            <PriceText>10k $HGMS {"\n"} 0 $ETH</PriceText>
             <IncButtonElement onClick={() => {
             this.clickPlay();
             this.handleIncrement();
@@ -567,7 +685,7 @@ render() {
         <div>
             <ItemImage src={VIMAGE} />
             <Text2>V POTION</Text2>
-            <PriceText>10k $HGMS {"\n"} 0.002 $ETH</PriceText>
+            <PriceText>20k $HGMS {"\n"} 0.002 $ETH</PriceText>
             <IncButtonElement onClick={() => {
             this.clickPlay();
             this.handleIncrement();
@@ -622,7 +740,41 @@ render() {
             </ModalContent>
         </ModalOverlay>
         )}
-
+       {this.state.isBalanceModalOpen && (
+  <BalanceModalOverlay>
+    <BalanceModalContainer>
+      <CloseButton onClick={this.toggleBalanceModal}>X</CloseButton>
+    <BalanceModalContent>
+      <BalanceTable>
+        <BalanceRow>
+          <BalanceLabel>$HGMS:</BalanceLabel>
+          <BalanceValue>{this.state.balanceHGMS}</BalanceValue>
+        </BalanceRow>
+        <BalanceRow>
+          <BalanceLabel>$ETH:</BalanceLabel>
+          <BalanceValue>{this.state.balanceETH}</BalanceValue>
+        </BalanceRow>
+        <BalanceRow>
+          <BalanceLabel>XTRA:</BalanceLabel>
+          <BalanceValue>{this.state.balanceXtraPotions}</BalanceValue>
+        </BalanceRow>
+        <BalanceRow>
+          <BalanceLabel>SKIP:</BalanceLabel>
+          <BalanceValue>{this.state.balanceSkipPotions}</BalanceValue>
+        </BalanceRow>
+        <BalanceRow>
+          <BalanceLabel>BOOST:</BalanceLabel>
+          <BalanceValue>{this.state.balanceBoostPotions}</BalanceValue>
+        </BalanceRow>
+        <BalanceRow>
+          <BalanceLabel>V:</BalanceLabel>
+          <BalanceValue>{this.state.balanceVPotions}</BalanceValue>
+        </BalanceRow>
+      </BalanceTable>
+    </BalanceModalContent>
+    </BalanceModalContainer>
+  </BalanceModalOverlay>
+)}
 
 
 

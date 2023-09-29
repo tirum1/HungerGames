@@ -118,7 +118,7 @@ const shadowAnimation = keyframes`
   }
 `;
 const ImageContainer = styled.div`
-  width: calc(20vw + 20vh);
+  width: calc(18vw + 18vh);
   max-width: calc(20vw + 20vh);
   height: auto;
   max-height: auto;
