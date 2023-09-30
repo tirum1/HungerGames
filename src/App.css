@@ -32,26 +32,7 @@
   justify-content: center;
 }
 
-.bal-cancel-button {
-  position: absolute;
-  margin-top: -390px;
-  right: -20px;
-  font-size: 20px;
-  padding: 10px 10px;
-  background-color: #ff5252;
-  border: none;
-  border-radius: 5px;
-  color: white;
-  cursor: pointer;
-  font-family: inherit;
-  transition: background-color 0.2s ease;
-  &:hover {
-    background-color: #ff3333;
-  }
-}
-.bal-cancel-button :hover {
-  color: #ff3333;
-}
+
 .cancel-button {
   position: absolute;
   margin-top: -40px;
@@ -118,6 +99,7 @@
   left: 0;
   position: fixed;
 }
+
 
 
 
