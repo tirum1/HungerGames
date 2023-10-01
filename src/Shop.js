@@ -495,6 +495,7 @@ class Shop extends Component {
       };
       this.hgmsAmountRef = React.createRef();
       this.ethAmountRef = React.createRef();
+
       if (window.ethereum) {
         this.web3 = new Web3(window.ethereum);
       } else {
@@ -526,22 +527,7 @@ class Shop extends Component {
       }));
     };
   
-    goToNextPage = () => {
-      if (this.state.currentPage < this.totalPages()) {
-        this.setState(prevState => ({
-          currentPage: prevState.currentPage + 1
-        }));
-      }
-    }
-  
-    goToPreviousPage = () => {
-      if (this.state.currentPage > 1) {
-        this.setState(prevState => ({
-          currentPage: prevState.currentPage - 1
-        }));
-      }
-    }
-  
+
     handleApplyClick = async () => {
       console.log("HERE");
       console.log("HERE");
@@ -674,7 +660,6 @@ class Shop extends Component {
     componentWillUnmount() {
       clearInterval(this.checkNetworkInterval);
     }
-  
   
 
     render() {
