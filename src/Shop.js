@@ -648,7 +648,8 @@ goToPreviousPage = () => {
           const NEWHGMSbalanceInFullUnits = parseFloat(ethers.utils.formatUnits(NEWHGMSbalanceBigNumber, 9));
           const NEWETHbalanceInFullUnits = parseFloat(ethers.utils.formatUnits(NEWETHbalanceBigNumber, 0));
           const NEWHGMSbalanceInMillions = (NEWHGMSbalanceInFullUnits / 1000000).toFixed(2);
-  
+          console.log(typeof NEWHGMSbalanceBigNumber, NEWHGMSbalanceBigNumber);
+
 
   
       } catch (error) {
