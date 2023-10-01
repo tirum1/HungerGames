@@ -265,7 +265,7 @@ function App() {
             />
           )}
           {currentComponent === "Shop" && (
-            <Shop
+            <Fight
               accounts={accounts}
               setAccounts={setAccounts}
               onButtonClick={(pageName) => {
