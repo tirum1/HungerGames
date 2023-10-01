@@ -480,8 +480,7 @@ class Shop extends Component {
         isDepositModalOpen: false,
         isBalanceModalOpen: false,
         isApplyModalOpen: false,
-        hgmsAmount: "",
-        ethAmount: "",
+
         balanceHGMS: 0,
         balanceETH: 0,
         balanceXtraPotions: 0,
@@ -515,14 +514,6 @@ class Shop extends Component {
       console.log("HERE");
       console.log("HERE");
       this.toggleApplyModal();
-    };
-  
-    handleHgmsAmountChange = (event) => {
-      this.setState({ hgmsAmount: event.target.value });
-    };
-  
-    handleEthAmountChange = (event) => {
-      this.setState({ ethAmount: event.target.value });
     };
   
     handleDeposit = () => {
@@ -673,8 +664,7 @@ class Shop extends Component {
                 Apply
             </ApplyButtonElement>
     
-    
-    
+
             {this.state.currentItem === "XTRA" && (
             <div>
                 <ItemImage src={XTRAIMAGE} />
