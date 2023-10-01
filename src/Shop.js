@@ -14,7 +14,7 @@ import hgmsTokenAbi from './assets/ABI/HungerGames.json';
 import GCAbi from "./assets/ABI/GnomesCollective.json";
 import {ethers, BigNumber} from 'ethers';
 
-const hgmsTokenAddress = '0x73229e7c7d8f9276e7a69cb0cc22ec503cf9c7c6'; 
+const hgmsTokenAddress = '0x73229e7c7d8f9276e7a69cb0cc22ec503cf9c7c6';
 const GnomesCollectiveAddress = "0x3acAcDfbF7fe223d42031a2cd185e232D911405F";
 
 const ModalOverlay = styled.div`
@@ -48,7 +48,7 @@ const BalanceModalContent = styled.div`
   border-radius: 5px;
   box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.2);
   text-align: center;
-  width: 100%; 
+  width: 100%;
 `;
 const BalanceTable = styled.div`
   margin-top: 20px;
@@ -427,25 +427,25 @@ const NFTModalOverlay = styled.div`
   z-index: 9999; // significantly high z-index
 `;
 const NFTModalContent = styled.div`
-  width: 15vw;  
+  width: 15vw;
   height: 50vh;
   background-color: #fff;
-  padding: 2rem; 
-  box-shadow: 0 0 20px rgba(0, 0, 0, 0.5); 
-  border-radius: 15px; 
+  padding: 2rem;
+  box-shadow: 0 0 20px rgba(0, 0, 0, 0.5);
+  border-radius: 15px;
   overflow-y: hidden;
 
 
   @media (max-width: 1920px)  {
     width: 20%
   }
-  
+
   @media (max-width: 1350px)  {
     width: 22%
   }
- 
+
   @media (max-width: 1200px) {
-    width: 27%; 
+    width: 27%;
   }
 
   @media (max-width: 1155px) {
@@ -475,7 +475,7 @@ class Shop extends Component {
     this.state = {
         currentItem : "XTRA",
         isConnected: Boolean(this.props.accounts[0]),
-        isSwitchButton: false, 
+        isSwitchButton: false,
         networkId: null,
         supportedNetworkId: 5,
         isDepositModalOpen: false,
@@ -483,16 +483,16 @@ class Shop extends Component {
         isApplyModalOpen: false,
         hgmsAmount: "",
         ethAmount: "",
-        balanceHGMS: 0, 
-        balanceETH: 0,  
-        balanceXtraPotions: 0, 
-        balanceSkipPotions: 0, 
-        balanceBoostPotions: 0, 
-        balanceVPotions: 0, 
+        balanceHGMS: 0,
+        balanceETH: 0,
+        balanceXtraPotions: 0,
+        balanceSkipPotions: 0,
+        balanceBoostPotions: 0,
+        balanceVPotions: 0,
         isApplyModalOpen: false,
         userNFTs: [],
         currentPage: 1,
-        nftsPerPage: 10 
+        nftsPerPage: 10
     };
     this.hgmsAmountRef = React.createRef();
     this.ethAmountRef = React.createRef();
@@ -524,37 +524,37 @@ class Shop extends Component {
         this.setState((prevState) => ({
           isBalanceModalOpen: !prevState.isBalanceModalOpen,
         }));
-    };      
+    };
 //     async fetchBalance() {
 //       if (this.fetchingBalance) {
-//           return; 
+//           return;
 //       }
-  
+
 //       this.fetchingBalance = true;
-  
+
 //       try {
 //         const accounts = await this.web3.eth.getAccounts();
 //         const connectedAccount = accounts[0];
 //         const provider = new ethers.providers.Web3Provider(window.ethereum);
 //         const signer = provider.getSigner();
 //         const contract = new ethers.Contract(hgmsTokenAddress, hgmsTokenAbi.abi, signer);
-    
+
 //         const hgmsBalanceBigNumber = await contract.hgmsShopBalances(connectedAccount);
 //         const ETHBalanceBigNumber = await contract.ethShopBalances(connectedAccount);
-    
-//         const hgmsBalanceInFullUnits = parseFloat(ethers.utils.formatUnits(hgmsBalanceBigNumber, 0)); 
-//         const ethBalanceInFullUnits = parseFloat(ethers.utils.formatUnits(ETHBalanceBigNumber, 9)); 
-//         const hgmsBalanceInMillions = (hgmsBalanceInFullUnits / 1000).toFixed(2); 
-    
+
+//         const hgmsBalanceInFullUnits = parseFloat(ethers.utils.formatUnits(hgmsBalanceBigNumber, 0));
+//         const ethBalanceInFullUnits = parseFloat(ethers.utils.formatUnits(ETHBalanceBigNumber, 9));
+//         const hgmsBalanceInMillions = (hgmsBalanceInFullUnits / 1000).toFixed(2);
+
 //         console.log(hgmsBalanceInMillions + "HGMS");
 //         console.log(ethBalanceInFullUnits + "ETH");
 //         console.log(this.state.balanceHGMS);
-    
-//         this.setState({ 
-//           balanceHGMS: hgmsBalanceInMillions + "K", 
-//           balanceETH: ethBalanceInFullUnits 
+
+//         this.setState({
+//           balanceHGMS: hgmsBalanceInMillions + "K",
+//           balanceETH: ethBalanceInFullUnits
 //         });
-    
+
 //       } catch (error) {
 //         console.error('Error reading HGMS balance:', error);
 //     } finally {
@@ -573,7 +573,7 @@ class Shop extends Component {
   //   const provider = new ethers.providers.Web3Provider(window.ethereum);
   //   const signer = provider.getSigner();
   //   const contract = new ethers.Contract(GnomesCollectiveAddress, GCAbi.abi, signer);
-    
+
   //   try {
   //     const nftIdsBigNumber = await contract.walletOfOwner(connectedAccount);
   //     console.log("NFT IDs fetched from contract:", connectedAccount, nftIdsBigNumber);
@@ -586,9 +586,9 @@ class Shop extends Component {
   // }
   //  }
 
-totalPages = () => {
-  return Math.ceil(this.state.userNFTs.length / this.state.nftsPerPage);
-}
+// totalPages = () => {
+//   return Math.ceil(this.state.userNFTs.length / this.state.nftsPerPage);
+// }
 
 
 goToNextPage = () => {
@@ -617,11 +617,11 @@ goToPreviousPage = () => {
     handleHgmsAmountChange = (event) => {
         this.setState({ hgmsAmount: event.target.value });
       };
-      
+
     handleEthAmountChange = (event) => {
         this.setState({ ethAmount: event.target.value });
       };
-       
+
     handleDeposit = () => {
         this.toggleDepositModal()
     }
@@ -630,33 +630,33 @@ goToPreviousPage = () => {
     }
   //   async confirmTransaction(HGMS, ETH) {
   //     try {
-  
+
   //         const accounts = await this.web3.eth.getAccounts();
   //         const connectedAccount = accounts[0];
   //         const provider = new ethers.providers.Web3Provider(window.ethereum);
   //         const signer = provider.getSigner();
   //         const contract = new ethers.Contract(hgmsTokenAddress, hgmsTokenAbi.abi, signer);
-  
-  
+
+
   //         const depositTx = await contract.depositToShop(HGMS, ETH * 1000000000, { value: ethers.utils.parseEther(ETH.toString()), from: connectedAccount });
-  //         await depositTx.wait(); 
-  
-          
+  //         await depositTx.wait();
+
+
   //         const NEWHGMSbalanceBigNumber = await contract.hgmsShopBalances(connectedAccount);
   //         const NEWETHbalanceBigNumber = await contract.ethShopBalances(connectedAccount);
-  
+
   //         const NEWHGMSbalanceInFullUnits = parseFloat(ethers.utils.formatUnits(NEWHGMSbalanceBigNumber, 9));
   //         const NEWETHbalanceInFullUnits = parseFloat(ethers.utils.formatUnits(NEWETHbalanceBigNumber, 0));
   //         const NEWHGMSbalanceInMillions = (NEWHGMSbalanceInFullUnits / 1000000).toFixed(2);
   //         console.log(typeof NEWHGMSbalanceBigNumber, NEWHGMSbalanceBigNumber);
 
 
-  
+
   //     } catch (error) {
   //         console.error('Error depositing:', error);
   //     }
   // }
-  
+
 
     handleIncrement = () => {
         if (this.state.currentItem === "XTRA") {
@@ -698,7 +698,7 @@ goToPreviousPage = () => {
           console.error("MetaMask is not installed or not connected");
           return;
         }
-      
+
         try {
           const networkIdHex = await ethereum.request({ method: "eth_chainId" });
           const networkId = parseInt(networkIdHex, 16);
@@ -717,7 +717,7 @@ goToPreviousPage = () => {
           console.error("MetaMask is not installed or not connected");
           return;
         }
-      
+
         try {
           const networkId = this.state.supportedNetworkId;
           await ethereum.request({
@@ -758,12 +758,12 @@ goToPreviousPage = () => {
       componentDidMount() {
         this.checkNetwork();
       //  this.fetchBalance();
-    
+
         // Save the intervals to the component's state so you can clear them later
         this.checkNetworkInterval = setInterval(this.checkNetwork, 10000); // every 10 seconds
         // this.fetchBalanceInterval = setInterval(this.fetchBalance, 10000); // every 10 seconds
     }
-    
+
     componentWillUnmount() {
         // Clear intervals when the component is unmounted
         clearInterval(this.checkNetworkInterval);
@@ -775,25 +775,25 @@ goToPreviousPage = () => {
       this.handleConfirm();
     }
 
-    handleConfirm = async () => {
-      const HGMSAmount = this.hgmsAmountRef.current.value;
-      const ETHAmount = this.ethAmountRef.current.value;
-      
-      // await this.confirmTransaction(HGMSAmount, ETHAmount);
-  }
+  //   handleConfirm = async () => {
+  //     const HGMSAmount = this.hgmsAmountRef.current.value;
+  //     const ETHAmount = this.ethAmountRef.current.value;
+
+  //     // await this.confirmTransaction(HGMSAmount, ETHAmount);
+  // }
 
 render() {
     const { isConnected, isSwitchButton } = this.state;
     const { depositAmount, onDeposit, onClose } = this.props;
     const indexOfLastNFT = this.state.currentPage * this.state.nftsPerPage;
     const indexOfFirstNFT = indexOfLastNFT - this.state.nftsPerPage;
-    const currentNFTs = this.state.userNFTs.slice(indexOfFirstNFT, indexOfLastNFT);
+  //  const currentNFTs = this.state.userNFTs.slice(indexOfFirstNFT, indexOfLastNFT);
 
     return (
       <div>
         <Title>SHOP</Title>
         <Image src={backgroundImage} alt="Image Description" />
-        
+
         {isConnected && !isSwitchButton ? (<div>
         <BalButtonElement onClick={this.handleBalance} onMouseEnter={this.HoverOverPlay}>Balance</BalButtonElement>
         <DepButtonElement onClick={this.handleDeposit} onMouseEnter={this.HoverOverPlay}>Deposit</DepButtonElement>
@@ -803,10 +803,10 @@ render() {
           {isConnected ? "Switch Network" : "Connect"}
         </DepButtonElement>
       )}
-        <ApplyButtonElement 
+        <ApplyButtonElement
             onClick={() => {
                 this.handleApplyClick();
-            }} 
+            }}
             onMouseEnter={this.HoverOverPlay}
         >
             Apply
@@ -901,8 +901,8 @@ render() {
             onMouseEnter={this.HoverOverPlay}
             >{"<"}</DecButtonElement>
             <DescText>
-            Boost All Stats & 
-            {"\n"} 
+            Boost All Stats &
+            {"\n"}
             Anti Skip
             </DescText>
         </div>
@@ -980,7 +980,7 @@ render() {
     </BalanceModalContainer>
   </BalanceModalOverlay>
         )}
-        {this.state.isApplyModalOpen && (
+        {/* {this.state.isApplyModalOpen && (
         <NFTModalOverlay>
         <NFTModalContent>
             <h2>Gnomes</h2>
@@ -1001,7 +1001,7 @@ render() {
             <button onClick={this.toggleApplyModal}>Close</button>
         </NFTModalContent>
         </NFTModalOverlay>
-        )}
+        )} */}
 
 
                 <BackButtonContainer>
@@ -1020,5 +1020,5 @@ render() {
             );
           }
 }
-  
+
 export default Shop;
