@@ -199,10 +199,20 @@ function App() {
     volume: 0.5
   }));
 
-  const loadingBarStyle = {
-    
-    };
-
+  const loadingCircleStyle = {
+    border: '16px solid #f3f3f3', // Light gray color
+    borderTop: '16px solid #ff4500', // The color of the spinning section
+    borderRadius: '50%',
+    width: '120px',
+    height: '120px',
+    animation: 'spin 2s linear infinite',
+    position: 'fixed',
+    top: '50%',
+    left: '50%',
+    transform: 'translate(-50%, -50%)',
+    zIndex: 300,
+  };
+  
     const contentStyle = {
       opacity: loading ? 0 : 1,
       transition: 'opacity 0.5s'
@@ -219,7 +229,7 @@ useEffect(() => {
 
   setTimeout(() => {
       setLoading(false);
-  }, 100); // This will delay for 5 seconds
+  }, 1000); // This will delay for 5 seconds
 }, []);
 
   function handlePageChange (pageName) {
@@ -228,7 +238,7 @@ useEffect(() => {
 
   return (
     <>
-    <div style={loadingBarStyle}></div>
+    {loading && <div style={loadingCircleStyle}></div>}
     <body className="background" style={contentStyle}>
      
         <div className="App">
@@ -322,13 +332,11 @@ useEffect(() => {
           )}
         </div>
       
-      
     </body>
     
     </>
   );
   
-
 }
 
 export default App;
