@@ -511,23 +511,6 @@ class Shop extends Component {
       });
     }
   
-    toggleApplyModal = () => {
-      this.setState(prevState => ({ isApplyModalOpen: !prevState.isApplyModalOpen }));
-    };
-  
-    toggleDepositModal = () => {
-      this.setState((prevState) => ({
-        isDepositModalOpen: !prevState.isDepositModalOpen,
-      }));
-    };
-  
-    toggleBalanceModal = () => {
-      this.setState((prevState) => ({
-        isBalanceModalOpen: !prevState.isBalanceModalOpen,
-      }));
-    };
-  
-
     handleApplyClick = async () => {
       console.log("HERE");
       console.log("HERE");
@@ -664,7 +647,7 @@ class Shop extends Component {
 
     render() {
         const { isConnected, isSwitchButton } = this.state;
-        const { depositAmount, onDeposit, onClose } = this.props;
+
 
     
         return (
