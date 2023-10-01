@@ -3,7 +3,7 @@ import { useState, useRef } from "react";
 import "./App.css";
 import Mint from "./Mint";
 import Read from './Read'; 
-//import Shop from './Shop'; 
+import Shop from './Shop'; 
 import Stake from './Stake'; 
 import Fight from './Fight'; 
 import { Flex } from "@chakra-ui/react";
@@ -44,7 +44,6 @@ const TwitterLogoContainer = styled.div`
     transform: translateX(-10px); /* Move the logo to the left on hover */
   }
 `;
-
 const HGLogoContainer = styled.div`
   position: absolute;
   top: 30px; /* Adjust the vertical position as needed */
@@ -69,7 +68,6 @@ const HGLogoContainer = styled.div`
     transform: translateX(-10px); /* Move the logo to the left on hover */
   }
 `;
-
 const TelegramLogoContainer = styled.div`
   position: absolute;
   top: 30px; /* Adjust the vertical position as needed */
@@ -94,7 +92,6 @@ const TelegramLogoContainer = styled.div`
     transform: translateX(-10px); /* Move the logo to the left on hover */
   }
 }`;
-
 const OpenSeaLogoContainer = styled.div`
   position: absolute;
   top: 30px; /* Adjust the vertical position as needed */
@@ -119,7 +116,6 @@ const OpenSeaLogoContainer = styled.div`
     transform: translateX(-10px); /* Move the logo to the left on hover */
   }
 }`;
-
 const EtherScanLogoContainer = styled.div`
   position: absolute;
   top: 30px; /* Adjust the vertical position as needed */
@@ -144,9 +140,6 @@ const EtherScanLogoContainer = styled.div`
     transform: translateX(-10px); /* Move the logo to the left on hover */
   }
 }`;
-
-
-
 const OverlayPattern = styled.div`
   position: absolute;
   top: 0;
@@ -157,8 +150,6 @@ const OverlayPattern = styled.div`
   opacity: 0.5; 
   pointer-events: none; 
 `;
-
-
 const TextElement = styled(Text)`
   font-size: 38px;
   text-shadow: 0 10px #000000;
@@ -265,7 +256,7 @@ function App() {
             />
           )}
           {currentComponent === "Shop" && (
-            <Fight
+            <Shop
               accounts={accounts}
               setAccounts={setAccounts}
               onButtonClick={(pageName) => {

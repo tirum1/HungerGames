@@ -426,7 +426,6 @@ const NFTModalOverlay = styled.div`
   background-color: rgba(0, 0, 0, 0.75); // darker semi-transparent background
   z-index: 9999; // significantly high z-index
 `;
-
 const NFTModalContent = styled.div`
   width: 15vw;  
   height: 50vh;
