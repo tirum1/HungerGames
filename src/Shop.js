@@ -525,65 +525,66 @@ class Shop extends Component {
           isBalanceModalOpen: !prevState.isBalanceModalOpen,
         }));
     };      
-    async fetchBalance() {
-      if (this.fetchingBalance) {
-          return; 
-      }
+//     async fetchBalance() {
+//       if (this.fetchingBalance) {
+//           return; 
+//       }
   
-      this.fetchingBalance = true;
+//       this.fetchingBalance = true;
   
-      try {
-        const accounts = await this.web3.eth.getAccounts();
-        const connectedAccount = accounts[0];
-        const provider = new ethers.providers.Web3Provider(window.ethereum);
-        const signer = provider.getSigner();
-        const contract = new ethers.Contract(hgmsTokenAddress, hgmsTokenAbi.abi, signer);
+//       try {
+//         const accounts = await this.web3.eth.getAccounts();
+//         const connectedAccount = accounts[0];
+//         const provider = new ethers.providers.Web3Provider(window.ethereum);
+//         const signer = provider.getSigner();
+//         const contract = new ethers.Contract(hgmsTokenAddress, hgmsTokenAbi.abi, signer);
     
-        const hgmsBalanceBigNumber = await contract.hgmsShopBalances(connectedAccount);
-        const ETHBalanceBigNumber = await contract.ethShopBalances(connectedAccount);
+//         const hgmsBalanceBigNumber = await contract.hgmsShopBalances(connectedAccount);
+//         const ETHBalanceBigNumber = await contract.ethShopBalances(connectedAccount);
     
-        const hgmsBalanceInFullUnits = parseFloat(ethers.utils.formatUnits(hgmsBalanceBigNumber, 0)); 
-        const ethBalanceInFullUnits = parseFloat(ethers.utils.formatUnits(ETHBalanceBigNumber, 9)); 
-        const hgmsBalanceInMillions = (hgmsBalanceInFullUnits / 1000).toFixed(2); 
+//         const hgmsBalanceInFullUnits = parseFloat(ethers.utils.formatUnits(hgmsBalanceBigNumber, 0)); 
+//         const ethBalanceInFullUnits = parseFloat(ethers.utils.formatUnits(ETHBalanceBigNumber, 9)); 
+//         const hgmsBalanceInMillions = (hgmsBalanceInFullUnits / 1000).toFixed(2); 
     
-        console.log(hgmsBalanceInMillions + "HGMS");
-        console.log(ethBalanceInFullUnits + "ETH");
-        console.log(this.state.balanceHGMS);
+//         console.log(hgmsBalanceInMillions + "HGMS");
+//         console.log(ethBalanceInFullUnits + "ETH");
+//         console.log(this.state.balanceHGMS);
     
-        this.setState({ 
-          balanceHGMS: hgmsBalanceInMillions + "K", 
-          balanceETH: ethBalanceInFullUnits 
-        });
+//         this.setState({ 
+//           balanceHGMS: hgmsBalanceInMillions + "K", 
+//           balanceETH: ethBalanceInFullUnits 
+//         });
     
-      } catch (error) {
-        console.error('Error reading HGMS balance:', error);
-    } finally {
-        this.fetchingBalance = false; // Set to false once fetching is done
-    }
-}
-async fetchUserNFTs() {
-  const { isConnected, networkId, supportedNetworkId } = this.state;
-  console.log("HERE");
-  if (!isConnected || networkId !== supportedNetworkId) return;
+//       } catch (error) {
+//         console.error('Error reading HGMS balance:', error);
+//     } finally {
+//         this.fetchingBalance = false; // Set to false once fetching is done
+//     }
+// }
 
-  const accounts = await this.web3.eth.getAccounts();
-  const connectedAccount = accounts[0];
-  const provider = new ethers.providers.Web3Provider(window.ethereum);
-  const signer = provider.getSigner();
-  const contract = new ethers.Contract(GnomesCollectiveAddress, GCAbi.abi, signer);
-  
-  try {
-    const nftIdsBigNumber = await contract.walletOfOwner(connectedAccount);
-    console.log("NFT IDs fetched from contract:", connectedAccount, nftIdsBigNumber);
 
-   
-    const nftIds = nftIdsBigNumber.map(id => id.toString());
 
-    this.setState({ userNFTs: nftIds });
-} catch (error) {
-    console.error('Error fetching NFT IDs:', error);
-}
-}
+  //   async fetchUserNFTs() {
+  //   const { isConnected, networkId, supportedNetworkId } = this.state;
+  //   if (!isConnected || networkId !== supportedNetworkId) return;
+
+  //   const accounts = await this.web3.eth.getAccounts();
+  //   const connectedAccount = accounts[0];
+  //   const provider = new ethers.providers.Web3Provider(window.ethereum);
+  //   const signer = provider.getSigner();
+  //   const contract = new ethers.Contract(GnomesCollectiveAddress, GCAbi.abi, signer);
+    
+  //   try {
+  //     const nftIdsBigNumber = await contract.walletOfOwner(connectedAccount);
+  //     console.log("NFT IDs fetched from contract:", connectedAccount, nftIdsBigNumber);
+
+  //     const nftIds = nftIdsBigNumber.map(id => id.toString());
+
+  //     this.setState({ userNFTs: nftIds });
+  // } catch (error) {
+  //     console.error('Error fetching NFT IDs:', error);
+  // }
+  //  }
 
 totalPages = () => {
   return Math.ceil(this.state.userNFTs.length / this.state.nftsPerPage);
@@ -608,7 +609,7 @@ goToPreviousPage = () => {
 }
     handleApplyClick = async () => {
       console.log("HERE");
-      await this.fetchUserNFTs();
+      //await this.fetchUserNFTs();
       console.log("HERE");
       this.toggleApplyModal();
     };
@@ -756,17 +757,17 @@ goToPreviousPage = () => {
 
       componentDidMount() {
         this.checkNetwork();
-        this.fetchBalance();
+      //  this.fetchBalance();
     
         // Save the intervals to the component's state so you can clear them later
         this.checkNetworkInterval = setInterval(this.checkNetwork, 10000); // every 10 seconds
-        this.fetchBalanceInterval = setInterval(this.fetchBalance, 10000); // every 10 seconds
+        // this.fetchBalanceInterval = setInterval(this.fetchBalance, 10000); // every 10 seconds
     }
     
     componentWillUnmount() {
         // Clear intervals when the component is unmounted
         clearInterval(this.checkNetworkInterval);
-        clearInterval(this.fetchBalanceInterval);
+       // clearInterval(this.fetchBalanceInterval);
     }
 
    handleMultipleActions = async () => {
