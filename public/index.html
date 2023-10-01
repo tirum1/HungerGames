@@ -11,16 +11,13 @@
     <title>Hunger Games</title>
     
     <style>
-       body {
-           overflow: hidden;
-           position: fixed;
-           top: 0;
-           left: 0;
-           bottom: 0;
-           right: 0;
-           width: 100%;
-           height: 100%;
-       }
+      body {
+    overflow-x: hidden;
+    overflow-y: auto; /* allows vertical scrolling */
+    width: 100%;
+    height: 100%;
+}
+
     </style>
 
   </head>
@@ -30,7 +27,10 @@
 
     <script>
        document.addEventListener('touchmove', function(e) {
-           e.preventDefault();
+           var y = e.touches[0].clientY;
+           var isAtTop = (window.pageYOffset === 0 && y > 10);
+           var isAtBottom = (window.pageYOffset + window.innerHeight >= document.body.scrollHeight - 10 && y < window.innerHeight - 10);
+           if (isAtTop || isAtBottom) e.preventDefault();
        }, { passive: false });
     </script>
   </body>
