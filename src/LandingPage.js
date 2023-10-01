@@ -16,8 +16,8 @@ const Container = styled.div`
 `;
 const MintButtonContainer = styled.div`
   position: absolute;
-  top: 98vh; /* Adjust the vertical position as needed */
-  left: calc(50vw - (8vw + 8vh));
+  top: 80vh; /* Adjust the vertical position as needed */
+  left: 45vw; /* Adjust the value as needed */
   transform: translate(-50%, -50%);
 `;
 const radiantGlow = keyframes`
@@ -33,59 +33,45 @@ const radiantGlow = keyframes`
 `;
 
 const FightButtonContainer = styled.div`
-  position: absolute;
-  top: 93vh;
-  left: calc(49vw);
-  transform: translate(-50%, -50%);
-  background-color: #833929;
-  border-radius: 5px;
-  box-shadow: 0px 2px 2px 1px #0F0F0F;
-  color: black;
-  cursor: pointer;
-  font-family: inherit;
-  padding: calc(.7vw + .7vh);
-  margin: 0 20px;
-  transition: background-color 0.2s ease, box-shadow 0.2s ease, color 0.2s ease;
-  animation: ${radiantGlow} 1s linear infinite;
-  
-  &:hover {
-    background-color: #ff5252;
-    box-shadow: 0px 2px 2px 1px #FFFF00;
-    color: white;
-    animation: none; /* Remove the radiant glow animation on hover */
-  }
+position: absolute;
+top: 80vh; /* Adjust the vertical position as needed */
+left: 35vw; /* Adjust the value as needed */
+transform: translate(-50%, -50%);
   
 
 `;
 
-const StakeButtonContainer = styled.div`
-  position: absolute;
-  top: 90vh; /* Adjust the vertical position as needed */
-  left: calc(50vw - (10vw + 10vh)); /* Adjust the value as needed */
-  transform: translate(-50%, -50%);
-`;
 const ReadMeButtonContainer = styled.div`
   position: absolute;
-  top: 98vh; /* Adjust the vertical position as needed */
-  left: calc(50vw + (8vw + 8vh)); /* Adjust the value as needed */
+  top: 80vh; /* Adjust the vertical position as needed */
+  left: 55vw; /* Adjust the value as needed */
   transform: translate(-50%, -50%);
 `;
 const ShopButtonContainer = styled.div`
   position: absolute;
-  top: 90vh; /* Adjust the vertical position as needed */
-  left: calc(50vw + (10vw + 10vh)); /* Adjust the value as needed */
+  top: 80vh; /* Adjust the vertical position as needed */
+  left: 65vw; /* Adjust the value as needed */
   transform: translate(-50%, -50%);
 `;
 const Title = styled.h1`
+  position: absolute;
+  top: 15vh;
+  left: 32vw;
   font-size: calc(2vh + 2vw);
   font-weight: bold;
-  color: #0000; /* U
-  pdated color to black */
-  margin-bottom: 15px;
+  color: #000; /* Updated color to black */
+  text-shadow: 
+    0px 0px 15px rgba(128, 128, 128, 0.9),
+    0px 0px 30px rgba(128, 128, 128, 0.8),
+    0px 0px 45px rgba(128, 128, 128, 0.7),
+    0px 0px 60px rgba(128, 128, 128, 0.6),
+    0px 0px 75px rgba(128, 128, 128, 0.5),
+    0px 0px 90px rgba(128, 128, 128, 0.4);
   &:hover {
     color: red;
   }
 `;
+
 const Description = styled.p`
   font-size: 16px;
   color: #000;
@@ -97,6 +83,9 @@ const Description = styled.p`
   }
 `;
 const Text = styled.p`
+  position: absolute;
+  top: 23vh;
+  left: 32vw;
   font-size: calc(1vh + 1vw);
   color: #fff;
   margin-bottom: 20px;
@@ -118,7 +107,10 @@ const shadowAnimation = keyframes`
   }
 `;
 const ImageContainer = styled.div`
-  width: calc(18vw + 18vh);
+position: absolute;
+top: 30vh;
+left: 40vw;
+  width: calc(14vw + 14vh);
   max-width: calc(20vw + 20vh);
   height: auto;
   max-height: auto;
@@ -199,8 +191,9 @@ class LandingPage extends Component {
     return (
       
       <div>
+        <div><Title>HUNGER GAMES</Title></div>
         <Container>
-          <Title>HUNGER GAMES</Title>
+          
         {/* Add the additional text here */}
         <Text>
           $HGMS 0x0000000000000000
@@ -216,18 +209,15 @@ class LandingPage extends Component {
                           this.handleShop();
                           this.clickPlay();
                         } }onMouseEnter={this.HoverOverPlay}>Shop</ButtonElement></ShopButtonContainer>
-          <FightButtonContainer onClick={() => {
+         <FightButtonContainer><ButtonElement onClick={() => {
                           this.handleFight();
                           this.clickPlay();
-                        } }onMouseEnter={this.HoverOverPlay}> FIGHT </FightButtonContainer>
+                        } }onMouseEnter={this.HoverOverPlay}>Fight</ButtonElement></FightButtonContainer>
           <ReadMeButtonContainer><ButtonElement onClick={() => {
                           this.handleRead();
                           this.clickPlay();
                         } }onMouseEnter={this.HoverOverPlay}>Read</ButtonElement></ReadMeButtonContainer>
-          <StakeButtonContainer><ButtonElement onClick={() => {
-                          this.handleStake();
-                          this.clickPlay();
-                        } }onMouseEnter={this.HoverOverPlay}>Stake</ButtonElement></StakeButtonContainer>
+        
          </Container>
        
         
