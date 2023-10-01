@@ -333,7 +333,7 @@ useEffect(() => {
           
         </div>
         <div className="footer">
-          ©2024 HungerGames. Devved by Dev.
+          ©2023 HungerGames. Devved by Dev.
         </div>
 
     </body>
