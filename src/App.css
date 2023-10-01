@@ -94,6 +94,22 @@
   box-sizing: border-box;
 }
 
+.sticky-footer {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  width: 100%;
+  background-color: black;
+  color: white;
+  text-align: center;
+  padding: 10px 0;
+  z-index: 999;
+  font-family: 'Roboto, sans-serif'; 
+}
+
+/* In your JSX */
+
 .overlay {
   opacity: 1;
   width: 70%;
@@ -103,9 +119,6 @@
   left: 0;
   position: fixed;
 }
-
-
-
 
 .button-container {
   position: absolute;
@@ -143,5 +156,7 @@ input[type="number"] {
   left: var(--open-sea-left); /* Reference the custom property */
   cursor: pointer;
 
-  /* Rest of your styling */
 }
+
+
+

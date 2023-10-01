@@ -179,7 +179,6 @@ transition: background-color 0.2s ease;
 }
 `;
 
-
 function App() {
   const [accounts, setAccounts] = useState([]);
   const [currentComponent, setCurrentComponent] = useState("LandingPage");
@@ -199,6 +198,7 @@ function App() {
     volume: 0.5
   }));
 
+  
   const loadingCircleStyle = {
     border: '16px solid #f3f3f3', // Light gray color
     borderTop: '16px solid #ff4500', // The color of the spinning section
@@ -208,7 +208,7 @@ function App() {
     animation: 'spin 2s linear infinite',
     position: 'fixed',
     top: '50%',
-    left: '50%',
+    left: '45%',
     transform: 'translate(-50%, -50%)',
     zIndex: 300,
   };
@@ -330,8 +330,12 @@ useEffect(() => {
             />
             
           )}
+          
         </div>
-      
+        <div className="sticky-footer">
+   ©2024 HungerGames. Devved by Dev.
+</div>
+
     </body>
     
     </>
