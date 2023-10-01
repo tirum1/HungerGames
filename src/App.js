@@ -200,14 +200,7 @@ function App() {
   }));
 
   const loadingBarStyle = {
-    height: '4px',
-    width: '100%',
-    position: 'fixed',
-    top: '0',
-    left: '0',
-    backgroundColor: '#ff4500',
-    zIndex: 1000,  
-    transition: 'width 2s'
+    
     };
 
     const contentStyle = {
@@ -235,10 +228,9 @@ useEffect(() => {
 
   return (
     <>
-    <body className="background">
     <div style={loadingBarStyle}></div>
-    <div style={contentStyle}>
-      <div>
+    <body className="background" style={contentStyle}>
+     
         <div className="App">
           <HGLogoContainer>
             <a href="https://gnomescollective.xyz">
@@ -329,9 +321,10 @@ useEffect(() => {
             
           )}
         </div>
-      </div>
-      </div>
+      
+      
     </body>
+    
     </>
   );
   
