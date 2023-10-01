@@ -9,29 +9,17 @@
     <link rel="apple-touch-icon" href="%PUBLIC_URL%/logo192.png" />
     <link rel="manifest" href="%PUBLIC_URL%/manifest.json" />
     <title>Hunger Games</title>
-    
+
     <style>
-      body {
-    overflow-x: hidden;
-    overflow-y: auto; /* allows vertical scrolling */
-    width: 100%;
-    height: 100%;
-}
-
+       body {
+           overflow: auto;
+           overscroll-behavior-y: none;
+       }
     </style>
-
   </head>
+  
   <body>
     <noscript>You need to enable JavaScript to run this app.</noscript>
     <div id="root"></div>
-
-    <script>
-       document.addEventListener('touchmove', function(e) {
-           var y = e.touches[0].clientY;
-           var isAtTop = (window.pageYOffset === 0 && y > 10);
-           var isAtBottom = (window.pageYOffset + window.innerHeight >= document.body.scrollHeight - 10 && y < window.innerHeight - 10);
-           if (isAtTop || isAtBottom) e.preventDefault();
-       }, { passive: false });
-    </script>
   </body>
 </html>
