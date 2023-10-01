@@ -692,25 +692,7 @@ goToPreviousPage = () => {
     clickPlay = () => {
         this.click.play();
       };
-    checkNetwork = async () => {
-        const { ethereum } = window;
-        if (!ethereum) {
-          console.error("MetaMask is not installed or not connected");
-          return;
-        }
-      
-        try {
-          const networkIdHex = await ethereum.request({ method: "eth_chainId" });
-          const networkId = parseInt(networkIdHex, 16);
-          const isNetwork = networkId === this.state.supportedNetworkId;
-          this.setState({
-            isSwitchButton: !isNetwork, // Show switch button if not connected
-            networkId,
-          });
-        } catch (error) {
-          console.error(error);
-        }
-      };
+
     handleNetwork = async () => {
         const { ethereum } = window;
         if (!ethereum) {
