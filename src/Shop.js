@@ -9,7 +9,7 @@ import BOOSTIMAGE from './assets/Items/3.png';
 import VIMAGE from './assets/Items/4.png';
 import clickSound from './assets/sound/hover.mp3';
 import "./App.css";
-import Web3 from 'web3';
+
 import hgmsTokenAbi from './assets/ABI/HungerGames.json';
 import GCAbi from "./assets/ABI/GnomesCollective.json";
 import {ethers, BigNumber} from 'ethers';
