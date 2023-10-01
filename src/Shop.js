@@ -533,7 +533,6 @@ class Shop extends Component {
       this.toggleBalanceModal()
     }
   
-  
     handleIncrement = () => {
         if (this.state.currentItem === "XTRA") {
           this.setState({ currentItem: "SKIP" });
@@ -548,6 +547,7 @@ class Shop extends Component {
             this.setState({ currentItem: "XTRA" });
           }
       };
+
     handleDecrement = () => {
         if (this.state.currentItem === "SKIP") {
           this.setState({ currentItem: "XTRA" });
@@ -804,64 +804,7 @@ class Shop extends Component {
                 </ModalContent>
             </ModalOverlay>
             )}
-           {this.state.isBalanceModalOpen && (
-      <BalanceModalOverlay>
-        <BalanceModalContainer>
-          <CloseButton onClick={this.toggleBalanceModal}>X</CloseButton>
-        <BalanceModalContent>
-          <BalanceTable>
-            <BalanceRow>
-              <BalanceLabel>$HGMS:</BalanceLabel>
-              <BalanceValue>{this.state.balanceHGMS}</BalanceValue>
-            </BalanceRow>
-            <BalanceRow>
-              <BalanceLabel>$ETH:</BalanceLabel>
-              <BalanceValue>{this.state.balanceETH}</BalanceValue>
-            </BalanceRow>
-            <BalanceRow>
-              <BalanceLabel>XTRA:</BalanceLabel>
-              <BalanceValue>{this.state.balanceXtraPotions}</BalanceValue>
-            </BalanceRow>
-            <BalanceRow>
-              <BalanceLabel>SKIP:</BalanceLabel>
-              <BalanceValue>{this.state.balanceSkipPotions}</BalanceValue>
-            </BalanceRow>
-            <BalanceRow>
-              <BalanceLabel>BOOST:</BalanceLabel>
-              <BalanceValue>{this.state.balanceBoostPotions}</BalanceValue>
-            </BalanceRow>
-            <BalanceRow>
-              <BalanceLabel>V:</BalanceLabel>
-              <BalanceValue>{this.state.balanceVPotions}</BalanceValue>
-            </BalanceRow>
-          </BalanceTable>
-        </BalanceModalContent>
-        </BalanceModalContainer>
-      </BalanceModalOverlay>
-            )}
-            {/* {this.state.isApplyModalOpen && (
-            <NFTModalOverlay>
-            <NFTModalContent>
-                <h2>Gnomes</h2>
-                <ul>
-                      {currentNFTs.map(nftId => (
-                          <li key={nftId}>ID: {nftId}</li>
-                      ))}
-                  </ul>
-                  <div className="pagination-controls">
-                <button onClick={this.goToPreviousPage} disabled={this.state.currentPage === 1}>
-                    Previous
-                </button>
-                <button onClick={this.goToNextPage} disabled={this.state.currentPage === this.totalPages()}>
-                    Next
-                </button>
-            </div>
-    
-                <button onClick={this.toggleApplyModal}>Close</button>
-            </NFTModalContent>
-            </NFTModalOverlay>
-            )} */}
-    
+
     
                     <BackButtonContainer>
                       <ButtonElement
