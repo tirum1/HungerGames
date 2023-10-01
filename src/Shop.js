@@ -477,8 +477,8 @@ class Shop extends Component {
         currentItem : "XTRA",
         isConnected: Boolean(this.props.accounts[0]),
         isSwitchButton: false, 
-        networkId: null,
-        supportedNetworkId: 5,
+      
+       
         isDepositModalOpen: false,
         isBalanceModalOpen: false,
         isApplyModalOpen: false,
@@ -561,29 +561,6 @@ class Shop extends Component {
     } finally {
         this.fetchingBalance = false; // Set to false once fetching is done
     }
-}
-async fetchUserNFTs() {
-  const { isConnected, networkId, supportedNetworkId } = this.state;
-  console.log("HERE");
-  if (!isConnected || networkId !== supportedNetworkId) return;
-
-  const accounts = await this.web3.eth.getAccounts();
-  const connectedAccount = accounts[0];
-  const provider = new ethers.providers.Web3Provider(window.ethereum);
-  const signer = provider.getSigner();
-  const contract = new ethers.Contract(GnomesCollectiveAddress, GCAbi.abi, signer);
-  
-  try {
-    const nftIdsBigNumber = await contract.walletOfOwner(connectedAccount);
-    console.log("NFT IDs fetched from contract:", connectedAccount, nftIdsBigNumber);
-
-   
-    const nftIds = nftIdsBigNumber.map(id => id.toString());
-
-    this.setState({ userNFTs: nftIds });
-} catch (error) {
-    console.error('Error fetching NFT IDs:', error);
-}
 }
 
 totalPages = () => {
@@ -692,37 +669,21 @@ goToPreviousPage = () => {
     clickPlay = () => {
         this.click.play();
       };
+    
 
-
-    connectAccount = async () => {
-        if (!window.ethereum) {
-          console.log("MetaMask is not installed or not connected");
-          return;
-        }
-
-        try {
-          const accounts = await window.ethereum.request({
-            method: "eth_requestAccounts",
-          });
-
-          if (accounts.length === 0) {
-            console.log("User denied account access");
-            return;
-          }
-
-          const selectedAccount = accounts[0]; // Select the first account
-
-          this.props.setAccounts(accounts);
-          this.setState({ isConnected: Boolean(selectedAccount) }, () => {
-            console.log("Connected Address:", selectedAccount);
-          });
-        } catch (error) {
-          console.error(error);
-        }
-      };
-
-
-
+      componentDidMount() {
+        
+        this.fetchBalance();
+    
+        // Save the intervals to the component's state so you can clear them later
+     
+        this.fetchBalanceInterval = setInterval(this.fetchBalance, 10000); // every 10 seconds
+    }
+    
+    componentWillUnmount() {
+     
+        clearInterval(this.fetchBalanceInterval);
+    }
 
    handleMultipleActions = async () => {
       this.toggleDepositModal();
@@ -753,9 +714,7 @@ render() {
         <DepButtonElement onClick={this.handleDeposit} onMouseEnter={this.HoverOverPlay}>Deposit</DepButtonElement>
         </div>
       ) : (
-        <DepButtonElement onClick={isConnected ? this.handleNetwork : this.connectAccount}>
-          {isConnected ? "Switch Network" : "Connect"}
-        </DepButtonElement>
+        <div></div>
       )}
         <ApplyButtonElement 
             onClick={() => {
