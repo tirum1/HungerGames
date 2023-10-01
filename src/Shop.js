@@ -693,23 +693,7 @@ goToPreviousPage = () => {
         this.click.play();
       };
 
-    handleNetwork = async () => {
-        const { ethereum } = window;
-        if (!ethereum) {
-          console.error("MetaMask is not installed or not connected");
-          return;
-        }
-      
-        try {
-          const networkId = this.state.supportedNetworkId;
-          await ethereum.request({
-            method: "wallet_switchEthereumChain",
-            params: [{ chainId: `0x${networkId.toString(16)}` }],
-          });
-        } catch (error) {
-          console.error(error);
-        }
-      };
+
     connectAccount = async () => {
         if (!window.ethereum) {
           console.log("MetaMask is not installed or not connected");
@@ -737,20 +721,8 @@ goToPreviousPage = () => {
         }
       };
 
-      componentDidMount() {
-        this.checkNetwork();
-        this.fetchBalance();
-    
-        // Save the intervals to the component's state so you can clear them later
-        this.checkNetworkInterval = setInterval(this.checkNetwork, 10000); // every 10 seconds
-        this.fetchBalanceInterval = setInterval(this.fetchBalance, 10000); // every 10 seconds
-    }
-    
-    componentWillUnmount() {
-        // Clear intervals when the component is unmounted
-        clearInterval(this.checkNetworkInterval);
-        clearInterval(this.fetchBalanceInterval);
-    }
+
+
 
    handleMultipleActions = async () => {
       this.toggleDepositModal();
