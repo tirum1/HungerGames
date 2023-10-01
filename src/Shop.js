@@ -474,26 +474,7 @@ class Shop extends Component {
   constructor(props) {
     super(props);
     this.state = {
-        currentItem : "XTRA",
-       
-     
-      
-       
-        isDepositModalOpen: false,
-        isBalanceModalOpen: false,
-        isApplyModalOpen: false,
-        hgmsAmount: 0,
-        ethAmount: 0,
-        balanceHGMS: 0, 
-        balanceETH: 0,  
-        balanceXtraPotions: 0, 
-        balanceSkipPotions: 0, 
-        balanceBoostPotions: 0, 
-        balanceVPotions: 0, 
-        isApplyModalOpen: false,
-        userNFTs: [],
-        currentPage: 1,
-        nftsPerPage: 10 
+
     };
 
     this.hoverover = new Howl({
