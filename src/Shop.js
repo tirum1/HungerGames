@@ -472,21 +472,12 @@ class Shop extends Component {
     constructor(props) {
       super(props);
       this.state = {
-        currentItem: "XTRA",
+
         isConnected: Boolean(this.props.accounts[0]),
         isSwitchButton: false,
         networkId: null,
         supportedNetworkId: 5,
-        isDepositModalOpen: false,
-        isBalanceModalOpen: false,
-        isApplyModalOpen: false,
 
-        balanceHGMS: 0,
-        balanceETH: 0,
-        balanceXtraPotions: 0,
-        balanceSkipPotions: 0,
-        balanceBoostPotions: 0,
-        balanceVPotions: 0,
 
       };
       this.hgmsAmountRef = React.createRef();
