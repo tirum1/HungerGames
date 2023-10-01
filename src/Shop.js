@@ -487,19 +487,12 @@ class Shop extends Component {
         balanceSkipPotions: 0,
         balanceBoostPotions: 0,
         balanceVPotions: 0,
-        isApplyModalOpen: false,
-        userNFTs: [],
-        currentPage: 1,
-        nftsPerPage: 10,
+
       };
       this.hgmsAmountRef = React.createRef();
       this.ethAmountRef = React.createRef();
 
-      if (window.ethereum) {
-        this.web3 = new Web3(window.ethereum);
-      } else {
-        console.error('MetaMask not found');
-      }
+
       this.hoverover = new Howl({
         src: HoverSound,
         volume: 0.5,
@@ -511,8 +504,6 @@ class Shop extends Component {
     }
   
     handleApplyClick = async () => {
-      console.log("HERE");
-      console.log("HERE");
       this.toggleApplyModal();
     };
   
@@ -614,7 +605,7 @@ class Shop extends Component {
             return;
           }
 
-          const selectedAccount = accounts[0]; // Select the first account
+          const selectedAccount = accounts[0]; 
 
           this.props.setAccounts(accounts);
           this.setState({ isConnected: Boolean(selectedAccount) }, () => {
@@ -624,16 +615,6 @@ class Shop extends Component {
           console.error(error);
         }
       };
-  
-    componentDidMount() {
-      this.checkNetwork();
-  
-      this.checkNetworkInterval = setInterval(this.checkNetwork, 10000); // every 10 seconds
-    }
-  
-    componentWillUnmount() {
-      clearInterval(this.checkNetworkInterval);
-    }
   
 
     render() {
