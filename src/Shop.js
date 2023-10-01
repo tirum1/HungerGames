@@ -475,8 +475,8 @@ class Shop extends Component {
     super(props);
     this.state = {
         currentItem : "XTRA",
-        isConnected: Boolean(this.props.accounts[0]),
-        isSwitchButton: false, 
+       
+     
       
        
         isDepositModalOpen: false,
@@ -497,11 +497,7 @@ class Shop extends Component {
     };
     this.hgmsAmountRef = React.createRef();
     this.ethAmountRef = React.createRef();
-    if (window.ethereum) {
-      this.web3 = new Web3(window.ethereum);
-    } else {
-      console.error('MetaMask not found');
-    }
+    
     this.hoverover = new Howl({
       src: HoverSound,
       volume: 0.5,
@@ -513,24 +509,16 @@ class Shop extends Component {
     }
 
 render() {
-    const { isConnected, isSwitchButton } = this.state;
-    const { depositAmount, onDeposit, onClose } = this.props;
-    const indexOfLastNFT = this.state.currentPage * this.state.nftsPerPage;
-    const indexOfFirstNFT = indexOfLastNFT - this.state.nftsPerPage;
-    const currentNFTs = this.state.userNFTs.slice(indexOfFirstNFT, indexOfLastNFT);
+    
+    
+ 
 
     return (
       <div>
         <Title>SHOP</Title>
         <Image src={backgroundImage} alt="Image Description" />
         
-        {isConnected && !isSwitchButton ? (<div>
-        <BalButtonElement onClick={this.handleBalance} onMouseEnter={this.HoverOverPlay}>Balance</BalButtonElement>
-        <DepButtonElement onClick={this.handleDeposit} onMouseEnter={this.HoverOverPlay}>Deposit</DepButtonElement>
-        </div>
-      ) : (
-        <div></div>
-      )}
+        
         <ApplyButtonElement 
             onClick={() => {
                 this.handleApplyClick();
@@ -713,9 +701,7 @@ render() {
         <NFTModalContent>
             <h2>Gnomes</h2>
             <ul>
-                  {currentNFTs.map(nftId => (
-                      <li key={nftId}>ID: {nftId}</li>
-                  ))}
+                 
               </ul>
               <div className="pagination-controls">
             <button onClick={this.goToPreviousPage} disabled={this.state.currentPage === 1}>
