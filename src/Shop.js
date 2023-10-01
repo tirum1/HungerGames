@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import styled, { keyframes } from 'styled-components';
-import { Howl, Howler } from 'howler';
+import { Howl} from 'howler';
 import HoverSound from './assets/sound/click-21156.mp3';
 import backgroundImage from './assets/background/Unbenannt-3.png';
 import XTRAIMAGE from './assets/Items/1.png';
@@ -9,93 +9,8 @@ import BOOSTIMAGE from './assets/Items/3.png';
 import VIMAGE from './assets/Items/4.png';
 import clickSound from './assets/sound/hover.mp3';
 import "./App.css";
-import Web3 from 'web3';
-import hgmsTokenAbi from './assets/ABI/HungerGames.json';
-import GCAbi from "./assets/ABI/GnomesCollective.json";
-import {ethers, BigNumber} from 'ethers';
 
-const hgmsTokenAddress = '0x73229e7c7d8f9276e7a69cb0cc22ec503cf9c7c6';
-const GnomesCollectiveAddress = "0x3acAcDfbF7fe223d42031a2cd185e232D911405F";
 
-const ModalOverlay = styled.div`
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background-color: rgba(0, 0, 0, 0.5); /* Semi-transparent black background */
-  z-index: 1000; /* Ensure it appears on top of everything */
-`;
-const BalanceModalOverlay = styled.div`
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background-color: rgba(0, 0, 0, 0.5);
-  z-index: 1000;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-`;
-const BalanceModalContainer = styled.div`
-  position: relative;
-  text-align: center;
-`;
-const BalanceModalContent = styled.div`
-  background-color: #fff;
-  padding: 20px;
-  border-radius: 5px;
-  box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.2);
-  text-align: center;
-  width: 100%;
-`;
-const BalanceTable = styled.div`
-  margin-top: 20px;
-`;
-const BalanceRow = styled.div`
-  display: flex;
-  justify-content: space-between;
-  margin-bottom: 10px;
-`;
-const BalanceLabel = styled.p`
-  font-size: calc(0.7vh + 0.7vw);
-  color: #000;
-`;
-const BalanceValue = styled.p`
-  font-size: calc(0.7vh + 0.7vw);
-  color: #000;
-  font-weight: bold;
-`;
-const CloseButton = styled.button`
-  position: absolute;
-  top: -10px;
-  right: -20px;
-  font-size: 2vw;
-  padding: 1vh 1vw;
-  background-color: #ff5252;
-  border: none;
-  border-radius: 5px;
-  color: white;
-  cursor: pointer;
-  font-family: inherit;
-  transition: background-color 0.2s ease;
-
-  &:hover {
-    background-color: #ff3333;
-  }
-`;
-const ModalContent = styled.div`
-  background-color: #fff;
-  padding: 20px;
-  border-radius: 5px;
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.2);
-  z-index: 1001;
-`;
 const BackButtonContainer = styled.div`
   position: absolute;
   top: 80vh;
@@ -248,19 +163,7 @@ const blurAnimation = keyframes`
     filter: blur(0px);
   }
 `;
-const Text = styled.p`
-font-size: calc(.6vh + .6vw);
-  color: #fff;
-  margin-bottom: 20px;
-  text-align: center;
-  position: absolute;
-  z-index: 1;
-  top: 25%;
-  left: 17%;
-  &:hover {
-    color: red;
-  }
-`;
+
 const DescText = styled.p`
 font-size: calc(.6vh + .6vw);
   color: #fff;
@@ -276,84 +179,7 @@ font-size: calc(.6vh + .6vw);
     color: red;
   }
 `;
-const TextHGMS = styled.p`
-  font-size: calc(.5vh + .5vw);
-  color: #fff;
-  margin-bottom: 20px;
-  text-align: center;
-  position: absolute;
-  z-index: 1;
-  top: 30%;
-  left: 17%;
-  &:hover {
-    color: red;
-  }
-`;
-const TextETH = styled.p`
-font-size: calc(.5vh + .5vw);
-  color: #fff;
-  margin-bottom: 20px;
-  text-align: center;
-  position: absolute;
-  z-index: 1;
-  top: 35%;
-  left: 17%;
-  &:hover {
-    color: red;
-  }
-`;
-const TextPOTIONS = styled.p`
-font-size: calc(.5vh + .5vw);
-  color: #fff;
-  margin-bottom: 20px;
-  text-align: center;
-  position: absolute;
-  z-index: 1;
-  top: 40%;
-  left: 17%;
-  &:hover {
-    color: red;
-  }
-`;
-const TextSKIP = styled.p`
-font-size: calc(.5vh + .5vw);
-  color: #fff;
-  margin-bottom: 20px;
-  text-align: center;
-  position: absolute;
-  z-index: 1;
-  top: 45%;
-  left: 17%;
-  &:hover {
-    color: red;
-  }
-`;
-const TextBOOST = styled.p`
-font-size: calc(.5vh + .5vw);
-  color: #fff;
-  margin-bottom: 20px;
-  text-align: center;
-  position: absolute;
-  z-index: 1;
-  top: 50%;
-  left: 17%;
-  &:hover {
-    color: red;
-  }
-`;
-const TextV = styled.p`
-font-size: calc(.5vh + .5vw);
-  color: #fff;
-  margin-bottom: 20px;
-  text-align: center;
-  position: absolute;
-  z-index: 1;
-  top: 55%;
-  left: 17%;
-  &:hover {
-    color: red;
-  }
-`;
+
 const Text2 = styled.p`
   font-size: calc(1vh + 1vw);
   color: #fff;
@@ -411,62 +237,6 @@ const Title = styled.h1`
     }
   }
 `;
-const ImageContainer = styled.div`
-  position: relative;
-`;
-const NFTModalOverlay = styled.div`
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100vw;
-  height: 100vh;
-  background-color: rgba(0, 0, 0, 0.75); // darker semi-transparent background
-  z-index: 9999; // significantly high z-index
-`;
-const NFTModalContent = styled.div`
-  width: 15vw;
-  height: 50vh;
-  background-color: #fff;
-  padding: 2rem;
-  box-shadow: 0 0 20px rgba(0, 0, 0, 0.5);
-  border-radius: 15px;
-  overflow-y: hidden;
-
-
-  @media (max-width: 1920px)  {
-    width: 20%
-  }
-
-  @media (max-width: 1350px)  {
-    width: 22%
-  }
-
-  @media (max-width: 1200px) {
-    width: 27%;
-  }
-
-  @media (max-width: 1155px) {
-    width: 32%;
-  }
-  @media (max-width: 800px) {
-    width: 37%;
-  }
-  @media (max-width: 620px) {
-    width: 42%;
-  }
-  @media (max-width: 520px) {
-    width: 55%;
-  }
-  @media (max-width: 520px) {
-    width: 80%;
-  }
-
-`;
-
-
 
 class Shop extends Component {
     constructor(props) {
@@ -477,8 +247,6 @@ class Shop extends Component {
         isSwitchButton: false,
         networkId: null,
         supportedNetworkId: 5,
-
-
       };
       this.hgmsAmountRef = React.createRef();
       this.ethAmountRef = React.createRef();
@@ -506,106 +274,7 @@ class Shop extends Component {
       this.toggleBalanceModal()
     }
   
-    handleIncrement = () => {
-        if (this.state.currentItem === "XTRA") {
-          this.setState({ currentItem: "SKIP" });
-        }
-        if (this.state.currentItem === "SKIP") {
-            this.setState({ currentItem: "BOOST" });
-          }
-        if (this.state.currentItem === "BOOST") {
-            this.setState({ currentItem: "V" });
-          }
-        if (this.state.currentItem === "V") {
-            this.setState({ currentItem: "XTRA" });
-          }
-      };
-
-    handleDecrement = () => {
-        if (this.state.currentItem === "SKIP") {
-          this.setState({ currentItem: "XTRA" });
-        }
-        if (this.state.currentItem === "XTRA") {
-            this.setState({ currentItem: "V" });
-          }
-        if (this.state.currentItem === "BOOST") {
-            this.setState({ currentItem: "SKIP" });
-        }
-        if (this.state.currentItem === "V") {
-            this.setState({ currentItem: "BOOST" });
-          }
-      };
-  
-    HoverOverPlay = () => {
-      this.hoverover.play();
-    };
-  
-    clickPlay = () => {
-      this.click.play();
-    };
-  
-    checkNetwork = async () => {
-        const { ethereum } = window;
-        if (!ethereum) {
-          console.error("MetaMask is not installed or not connected");
-          return;
-        }
-
-        try {
-          const networkIdHex = await ethereum.request({ method: "eth_chainId" });
-          const networkId = parseInt(networkIdHex, 16);
-          const isNetwork = networkId === this.state.supportedNetworkId;
-          this.setState({
-            isSwitchButton: !isNetwork, 
-            networkId,
-          });
-        } catch (error) {
-          console.error(error);
-        }
-      };
-    handleNetwork = async () => {
-        const { ethereum } = window;
-        if (!ethereum) {
-          console.error("MetaMask is not installed or not connected");
-          return;
-        }
-
-        try {
-          const networkId = this.state.supportedNetworkId;
-          await ethereum.request({
-            method: "wallet_switchEthereumChain",
-            params: [{ chainId: `0x${networkId.toString(16)}` }],
-          });
-        } catch (error) {
-          console.error(error);
-        }
-      };
-    connectAccount = async () => {
-        if (!window.ethereum) {
-          console.log("MetaMask is not installed or not connected");
-          return;
-        }
-
-        try {
-          const accounts = await window.ethereum.request({
-            method: "eth_requestAccounts",
-          });
-
-          if (accounts.length === 0) {
-            console.log("User denied account access");
-            return;
-          }
-
-          const selectedAccount = accounts[0]; 
-
-          this.props.setAccounts(accounts);
-          this.setState({ isConnected: Boolean(selectedAccount) }, () => {
-            console.log("Connected Address:", selectedAccount);
-          });
-        } catch (error) {
-          console.error(error);
-        }
-      };
+   
   
 
     render() {
