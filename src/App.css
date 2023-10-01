@@ -1,5 +1,14 @@
 @import url("https://fonts.googleapis.com/css?family=Press+Start+2P");
 @import url("https://fonts.googleapis.com/css?family=VT323");
+@import url('https://fonts.googleapis.com/css2?family=YourFontName&display=swap'); 
+@font-face {
+  font-family: 'Pixels';  
+  src: 
+      url('./assets/fonts/Pixels.ttf') format('truetype');  
+  font-weight: normal;
+  font-style: normal;
+}
+
 * {
   margin: 0;
   padding: 0;
@@ -91,14 +100,12 @@
   100% { transform: rotate(360deg); }
 }
 
-/* Adjust button styles as needed */
-
 * {
   box-sizing: border-box;
 }
 
 .footer {
-  height: 25px;
+  height: 35px;
   position: fixed;
   bottom: 0;
   left: 0;
@@ -106,14 +113,11 @@
   background-color: black;
   color: white;
   text-align: center;
-  font-family: 'Roboto, sans-serif'; 
-  font-size: 14px;
-  padding-top: 5px;  /* adjust this value to move the text down */
+  font-family: 'Pixels'; 
+  font-size: 24px;
+  padding-top: 4px; 
+
 }
-
-
-
-/* In your JSX */
 
 .overlay {
   opacity: 1;
@@ -145,7 +149,6 @@
     height: 10vh;
   }
 }
-
 
 .my-input-style {
   text-align: center;
