@@ -726,32 +726,35 @@ goToPreviousPage = () => {
           console.error(error);
         }
       };
+
+    
     connectAccount = async () => {
-        if (!window.ethereum) {
+      if (!window.ethereum) {
           console.log("MetaMask is not installed or not connected");
           return;
-        }
-
-        try {
+      }
+  
+      try {
           const accounts = await window.ethereum.request({
-            method: "eth_requestAccounts",
+              method: "eth_requestAccounts",
           });
-
+  
           if (accounts.length === 0) {
-            console.log("User denied account access");
-            return;
+              console.log("User denied account access");
+              return;
           }
-
+  
           const selectedAccount = accounts[0]; // Select the first account
-
+  
           this.props.setAccounts(accounts);
           this.setState({ isConnected: Boolean(selectedAccount) }, () => {
-            console.log("Connected Address:", selectedAccount);
+              console.log("Connected Address:", selectedAccount);
           });
-        } catch (error) {
+      } catch (error) {
           console.error(error);
-        }
-      };
+      }
+  };
+  
 
       componentDidMount() {
         this.checkNetwork();
@@ -795,20 +798,13 @@ render() {
         {isConnected && !isSwitchButton ? (<div>
         <BalButtonElement onClick={this.handleBalance} onMouseEnter={this.HoverOverPlay}>Balance</BalButtonElement>
         <DepButtonElement onClick={this.handleDeposit} onMouseEnter={this.HoverOverPlay}>Deposit</DepButtonElement>
+        <ApplyButtonElement onClick={() => {this.handleApplyClick();}} onMouseEnter={this.HoverOverPlay}>Apply</ApplyButtonElement>
         </div>
-      ) : (
-        <DepButtonElement onClick={isConnected ? this.handleNetwork : this.connectAccount}>
-          {isConnected ? "Switch Network" : "Connect"}
-        </DepButtonElement>
+      ) : (<div>
+        <DepButtonElement onClick={isConnected ? this.handleNetwork : this.connectAccount}>{isConnected ? "Switch Network" : "Connect"}</DepButtonElement>
+        </div>
       )}
-        <ApplyButtonElement 
-            onClick={() => {
-                this.handleApplyClick();
-            }} 
-            onMouseEnter={this.HoverOverPlay}
-        >
-            Apply
-        </ApplyButtonElement>
+
 
 
 

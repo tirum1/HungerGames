@@ -179,9 +179,12 @@ transition: background-color 0.2s ease;
 }
 `;
 
+
 function App() {
   const [accounts, setAccounts] = useState([]);
   const [currentComponent, setCurrentComponent] = useState("LandingPage");
+  const [loading, setLoading] = useState(true);
+
 
   const [isPlaying, setIsPlaying] = useState(false);
 
@@ -196,23 +199,45 @@ function App() {
     volume: 0.5
   }));
 
-  useEffect(() => {
-    setIsPlaying(true);
-    document.title = "Hunger Games";
-    const link = document.querySelector("link[rel*='icon']") || document.createElement('link');
-    link.type = 'image/x-icon';
-    link.rel = 'shortcut icon';
-    link.href = './assets/background/favicon.ico';
-    document.getElementsByTagName('head')[0].appendChild(link);
-  }, []);
+  const loadingBarStyle = {
+    height: '4px',
+    width: '100%',
+    position: 'fixed',
+    top: '0',
+    left: '0',
+    backgroundColor: '#ff4500',
+    zIndex: 1000,  
+    transition: 'width 2s'
+    };
 
+    const contentStyle = {
+      opacity: loading ? 0 : 1,
+      transition: 'opacity 0.5s'
+    };
+
+useEffect(() => {
+  setIsPlaying(true);
+  document.title = "Hunger Games";
+  const link = document.querySelector("link[rel*='icon']") || document.createElement('link');
+  link.type = 'image/x-icon';
+  link.rel = 'shortcut icon';
+  link.href = './assets/background/favicon.ico';
+  document.getElementsByTagName('head')[0].appendChild(link);
+
+  setTimeout(() => {
+      setLoading(false);
+  }, 100); // This will delay for 5 seconds
+}, []);
 
   function handlePageChange (pageName) {
     setCurrentComponent(pageName);
   }
 
   return (
+    <>
     <body className="background">
+    <div style={loadingBarStyle}></div>
+    <div style={contentStyle}>
       <div>
         <div className="App">
           <HGLogoContainer>
@@ -305,7 +330,9 @@ function App() {
           )}
         </div>
       </div>
+      </div>
     </body>
+    </>
   );
   
 
