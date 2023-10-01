@@ -758,42 +758,7 @@ class Shop extends Component {
                 </DescText>
             </div>
             )}
-            {this.state.isDepositModalOpen && (
-            <ModalOverlay>
-                <ModalContent>
-                <h2>Deposit</h2>
-                   <div className="form-group">
-                    <label htmlFor="hgmsAmount">$HGMS Amount:</label>
-                    <input
-                    type="text"
-                    id="hgmsAmount"
-                    className="form-control"
-                    ref={this.hgmsAmountRef}
-                    />
-                </div>
-                <div className="form-group">
-                    <label htmlFor="ethAmount">$ETH Amount:</label>
-                    <input
-                    type="text"
-                    id="ethAmount"
-                    className="form-control"
-                    ref={this.ethAmountRef}
-                    />
-                </div>
-                <div className="button-container">
-                    <button className="cancel-button" onClick={this.toggleDepositModal}>
-                    X
-                    </button>
-                    <button
-                    className="deposit-button"
-
-                  >
-                    Confirm
-                  </button>
-                </div>
-                </ModalContent>
-            </ModalOverlay>
-            )}
+           
 
     
                     <BackButtonContainer>
