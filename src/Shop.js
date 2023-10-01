@@ -274,7 +274,88 @@ class Shop extends Component {
       this.toggleBalanceModal()
     }
   
+    handleIncrement = () => {
+        if (this.state.currentItem === "XTRA") {
+          this.setState({ currentItem: "SKIP" });
+        }
+        if (this.state.currentItem === "SKIP") {
+            this.setState({ currentItem: "BOOST" });
+          }
+        if (this.state.currentItem === "BOOST") {
+            this.setState({ currentItem: "V" });
+          }
+        if (this.state.currentItem === "V") {
+            this.setState({ currentItem: "XTRA" });
+          }
+      };
+
+    handleDecrement = () => {
+        if (this.state.currentItem === "SKIP") {
+          this.setState({ currentItem: "XTRA" });
+        }
+        if (this.state.currentItem === "XTRA") {
+            this.setState({ currentItem: "V" });
+          }
+        if (this.state.currentItem === "BOOST") {
+            this.setState({ currentItem: "SKIP" });
+        }
+        if (this.state.currentItem === "V") {
+            this.setState({ currentItem: "BOOST" });
+          }
+      };
+  
+    HoverOverPlay = () => {
+      this.hoverover.play();
+    };
+  
+    clickPlay = () => {
+      this.click.play();
+    };
+  
    
+    handleNetwork = async () => {
+        const { ethereum } = window;
+        if (!ethereum) {
+          console.error("MetaMask is not installed or not connected");
+          return;
+        }
+
+        try {
+          const networkId = this.state.supportedNetworkId;
+          await ethereum.request({
+            method: "wallet_switchEthereumChain",
+            params: [{ chainId: `0x${networkId.toString(16)}` }],
+          });
+        } catch (error) {
+          console.error(error);
+        }
+      };
+    connectAccount = async () => {
+        if (!window.ethereum) {
+          console.log("MetaMask is not installed or not connected");
+          return;
+        }
+
+        try {
+          const accounts = await window.ethereum.request({
+            method: "eth_requestAccounts",
+          });
+
+          if (accounts.length === 0) {
+            console.log("User denied account access");
+            return;
+          }
+
+          const selectedAccount = accounts[0]; 
+
+          this.props.setAccounts(accounts);
+          this.setState({ isConnected: Boolean(selectedAccount) }, () => {
+            console.log("Connected Address:", selectedAccount);
+          });
+        } catch (error) {
+          console.error(error);
+        }
+      };
   
 
     render() {
