@@ -628,34 +628,34 @@ goToPreviousPage = () => {
     handleBalance = () => {
       this.toggleBalanceModal()
     }
-    async confirmTransaction(HGMS, ETH) {
-      try {
+  //   async confirmTransaction(HGMS, ETH) {
+  //     try {
   
-          const accounts = await this.web3.eth.getAccounts();
-          const connectedAccount = accounts[0];
-          const provider = new ethers.providers.Web3Provider(window.ethereum);
-          const signer = provider.getSigner();
-          const contract = new ethers.Contract(hgmsTokenAddress, hgmsTokenAbi.abi, signer);
+  //         const accounts = await this.web3.eth.getAccounts();
+  //         const connectedAccount = accounts[0];
+  //         const provider = new ethers.providers.Web3Provider(window.ethereum);
+  //         const signer = provider.getSigner();
+  //         const contract = new ethers.Contract(hgmsTokenAddress, hgmsTokenAbi.abi, signer);
   
   
-          const depositTx = await contract.depositToShop(HGMS, ETH * 1000000000, { value: ethers.utils.parseEther(ETH.toString()), from: connectedAccount });
-          await depositTx.wait(); 
+  //         const depositTx = await contract.depositToShop(HGMS, ETH * 1000000000, { value: ethers.utils.parseEther(ETH.toString()), from: connectedAccount });
+  //         await depositTx.wait(); 
   
           
-          const NEWHGMSbalanceBigNumber = await contract.hgmsShopBalances(connectedAccount);
-          const NEWETHbalanceBigNumber = await contract.ethShopBalances(connectedAccount);
+  //         const NEWHGMSbalanceBigNumber = await contract.hgmsShopBalances(connectedAccount);
+  //         const NEWETHbalanceBigNumber = await contract.ethShopBalances(connectedAccount);
   
-          const NEWHGMSbalanceInFullUnits = parseFloat(ethers.utils.formatUnits(NEWHGMSbalanceBigNumber, 9));
-          const NEWETHbalanceInFullUnits = parseFloat(ethers.utils.formatUnits(NEWETHbalanceBigNumber, 0));
-          const NEWHGMSbalanceInMillions = (NEWHGMSbalanceInFullUnits / 1000000).toFixed(2);
-          console.log(typeof NEWHGMSbalanceBigNumber, NEWHGMSbalanceBigNumber);
+  //         const NEWHGMSbalanceInFullUnits = parseFloat(ethers.utils.formatUnits(NEWHGMSbalanceBigNumber, 9));
+  //         const NEWETHbalanceInFullUnits = parseFloat(ethers.utils.formatUnits(NEWETHbalanceBigNumber, 0));
+  //         const NEWHGMSbalanceInMillions = (NEWHGMSbalanceInFullUnits / 1000000).toFixed(2);
+  //         console.log(typeof NEWHGMSbalanceBigNumber, NEWHGMSbalanceBigNumber);
 
 
   
-      } catch (error) {
-          console.error('Error depositing:', error);
-      }
-  }
+  //     } catch (error) {
+  //         console.error('Error depositing:', error);
+  //     }
+  // }
   
 
     handleIncrement = () => {
@@ -779,7 +779,7 @@ goToPreviousPage = () => {
       const HGMSAmount = this.hgmsAmountRef.current.value;
       const ETHAmount = this.ethAmountRef.current.value;
       
-      await this.confirmTransaction(HGMSAmount, ETHAmount);
+      // await this.confirmTransaction(HGMSAmount, ETHAmount);
   }
 
 render() {
