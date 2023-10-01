@@ -600,7 +600,7 @@ class Shop extends Component {
           const networkId = parseInt(networkIdHex, 16);
           const isNetwork = networkId === this.state.supportedNetworkId;
           this.setState({
-            isSwitchButton: !isNetwork, // Show switch button if not connected
+            isSwitchButton: !isNetwork, 
             networkId,
           });
         } catch (error) {
@@ -665,9 +665,7 @@ class Shop extends Component {
     render() {
         const { isConnected, isSwitchButton } = this.state;
         const { depositAmount, onDeposit, onClose } = this.props;
-        const indexOfLastNFT = this.state.currentPage * this.state.nftsPerPage;
-        const indexOfFirstNFT = indexOfLastNFT - this.state.nftsPerPage;
-      //  const currentNFTs = this.state.userNFTs.slice(indexOfFirstNFT, indexOfLastNFT);
+
     
         return (
           <div>
