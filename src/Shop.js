@@ -495,9 +495,7 @@ class Shop extends Component {
         currentPage: 1,
         nftsPerPage: 10 
     };
-    this.hgmsAmountRef = React.createRef();
-    this.ethAmountRef = React.createRef();
-    
+
     this.hoverover = new Howl({
       src: HoverSound,
       volume: 0.5,
