@@ -1,8 +1,11 @@
 @import url("https://fonts.googleapis.com/css?family=Press+Start+2P");
 @import url("https://fonts.googleapis.com/css?family=VT323");
-
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box; /* This ensures padding and border are included in the total width/height */
+}
 .background {
-  /* Background Gradient */
   background: linear-gradient(
     45deg,
     #ff0000,
@@ -12,24 +15,24 @@
     #0000ff,
     #8080ff
   );
-
-  /* Background Image */
-  background-image: url('./assets/background/BG.png'); /* Replace 'your-image-url.jpg' with your image URL */
+  
+  background-image: url('./assets/background/BG.png'); 
   background-repeat: no-repeat;
-  background-size: cover; /* Cover the entire screen */
-  background-position: center bottom; /* Position at the center of the horizontal axis and the bottom of the vertical axis */
+  background-size: cover;  /* this ensures that the image will cover the viewport */
+  background-position: center bottom;
   
   color: brown;
   font-family: "Press Start 2P", "VT323";
-  background-size: 100% 100%;
   animation: gradientAnimation 15s ease infinite;
   text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.8);
   filter: drop-shadow(2px 2px 4px rgba(0, 0, 0, 0.8));
-  height: 103vh;
+  height: 100vh;  /* fills the height of the viewport */
   margin: 0;
   display: flex;
+  flex-direction: column;
   align-items: center;
   justify-content: center;
+  overflow: hidden;
 }
 
 
@@ -94,19 +97,21 @@
   box-sizing: border-box;
 }
 
-.sticky-footer {
+.footer {
+  height: 25px;
   position: fixed;
   bottom: 0;
   left: 0;
   right: 0;
-  width: 100%;
   background-color: black;
   color: white;
   text-align: center;
-  padding: 10px 0;
-  z-index: 999;
   font-family: 'Roboto, sans-serif'; 
+  font-size: 14px;
+  padding-top: 5px;  /* adjust this value to move the text down */
 }
+
+
 
 /* In your JSX */
 

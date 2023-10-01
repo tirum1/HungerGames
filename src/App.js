@@ -332,9 +332,9 @@ useEffect(() => {
           )}
           
         </div>
-        <div className="sticky-footer">
-   ©2024 HungerGames. Devved by Dev.
-</div>
+        <div className="footer">
+          ©2024 HungerGames. Devved by Dev.
+        </div>
 
     </body>
     
