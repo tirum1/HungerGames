@@ -467,8 +467,6 @@ const NFTModalContent = styled.div`
 
 `;
 
-
-
 class Shop extends Component {
 
   constructor(props) {
@@ -760,7 +758,7 @@ goToPreviousPage = () => {
         this.fetchBalance();
     
         
-        this.checkNetworkInterval = setInterval(this.checkNetwork, 10000); 
+        this.checkNetworkInterval = setInterval(this.checkNetwork, 1000); 
         this.fetchBalanceInterval = setInterval(this.fetchBalance, 10000); 
     }
     
