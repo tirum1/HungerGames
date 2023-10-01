@@ -3,7 +3,7 @@ import { useState, useRef } from "react";
 import "./App.css";
 import Mint from "./Mint";
 import Read from './Read'; 
-import Shop from './Shop'; 
+//import Shop from './Shop'; 
 import Stake from './Stake'; 
 import Fight from './Fight'; 
 import { Flex } from "@chakra-ui/react";
