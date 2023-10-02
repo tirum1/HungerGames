@@ -184,6 +184,7 @@ function App() {
   const [currentComponent, setCurrentComponent] = useState("LandingPage");
   const [loading, setLoading] = useState(true);
   const [windowWidth, setWindowWidth] = useState(window.innerWidth);
+  const [windowheight, setWindowHeight] = useState(window.innerWidth);
 
   const [isPlaying, setIsPlaying] = useState(false);
 
@@ -230,10 +231,13 @@ useEffect(() => {
   setTimeout(() => {
       setLoading(false);
   }, 1000); // This will delay for 5 seconds
-  const handleResize = () => setWindowWidth(window.innerWidth);
-  window.addEventListener('resize', handleResize);
+
+  const handleWidthResize = () => setWindowWidth(window.innerWidth);
+  const handleHeightResize = () => setWindowHeight(window.innerHeight);
+  window.addEventListener('resize', handleHeightResize);
   return () => {
-    window.removeEventListener('resize', handleResize);
+    window.removeEventListener("resize", handleWidthResize);
+    window.removeEventListener('resize', handleHeightResize);
   };
 }, []);
 

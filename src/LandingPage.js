@@ -60,13 +60,7 @@ const Title = styled.h1`
   font-size: calc(2vh + 2vw);
   font-weight: bold;
   color: #000; /* Updated color to black */
-  text-shadow: 
-    0px 0px 15px rgba(128, 128, 128, 0.9),
-    0px 0px 30px rgba(128, 128, 128, 0.8),
-    0px 0px 45px rgba(128, 128, 128, 0.7),
-    0px 0px 60px rgba(128, 128, 128, 0.6),
-    0px 0px 75px rgba(128, 128, 128, 0.5),
-    0px 0px 90px rgba(128, 128, 128, 0.4);
+  
   &:hover {
     color: red;
   }
