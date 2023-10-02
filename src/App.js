@@ -183,7 +183,7 @@ function App() {
   const [accounts, setAccounts] = useState([]);
   const [currentComponent, setCurrentComponent] = useState("LandingPage");
   const [loading, setLoading] = useState(true);
-
+  const [windowWidth, setWindowWidth] = useState(window.innerWidth);
 
   const [isPlaying, setIsPlaying] = useState(false);
 
@@ -207,8 +207,8 @@ function App() {
     height: '120px',
     animation: 'spin 2s linear infinite',
     position: 'fixed',
-    top: '50%',
-    left: '45%',
+    top: windowWidth >= 390 ? '40%' : '50%',
+    left: windowWidth >= 390 ? '35%' : '45%',  // Adjust the left position based on screen width
     transform: 'translate(-50%, -50%)',
     zIndex: 300,
   };
@@ -230,6 +230,11 @@ useEffect(() => {
   setTimeout(() => {
       setLoading(false);
   }, 1000); // This will delay for 5 seconds
+  const handleResize = () => setWindowWidth(window.innerWidth);
+  window.addEventListener('resize', handleResize);
+  return () => {
+    window.removeEventListener('resize', handleResize);
+  };
 }, []);
 
   function handlePageChange (pageName) {

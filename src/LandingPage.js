@@ -55,7 +55,7 @@ const ShopButtonContainer = styled.div`
 `;
 const Title = styled.h1`
   position: absolute;
-  top: 15vh;
+  top: 25vh;
   left: 32vw;
   font-size: calc(2vh + 2vw);
   font-weight: bold;
@@ -84,7 +84,7 @@ const Description = styled.p`
 `;
 const Text = styled.p`
   position: absolute;
-  top: 23vh;
+  top: 35vh;
   left: 32vw;
   font-size: calc(1vh + 1vw);
   color: #fff;
