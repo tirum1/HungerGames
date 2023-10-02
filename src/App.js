@@ -211,13 +211,13 @@ function App() {
     return '45%';
 }
 
-const determineTopValue = (height) => {
-    if (height >= 425) return '38%';
-    if (height >= 390) return '35%';
-    if (height >= 337) return '32%';
-    if (height >= 320) return '30%';
-    return '45%';
-}
+  const determineTopValue = (height) => {
+      if (height >= 425) return '38%';
+      if (height >= 390) return '35%';
+      if (height >= 337) return '32%';
+      if (height >= 320) return '30%';
+      return '45%';
+  }
 
 
   const leftValue = determineLeftValue(windowWidth);
@@ -256,7 +256,7 @@ const determineTopValue = (height) => {
   
       setTimeout(() => {
           setLoading(false);
-      }, 50000000); 
+      }, 1000); 
   
       const handleResize = () => {
           setWindowWidth(window.innerWidth);
