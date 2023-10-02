@@ -198,8 +198,32 @@ function App() {
     loop: false,
     volume: 0.5
   }));
+    
+  const determineLeftValue = (width) => {
+    if (width >= 2560) return '47.8%';
+    if (width >= 1440) return '47%';
+    if (width >= 1024) return '45%';
+    if (width >= 768) return '42%';
+    if (width >= 500) return '10%';
+    if (width >= 425) return '38%';
+    if (width >= 375) return '35%';
+    if (width >= 320) return '32%';
+    return '45%';
+}
 
+const determineTopValue = (height) => {
+    if (height >= 425) return '38%';
+    if (height >= 390) return '35%';
+    if (height >= 337) return '32%';
+    if (height >= 320) return '30%';
+    return '45%';
+}
+
+
+  const leftValue = determineLeftValue(windowWidth);
+  const topValue = determineTopValue(windowheight);
   
+
   const loadingCircleStyle = {
     border: '16px solid #f3f3f3', // Light gray color
     borderTop: '16px solid #ff4500', // The color of the spinning section
@@ -208,38 +232,44 @@ function App() {
     height: '120px',
     animation: 'spin 2s linear infinite',
     position: 'fixed',
-    top: windowWidth >= 390 ? '40%' : '50%',
-    left: windowWidth >= 390 ? '35%' : '45%',  // Adjust the left position based on screen width
+    top: topValue,
+    left: leftValue,
     transform: 'translate(-50%, -50%)',
     zIndex: 300,
-  };
-  
+};
+
+
     const contentStyle = {
       opacity: loading ? 0 : 1,
       transition: 'opacity 0.5s'
     };
 
-useEffect(() => {
-  setIsPlaying(true);
-  document.title = "Hunger Games";
-  const link = document.querySelector("link[rel*='icon']") || document.createElement('link');
-  link.type = 'image/x-icon';
-  link.rel = 'shortcut icon';
-  link.href = './assets/background/favicon.ico';
-  document.getElementsByTagName('head')[0].appendChild(link);
+    useEffect(() => {
+      setIsPlaying(true);
+      document.title = "Hunger Games";
+  
+      const link = document.querySelector("link[rel*='icon']") || document.createElement('link');
+      link.type = 'image/x-icon';
+      link.rel = 'shortcut icon';
+      link.href = './assets/background/favicon.ico';
+      document.getElementsByTagName('head')[0].appendChild(link);
+  
+      setTimeout(() => {
+          setLoading(false);
+      }, 50000000); 
+  
+      const handleResize = () => {
+          setWindowWidth(window.innerWidth);
+          setWindowHeight(window.innerHeight);
+      };
+  
+      window.addEventListener('resize', handleResize);
+  
+      return () => {
+          window.removeEventListener("resize", handleResize);
+      };
+  }, []);
 
-  setTimeout(() => {
-      setLoading(false);
-  }, 1000); // This will delay for 5 seconds
-
-  const handleWidthResize = () => setWindowWidth(window.innerWidth);
-  const handleHeightResize = () => setWindowHeight(window.innerHeight);
-  window.addEventListener('resize', handleHeightResize);
-  return () => {
-    window.removeEventListener("resize", handleWidthResize);
-    window.removeEventListener('resize', handleHeightResize);
-  };
-}, []);
 
   function handlePageChange (pageName) {
     setCurrentComponent(pageName);
