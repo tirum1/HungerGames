@@ -16,7 +16,7 @@ const Container = styled.div`
 `;
 const MintButtonContainer = styled.div`
   position: absolute;
-  top: 80vh; /* Adjust the vertical position as needed */
+  top: 50vh; /* Adjust the vertical position as needed */
   left: 45vw; /* Adjust the value as needed */
   transform: translate(-50%, -50%);
 `;
@@ -34,7 +34,7 @@ const radiantGlow = keyframes`
 
 const FightButtonContainer = styled.div`
 position: absolute;
-top: 80vh; /* Adjust the vertical position as needed */
+top: 50vh; /* Adjust the vertical position as needed */
 left: 35vw; /* Adjust the value as needed */
 transform: translate(-50%, -50%);
   
@@ -43,13 +43,13 @@ transform: translate(-50%, -50%);
 
 const ReadMeButtonContainer = styled.div`
   position: absolute;
-  top: 80vh; /* Adjust the vertical position as needed */
+  top: 50vh; /* Adjust the vertical position as needed */
   left: 55vw; /* Adjust the value as needed */
   transform: translate(-50%, -50%);
 `;
 const ShopButtonContainer = styled.div`
   position: absolute;
-  top: 80vh; /* Adjust the vertical position as needed */
+  top: 50vh; /* Adjust the vertical position as needed */
   left: 65vw; /* Adjust the value as needed */
   transform: translate(-50%, -50%);
 `;
@@ -198,9 +198,6 @@ class LandingPage extends Component {
         <Text>
           $HGMS 0x0000000000000000
         </Text>
-          <ImageContainer>
-            <Image src={NFTImage} alt="NFT" />
-          </ImageContainer>
           <MintButtonContainer><ButtonElement onClick={() => {
                           this.handleMint();
                           this.clickPlay();
