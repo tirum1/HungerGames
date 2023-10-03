@@ -64,6 +64,40 @@ const Title = styled.h1`
   &:hover {
     color: red;
   }
+  // For left value
+  @media (min-width: 2560px) {
+    left: 34%;
+  }
+  @media (min-width: 1440px) and (max-width: 2559px) {
+    left: 32%;
+  }
+  @media (min-width: 1024px) and (max-width: 1439px) {
+    left: 40%;
+  }
+  @media (min-width: 844px) and (max-width: 1023px) {
+    left: 42%;
+  }
+  @media (min-width: 768px) and (max-width: 843px) {
+    left: 42%;
+  }
+  @media (min-width: 500px) and (max-width: 767px) {
+    left: 42%;
+  }
+  @media (min-width: 425px) and (max-width: 499px) {
+    left: 38%;
+  }
+  @media (min-width: 390px) and (max-width: 424px) {
+    left: 15%;
+    top: 30%;
+  }
+  @media (min-width: 375px) and (max-width: 389px) {
+    left: 35%;
+  }
+  @media (min-width: 320px) and (max-width: 374px) {
+    left: 32%;
+  }
+
+
 `;
 
 const Description = styled.p`
@@ -87,6 +121,46 @@ const Text = styled.p`
 
   &:hover {
     color: red;
+  }
+  @media (min-width: 2560px) {
+    left: 34%;
+    top: 35%;
+  }
+  @media (min-width: 1440px) and (max-width: 2559px) {
+    left: 16%;
+    top: 35%;
+  }
+  @media (min-width: 1024px) and (max-width: 1439px) {
+    left: 30%;
+    top: 35%;
+  }
+  @media (min-width: 844px) and (max-width: 1023px) {
+    left: 25%;
+    top: 35%;
+  }
+  @media (min-width: 768px) and (max-width: 843px) {
+    left: 25%;
+    top: 35%;
+  }
+  @media (min-width: 500px) and (max-width: 767px) {
+    left: 15%;
+    top: 35%;
+  }
+  @media (min-width: 425px) and (max-width: 499px) {
+    left: 15%;
+    top: 35%;
+  }
+  @media (min-width: 390px) and (max-width: 424px) {
+    left: 15%;
+    top: 35%;
+  }
+  @media (min-width: 375px) and (max-width: 389px) {
+    left: 11%;
+    top: 35%;
+  }
+  @media (min-width: 320px) and (max-width: 374px) {
+    left: 5%;
+    top: 35%
   }
 `;
 const shadowAnimation = keyframes`
@@ -190,7 +264,7 @@ class LandingPage extends Component {
           
         {/* Add the additional text here */}
         <Text>
-          $HGMS 0x0000000000000000
+          $HGMS 0x73229e7c7d8f9276e7a69cb0cc22ec503cf9c7c6
         </Text>
           <MintButtonContainer><ButtonElement onClick={() => {
                           this.handleMint();

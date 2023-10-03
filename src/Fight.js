@@ -129,7 +129,7 @@ class Fight extends Component {
                           }}
                           onMouseEnter={this.HoverOverPlay}
                         >
-                          Fight
+                          Queue
                         </ButtonElement>
             <BackButtonContainer>
                           <ButtonElement

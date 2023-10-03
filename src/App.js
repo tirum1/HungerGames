@@ -185,7 +185,6 @@ function App() {
   const [loading, setLoading] = useState(true);
   const [windowWidth, setWindowWidth] = useState(window.innerWidth);
   const [windowheight, setWindowHeight] = useState(window.innerWidth);
-
   const [isPlaying, setIsPlaying] = useState(false);
 
   const clickSoundRef = useRef(new Howl({
@@ -198,14 +197,23 @@ function App() {
     loop: false,
     volume: 0.5
   }));
-    
+  const handleLoad = () => {
+    setLoading(false);  
+  };
+  
+  const handleResize = () => {
+    setWindowWidth(window.innerWidth);
+    setWindowHeight(window.innerHeight);
+  };
   const determineLeftValue = (width) => {
     if (width >= 2560) return '47.8%';
     if (width >= 1440) return '47%';
     if (width >= 1024) return '45%';
+    if (width >= 844) return '42%';
     if (width >= 768) return '42%';
-    if (width >= 500) return '10%';
+    if (width >= 500) return '42%';
     if (width >= 425) return '38%';
+    if (width >= 390) return '38%';
     if (width >= 375) return '35%';
     if (width >= 320) return '32%';
     return '45%';
@@ -238,7 +246,6 @@ function App() {
     zIndex: 300,
 };
 
-
     const contentStyle = {
       opacity: loading ? 0 : 1,
       transition: 'opacity 0.5s'
@@ -254,32 +261,27 @@ function App() {
       link.href = './assets/background/favicon.ico';
       document.getElementsByTagName('head')[0].appendChild(link);
   
-      setTimeout(() => {
-          setLoading(false);
-      }, 1000); 
-  
-      const handleResize = () => {
-          setWindowWidth(window.innerWidth);
-          setWindowHeight(window.innerHeight);
-      };
-  
       window.addEventListener('resize', handleResize);
+      window.addEventListener('load', handleLoad);
   
       return () => {
-          window.removeEventListener("resize", handleResize);
+        window.removeEventListener("resize", handleResize);
+        window.removeEventListener('load', handleLoad); 
       };
-  }, []);
-
-
+      
+    }, []);
+  
   function handlePageChange (pageName) {
     setCurrentComponent(pageName);
   }
 
+
+  if (loading) {
+    return <div style={loadingCircleStyle}></div>;
+  }
   return (
     <>
-    {loading && <div style={loadingCircleStyle}></div>}
     <body className="background" style={contentStyle}>
-     
         <div className="App">
           <HGLogoContainer>
             <a href="https://gnomescollective.xyz">
@@ -378,7 +380,7 @@ function App() {
     </body>
     
     </>
-  );
+  ) ;
   
 }
 
