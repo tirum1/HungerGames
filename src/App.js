@@ -186,6 +186,11 @@ function App() {
   const [windowWidth, setWindowWidth] = useState(window.innerWidth);
   const [windowheight, setWindowHeight] = useState(window.innerWidth);
   const [isPlaying, setIsPlaying] = useState(false);
+  const [fadeLoading, setFadeLoading] = useState(false);
+  const [fadeInContent, setFadeInContent] = useState(false);
+  const fadeInStyle = fadeInContent ? { opacity: 1, transition: 'opacity 0.5s' } : { opacity: 0 };
+ 
+
 
   const clickSoundRef = useRef(new Howl({
     src: clickSound,
@@ -198,9 +203,16 @@ function App() {
     volume: 0.5
   }));
   const handleLoad = () => {
-    setLoading(false);  
-  };
-  
+    const fadeDuration = 1500; // 0.5s for the transition + 1s for the delay
+    // Start the fade-out animation for the loader after a delay
+    setTimeout(() => {
+      setLoading(false);
+      setFadeLoading(true);
+      setFadeInContent(true);
+    }, fadeDuration);
+};
+
+
   const handleResize = () => {
     setWindowWidth(window.innerWidth);
     setWindowHeight(window.innerHeight);
@@ -244,8 +256,10 @@ function App() {
     left: leftValue,
     transform: 'translate(-50%, -50%)',
     zIndex: 300,
+    opacity: 1, 
+    transition: 'opacity 0.5s'
 };
-
+const finalLoadingStyle = fadeLoading ? { ...loadingCircleStyle, opacity: 0 } : loadingCircleStyle;
     const contentStyle = {
       opacity: loading ? 0 : 1,
       transition: 'opacity 0.5s'
@@ -266,22 +280,27 @@ function App() {
   
       return () => {
         window.removeEventListener("resize", handleResize);
-        window.removeEventListener('load', handleLoad); 
+        window.removeEventListener('load', handleLoad);
       };
-      
     }, []);
   
   function handlePageChange (pageName) {
     setCurrentComponent(pageName);
   }
+  useEffect(() => {
+    if (!loading) {
+      setFadeInContent(true);
+    }
+  }, [loading]);
 
 
-  if (loading) {
-    return <div style={loadingCircleStyle}></div>;
-  }
+  const loaderElement = !fadeInContent && (
+    <div style={finalLoadingStyle}></div>
+  );
   return (
     <>
-    <body className="background" style={contentStyle}>
+    {loaderElement}
+      <body className="background" style={{...contentStyle, ...fadeInStyle}}>
         <div className="App">
           <HGLogoContainer>
             <a href="https://gnomescollective.xyz">
