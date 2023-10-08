@@ -5,6 +5,13 @@ import NFTImage from './assets/background/1.png';
 import clickSound from "./assets/sound/hover.mp3";
 import {Howl,Howler} from "howler";
 import HoverSound from "./assets/sound/click-21156.mp3";
+import BookButton from './assets/Items/Book Button.gif';
+import BookStill from './assets/Items/Book Still.png';
+import BookDown from './assets/Items/Book Pressed.png';
+import SwordStill from './assets/Items/Sword Still.png';
+import SwordButton from './assets/Items/Sword Button.gif';
+import SwordDown from './assets/Items/Sword Pressed.png';
+
 
 
 const Container = styled.div`
@@ -32,21 +39,6 @@ const radiantGlow = keyframes`
   }
 `;
 
-const FightButtonContainer = styled.div`
-position: absolute;
-top: 50vh; /* Adjust the vertical position as needed */
-left: 35vw; /* Adjust the value as needed */
-transform: translate(-50%, -50%);
-  
-
-`;
-
-const ReadMeButtonContainer = styled.div`
-  position: absolute;
-  top: 50vh; /* Adjust the vertical position as needed */
-  left: 55vw; /* Adjust the value as needed */
-  transform: translate(-50%, -50%);
-`;
 const ShopButtonContainer = styled.div`
   position: absolute;
   top: 50vh; /* Adjust the vertical position as needed */
@@ -122,46 +114,35 @@ const Text = styled.p`
   &:hover {
     color: red;
   }
-  @media (min-width: 2560px) {
-    left: 34%;
-    top: 35%;
+
+`;
+const BATTLEText = styled.p`
+  position: absolute;
+  top: 35vh;
+  left: 60vw;
+  font-size: calc(1vh + 1vw);
+  color: #fff;
+  margin-bottom: 20px;
+  text-align: center;
+
+  &:hover {
+    color: red;
   }
-  @media (min-width: 1440px) and (max-width: 2559px) {
-    left: 16%;
-    top: 35%;
+
+`;
+const NFTText = styled.p`
+  position: absolute;
+  top: 35vh;
+  left: 32vw;
+  font-size: calc(1vh + 1vw);
+  color: #fff;
+  margin-bottom: 20px;
+  text-align: center;
+
+  &:hover {
+    color: red;
   }
-  @media (min-width: 1024px) and (max-width: 1439px) {
-    left: 30%;
-    top: 35%;
-  }
-  @media (min-width: 844px) and (max-width: 1023px) {
-    left: 25%;
-    top: 35%;
-  }
-  @media (min-width: 768px) and (max-width: 843px) {
-    left: 25%;
-    top: 35%;
-  }
-  @media (min-width: 500px) and (max-width: 767px) {
-    left: 15%;
-    top: 35%;
-  }
-  @media (min-width: 425px) and (max-width: 499px) {
-    left: 15%;
-    top: 35%;
-  }
-  @media (min-width: 390px) and (max-width: 424px) {
-    left: 15%;
-    top: 35%;
-  }
-  @media (min-width: 375px) and (max-width: 389px) {
-    left: 11%;
-    top: 35%;
-  }
-  @media (min-width: 320px) and (max-width: 374px) {
-    left: 5%;
-    top: 35%
-  }
+
 `;
 const shadowAnimation = keyframes`
   0% {
@@ -191,6 +172,75 @@ const Image = styled.img`
   border: 2px solid #0000;
   box-shadow: 0px 0px 180px rgba(0, 102, 255, 0.3);
 `;
+const SwordElement = styled.div`
+  position: absolute;
+  top: 50vh; 
+  left: 35vw;
+  width: 60px; /* Adjust as needed */
+  height: 50px; /* Adjust as needed */
+  transform: translate(-50%, -50%);
+  cursor: pointer;
+  transition: transform 0.2s;
+  
+  img {
+    width: 100%; 
+    height: auto;
+  }
+`;
+
+const BookElement = styled.div`
+  position: absolute;
+  top: 50vh; 
+  left: 55vw;
+  width: 60px; /* Adjust as needed */
+  height: 50px; /* Adjust as needed */
+  transform: translate(-50%, -50%);
+  cursor: pointer;
+  transition: transform 0.2s;
+  
+
+  img {
+    width: 100%; 
+    height: auto;
+  }
+`;
+const HGMSCopyIcon = styled.span`
+  cursor: pointer;
+  font-size: 24px; 
+  position: absolute;
+  top: 35vh;
+  left: 32vw;
+
+  &:hover {
+    opacity: 0.8;
+    color: Blue;
+  }
+`;
+const BATTLECopyIcon = styled.span`
+  cursor: pointer;
+  font-size: 24px; 
+  position: absolute;
+  top: 35vh;
+  left: 60vw;
+
+  &:hover {
+    opacity: 0.8;
+    color: Blue;
+  }
+`;
+const NFTCopyIcon = styled.span`
+  cursor: pointer;
+  font-size: 24px; 
+  position: absolute;
+  top: 35vh;
+  left: 32vw;
+
+  &:hover {
+    opacity: 0.8;
+    color: Blue;
+  }
+`;
+
 const ButtonElement = styled.button`
   background-color: #833929;
   border-radius: 5px;
@@ -211,14 +261,24 @@ const ButtonElement = styled.button`
 class LandingPage extends Component {
   constructor(props) {
     super(props);
-    this.hoverover = new Howl({ src: HoverSound,
-    volume: 0.5 });
+    this.state = {
+        fightImage: SwordStill,
+        readImage: BookStill,
+        
+        isMouseDown: false,
+        mousedownTime: 0,
+    };
+    this.hoverover = new Howl({ 
+      src: HoverSound,
+      volume: 0.5 
+    });
     this.click = new Howl({
       src: clickSound,
       volume: 0.3,
     });
-    // You can access props using this.props here or initialize state if needed
-  }
+
+}
+
   HoverOverPlay = () => {
     this.hoverover.play();
 }
@@ -231,24 +291,138 @@ class LandingPage extends Component {
       onButtonClick('Mint');
     }
   };
-  handleFight = () => {
-    const { onButtonClick } = this.props;
-    if (typeof onButtonClick === 'function') {
-      onButtonClick('Fight');
+
+  componentWillUnmount() {
+    if (this.fightTimeout) {
+        clearTimeout(this.fightTimeout);
     }
-  };
-  handleRead = () => {
-    const { onButtonClick } = this.props;
-    if (typeof onButtonClick === 'function') {
-      onButtonClick('Read'); 
+    if (this.bookTimeout) { // Ensure you also clear the bookTimeout
+        clearTimeout(this.bookTimeout);
     }
-  };
+}
+handleFightMouseDown = () => {
+  this.setState({ 
+      fightImage: SwordButton,
+      mousedownTime: Date.now()
+  });
+
+  if (this.fightTimeout) {
+      clearTimeout(this.fightTimeout);
+  }
+
+  this.fightTimeout = setTimeout(() => {
+      if (this.state.fightImage === SwordButton) {
+          this.setState({ fightImage: SwordDown });
+      }
+  }, 700);
+};
+
+handleFightMouseUp = () => {
+  if (this.fightTimeout) {
+      clearTimeout(this.fightTimeout);
+  }
+
+  const elapsedTime = Date.now() - this.state.mousedownTime;
+
+  if (elapsedTime < 900) {
+      this.setState({ fightImage: SwordButton });
+      setTimeout(() => {
+          this.setState({ fightImage: SwordStill });
+          this.navigateFight();
+      }, 900 - elapsedTime);
+  } else {
+      this.setState({ fightImage: SwordStill });
+      this.navigateFight();
+  }
+};
+
+navigateFight = () => {
+  const { onButtonClick } = this.props;
+  if (typeof onButtonClick === 'function') {
+    onButtonClick('Fight'); 
+  }
+};
+
+
+
+handleBookMouseDown = () => {
+  this.setState({ 
+      readImage: BookButton, // Corrected this to 'readImage'
+      mousedownTime: Date.now()
+  });
+
+  if (this.bookTimeout) { // Different timeout for book actions
+      clearTimeout(this.bookTimeout);
+  }
+
+  this.bookTimeout = setTimeout(() => {
+      if (this.state.readImage === BookButton) { // Corrected this to 'readImage'
+          this.setState({ readImage: BookDown }); // And this
+      }
+  }, 800);
+};
+
+handleBookMouseUp = () => {
+  if (this.bookTimeout) { // Different timeout for book actions
+      clearTimeout(this.bookTimeout);
+  }
+
+  const elapsedTime = Date.now() - this.state.mousedownTime;
+
+  if (elapsedTime < 900) {
+      this.setState({ readImage: BookButton }); // Corrected this
+      setTimeout(() => {
+          this.setState({ readImage: BookStill }); // And this
+          this.navigateBook();
+      }, 900 - elapsedTime);
+  } else {
+      this.setState({ readImage: BookStill }); // And this too
+      this.navigateBook();
+  }
+};
+
+navigateBook = () => {
+  const { onButtonClick } = this.props;
+  if (typeof onButtonClick === 'function') {
+   onButtonClick('Read'); 
+  }
+};
+copyHGMSAddress = async () => {
+  const textToCopy = "0x73229e7c7d8f9276e7a69cb0cc22ec503cf9c7c6";
+  try {
+      await navigator.clipboard.writeText(textToCopy);
+      this.setState({ copied: true });
+
+      // Remove copied feedback after a few seconds
+      setTimeout(() => {
+        this.setState({ copied: false });
+      }, 3000);
+  } catch (err) {
+      console.error('Failed to copy address: ', err);
+  }
+};
+copyBATTLEAddress = async () => {
+  const textToCopy = "BATTLE";
+  try {
+      await navigator.clipboard.writeText(textToCopy);
+      this.setState({ copiedBATTLE: true });
+
+      // Remove copied feedback after a few seconds
+      setTimeout(() => {
+        this.setState({ copiedBATTLE: false });
+      }, 3000);
+  } catch (err) {
+      console.error('Failed to copy address: ', err);
+  }
+};
+
   handleShop = () => {
     const { onButtonClick } = this.props;
     if (typeof onButtonClick === 'function') {
       onButtonClick('Shop'); 
     }
   };
+
   handleStake = () => {
     const { onButtonClick } = this.props;
     if (typeof onButtonClick === 'function') {
@@ -257,39 +431,58 @@ class LandingPage extends Component {
   }
   render() {
     return (
-      
       <div>
-        <div><Title>HUNGER GAMES</Title></div>
+        <Title>HUNGER GAMES</Title>
         <Container>
-          
-        {/* Add the additional text here */}
-        <Text>
-          $HGMS 0x73229e7c7d8f9276e7a69cb0cc22ec503cf9c7c6
-        </Text>
-          <MintButtonContainer><ButtonElement onClick={() => {
-                          this.handleMint();
-                          this.clickPlay();
-                        } }onMouseEnter={this.HoverOverPlay}>Mint</ButtonElement></MintButtonContainer>
-          <ShopButtonContainer><ButtonElement onClick={() => {
-                          this.handleShop();
-                          this.clickPlay();
-                        } }onMouseEnter={this.HoverOverPlay}>Shop</ButtonElement></ShopButtonContainer>
-         <FightButtonContainer><ButtonElement onClick={() => {
-                          this.handleFight();
-                          this.clickPlay();
-                        } }onMouseEnter={this.HoverOverPlay}>Fight</ButtonElement></FightButtonContainer>
-          <ReadMeButtonContainer><ButtonElement onClick={() => {
-                          this.handleRead();
-                          this.clickPlay();
-                        } }onMouseEnter={this.HoverOverPlay}>Read</ButtonElement></ReadMeButtonContainer>
-        
-         </Container>
-       
-        
-        
+        {this.state.copied ? (
+            <Text>Copied!</Text>
+          ) : (
+            <HGMSCopyIcon onClick={this.copyHGMSAddress}>$HGMS CONTRACT</HGMSCopyIcon>
+          )}
+           {this.state.copiedBATTLE ? (
+            <BATTLEText>Copied!</BATTLEText>
+          ) : (
+            <BATTLECopyIcon onClick={this.copyBATTLEAddress}>BATTLECONTRACT</BATTLECopyIcon>
+          )}
+          <MintButtonContainer>
+            <ButtonElement onClick={() => {
+                            this.handleMint();
+                            this.clickPlay();
+                          }} 
+              onMouseEnter={this.HoverOverPlay}>
+              Mint
+            </ButtonElement>
+          </MintButtonContainer>
+
+          <ShopButtonContainer>
+            <ButtonElement onClick={() => {
+                            this.handleShop();
+                            this.clickPlay();
+                          }} 
+              onMouseEnter={this.HoverOverPlay}>
+              Shop
+            </ButtonElement>
+          </ShopButtonContainer>
+
+          <SwordElement 
+              onMouseDown={this.handleFightMouseDown}
+              onMouseUp={this.handleFightMouseUp}
+              onMouseEnter={this.HoverOverPlay}>
+              <img src={this.state.fightImage} alt="Fight" />
+          </SwordElement>
+          <BookElement 
+              onMouseDown={this.handleBookMouseDown}
+              onMouseUp={this.handleBookMouseUp}
+              onMouseEnter={this.HoverOverPlay}>
+              <img src={this.state.readImage} alt="Book" />
+
+          </BookElement>
+
+        </Container>
       </div>
     );
-  }
+}
+
 }
 
 export default LandingPage;

@@ -10,12 +10,15 @@ import VIMAGE from './assets/Items/4.png';
 import clickSound from './assets/sound/hover.mp3';
 import "./App.css";
 import Web3 from 'web3';
+import {ethers} from 'ethers';
 import hgmsTokenAbi from './assets/ABI/HungerGames.json';
+import battleGnomesAbi from './assets/ABI/HungerGames.json';
 import GCAbi from "./assets/ABI/GnomesCollective.json";
-import {ethers, BigNumber} from 'ethers';
 
-const hgmsTokenAddress = '0x73229e7c7d8f9276e7a69cb0cc22ec503cf9c7c6'; 
-const GnomesCollectiveAddress = "0x3acAcDfbF7fe223d42031a2cd185e232D911405F";
+
+const hgmsTokenAddress = '0x6E62C622c7035d4CE1f36Bd977478A85C614d0E6'; 
+const GnomesCollectiveAddress = "0x086A19cEB20911FE4f5DeB1Fd5368C5dbd749a4D";
+const BattleGnomesAbi = "0x2EBfe8cfDeB403423eac15016CEdd459a7BF1fB1";
 
 const ModalOverlay = styled.div`
   position: fixed;
@@ -426,6 +429,10 @@ const NFTModalOverlay = styled.div`
   background-color: rgba(0, 0, 0, 0.75); // darker semi-transparent background
   z-index: 9999; // significantly high z-index
 `;
+const StyledLi = styled.li`
+  font-size: 14px; /* Adjust the font size as needed */
+  top: 150px;
+`;
 
 const NFTModalContent = styled.div`
   width: 15vw;  
@@ -438,32 +445,10 @@ const NFTModalContent = styled.div`
 
 
   @media (max-width: 1920px)  {
-    width: 20%
+    width: 50%
   }
   
-  @media (max-width: 1350px)  {
-    width: 22%
-  }
  
-  @media (max-width: 1200px) {
-    width: 27%; 
-  }
-
-  @media (max-width: 1155px) {
-    width: 32%;
-  }
-  @media (max-width: 800px) {
-    width: 37%;
-  }
-  @media (max-width: 620px) {
-    width: 42%;
-  }
-  @media (max-width: 520px) {
-    width: 55%;
-  }
-  @media (max-width: 520px) {
-    width: 80%;
-  }
 
 `;
 
@@ -606,9 +591,9 @@ goToPreviousPage = () => {
   }
 }
     handleApplyClick = async () => {
-      console.log("HERE");
+
       await this.fetchUserNFTs();
-      console.log("HERE");
+
       this.toggleApplyModal();
     };
 
@@ -789,7 +774,7 @@ render() {
     const indexOfLastNFT = this.state.currentPage * this.state.nftsPerPage;
     const indexOfFirstNFT = indexOfLastNFT - this.state.nftsPerPage;
     const currentNFTs = this.state.userNFTs.slice(indexOfFirstNFT, indexOfLastNFT);
-
+    console.log(currentNFTs);
     return (
       <div>
         <Title>SHOP</Title>
@@ -804,8 +789,6 @@ render() {
         <DepButtonElement onClick={isConnected ? this.handleNetwork : this.connectAccount}>{isConnected ? "Switch Network" : "Connect"}</DepButtonElement>
         </div>
       )}
-
-
 
 
         {this.state.currentItem === "XTRA" && (
@@ -977,10 +960,10 @@ render() {
         {this.state.isApplyModalOpen && (
         <NFTModalOverlay>
         <NFTModalContent>
-            <h2>Gnomes</h2>
+            <h3>Gnomes</h3>
             <ul>
                   {currentNFTs.map(nftId => (
-                      <li key={nftId}>ID: {nftId}</li>
+                      <StyledLi key={nftId}>ID: {nftId}</StyledLi>
                   ))}
               </ul>
               <div className="pagination-controls">

@@ -1,4 +1,4 @@
-import styled from "styled-components";
+import styled, { keyframes } from "styled-components";
 import { useState, useRef } from "react";
 import "./App.css";
 import Mint from "./Mint";
@@ -18,15 +18,15 @@ import OpenSeaLogo from './assets/social-media-icons/opensea.png';
 import EtherScan from './assets/social-media-icons/etherscan.png';
 import HGLogo from './assets/social-media-icons/HG.png';
 import PatternImage from './assets/background/Pattern.png'; 
-
+import LoadingAnimation from "./assets/Items/Caldero.gif"
 
 const TwitterLogoContainer = styled.div`
   position: absolute;
-  top: 30px; /* Adjust the vertical position as needed */
+  top: 35px; /* Adjust the vertical position as needed */
   left:  calc(1vh + 1vw); /* Adjust the horizontal position as needed */
   cursor: pointer;
   transition: transform 0.2s ease; /* Add transition effect */
-  z-index: 1;
+  z-index: 200;
   img {
     width: calc(3vh + 3vw); /* Adjust the width as needed */
     height: calc(3vh + 3vw); /* Adjust the height as needed */
@@ -46,11 +46,11 @@ const TwitterLogoContainer = styled.div`
 `;
 const HGLogoContainer = styled.div`
   position: absolute;
-  top: 30px; /* Adjust the vertical position as needed */
+  top: 35px; /* Adjust the vertical position as needed */
   right:  calc(1vh + 1vw); /* Adjust the horizontal position as needed */
   cursor: pointer;
   transition: transform 0.2s ease; /* Add transition effect */
-  z-index: 1;
+  z-index: 200;
   img {
     width: calc(7vh + 7vw); /* Adjust the width as needed */
     height: calc(4vh + 4vw); /* Adjust the height as needed */
@@ -70,11 +70,11 @@ const HGLogoContainer = styled.div`
 `;
 const TelegramLogoContainer = styled.div`
   position: absolute;
-  top: 30px; /* Adjust the vertical position as needed */
+  top: 35px; /* Adjust the vertical position as needed */
   left:  calc(11vh + 11vw); /* Adjust the horizontal position as needed */
   cursor: pointer;
   transition: transform 0.2s ease; /* Add transition effect */
-  z-index: 1;
+  z-index: 200;
   img {
     width: calc(3vh + 3vw); /* Adjust the width as needed */
     height: calc(3vh + 3vw); /* Adjust the height as needed */
@@ -94,11 +94,11 @@ const TelegramLogoContainer = styled.div`
 }`;
 const OpenSeaLogoContainer = styled.div`
   position: absolute;
-  top: 30px; /* Adjust the vertical position as needed */
+  top: 35px; /* Adjust the vertical position as needed */
   left: calc(6vh + 6vw); /* Adjust the horizontal position as needed */
   cursor: pointer;
   transition: transform 0.2s ease; /* Add transition effect */
-  z-index: 1;
+  z-index: 200;
   img {
     width: calc(3vh + 3vw); /* Adjust the width as needed */
     height: calc(3vh + 3vw); /* Adjust the height as needed */
@@ -118,11 +118,11 @@ const OpenSeaLogoContainer = styled.div`
 }`;
 const EtherScanLogoContainer = styled.div`
   position: absolute;
-  top: 30px; /* Adjust the vertical position as needed */
+  top: 35px; /* Adjust the vertical position as needed */
   left:  calc(16vh + 16vw);px; /* Adjust the horizontal position as needed */
   cursor: pointer;
   transition: transform 0.2s ease; /* Add transition effect */
-  z-index: 1;
+  z-index: 200;
   img {
     width: calc(3vh + 3vw); /* Adjust the width as needed */
     height: calc(3vh + 3vw); /* Adjust the height as needed */
@@ -178,6 +178,35 @@ transition: background-color 0.2s ease;
   color: white;
 }
 `;
+const blink = keyframes`
+0% { opacity: 1; }
+50% { opacity: 0; }
+100% { opacity: 1; }
+`;
+const LoadingGIFContainer = styled.div`
+position: fixed;
+top: 50vh;
+left: 50%;
+transform: translate(-50%, -50%);
+width: 150px;  // You can adjust as needed
+height: 150px; // You can adjust as needed
+text-align: center;  // Added for aligning text
+z-index: 300;
+
+img {
+  width: 100%;
+  height: 100%;
+  display: block; // Makes the image a block element to push the text to the next line
+  margin: 0 auto; // Centers the image
+}
+
+p {
+  margin-top: 10px; // Space between the image and text
+  font-size: 48px;
+  font-weight: bold;
+  color: #ffffff;  // Assuming you want white text
+
+`;
 
 function App() {
   const [accounts, setAccounts] = useState([]);
@@ -189,7 +218,8 @@ function App() {
   const [fadeLoading, setFadeLoading] = useState(false);
   const [fadeInContent, setFadeInContent] = useState(false);
   const fadeInStyle = fadeInContent ? { opacity: 1, transition: 'opacity 0.5s' } : { opacity: 0 };
- 
+  const [modalContent, setModalContent] = useState(null);
+
 
 
   const clickSoundRef = useRef(new Howl({
@@ -202,16 +232,12 @@ function App() {
     loop: false,
     volume: 0.5
   }));
-  const handleLoad = () => {
-    const fadeDuration = 1500; // 0.5s for the transition + 1s for the delay
-    // Start the fade-out animation for the loader after a delay
-    setTimeout(() => {
-      setLoading(false);
-      setFadeLoading(true);
-      setFadeInContent(true);
-    }, fadeDuration);
-};
 
+
+const contentStyle = {
+  opacity: loading ? 0 : 1,
+  transition: 'opacity 0.5s'
+};
 
   const handleResize = () => {
     setWindowWidth(window.innerWidth);
@@ -232,6 +258,7 @@ function App() {
 }
 
   const determineTopValue = (height) => {
+      if (height >= 844) return '850%';
       if (height >= 425) return '38%';
       if (height >= 390) return '35%';
       if (height >= 337) return '32%';
@@ -242,48 +269,33 @@ function App() {
 
   const leftValue = determineLeftValue(windowWidth);
   const topValue = determineTopValue(windowheight);
-  
 
-  const loadingCircleStyle = {
-    border: '16px solid #f3f3f3', // Light gray color
-    borderTop: '16px solid #ff4500', // The color of the spinning section
-    borderRadius: '50%',
-    width: '120px',
-    height: '120px',
-    animation: 'spin 2s linear infinite',
-    position: 'fixed',
-    top: topValue,
-    left: leftValue,
-    transform: 'translate(-50%, -50%)',
-    zIndex: 300,
-    opacity: 1, 
-    transition: 'opacity 0.5s'
-};
-const finalLoadingStyle = fadeLoading ? { ...loadingCircleStyle, opacity: 0 } : loadingCircleStyle;
-    const contentStyle = {
-      opacity: loading ? 0 : 1,
-      transition: 'opacity 0.5s'
-    };
 
-    useEffect(() => {
-      setIsPlaying(true);
-      document.title = "Hunger Games";
-  
-      const link = document.querySelector("link[rel*='icon']") || document.createElement('link');
-      link.type = 'image/x-icon';
-      link.rel = 'shortcut icon';
-      link.href = './assets/background/favicon.ico';
-      document.getElementsByTagName('head')[0].appendChild(link);
-  
-      window.addEventListener('resize', handleResize);
-      window.addEventListener('load', handleLoad);
-  
-      return () => {
-        window.removeEventListener("resize", handleResize);
-        window.removeEventListener('load', handleLoad);
-      };
-    }, []);
-  
+useEffect(() => {
+  setIsPlaying(true);
+  document.title = "Hunger Games";
+
+  document.body.style.backgroundColor = '#4a5462';
+
+  const link = document.querySelector("link[rel*='icon']") || document.createElement('link');
+  link.type = 'image/x-icon';
+  link.rel = 'shortcut icon';
+  link.href = './assets/background/favicon.ico';
+  document.getElementsByTagName('head')[0].appendChild(link);
+
+  window.addEventListener('resize', handleResize);
+
+  setTimeout(() => {
+    setLoading(false);
+    document.body.style.backgroundColor = ''; 
+  }, 2500);
+
+  return () => {
+    window.removeEventListener("resize", handleResize);
+  };
+}, []);
+
+
   function handlePageChange (pageName) {
     setCurrentComponent(pageName);
   }
@@ -295,8 +307,13 @@ const finalLoadingStyle = fadeLoading ? { ...loadingCircleStyle, opacity: 0 } : 
 
 
   const loaderElement = !fadeInContent && (
-    <div style={finalLoadingStyle}></div>
-  );
+<LoadingGIFContainer>
+  <img src={LoadingAnimation} alt="Loading" />
+  <p>LOADING..<span className="blinking">.</span></p>
+
+</LoadingGIFContainer>
+);
+  
   return (
     <>
     {loaderElement}
@@ -364,23 +381,24 @@ const finalLoadingStyle = fadeLoading ? { ...loadingCircleStyle, opacity: 0 } : 
               accounts={accounts}
               setAccounts={setAccounts}
               onButtonClick={(pageName) => {
-                handlePageChange(pageName);
+              handlePageChange(pageName);
               }}
             />
             
           )}
           
           {currentComponent === 'Fight' && (
-            <Fight
-              accounts={accounts}
-              setAccounts={setAccounts}
-              onButtonClick={(pageName) => {
-                handlePageChange(pageName);
-              }}
-            />
-            
+         <Fight
+        accounts={accounts}
+        setAccounts={setAccounts}
+        setModalContent={setModalContent}
+        onButtonClick={(pageName) => {
+        handlePageChange(pageName);
+        }}
+    />
           )}
-                    {currentComponent === 'Stake' && (
+
+          {currentComponent === 'Stake' && (
             <Stake
               accounts={accounts}
               setAccounts={setAccounts}
@@ -390,11 +408,21 @@ const finalLoadingStyle = fadeLoading ? { ...loadingCircleStyle, opacity: 0 } : 
             />
             
           )}
-          
+
+
         </div>
         <div className="footer">
           ©2023 HungerGames. Devved by Dev.
         </div>
+        <div className="top-footer">
+        <span className="footer-item">| Prizepool: [10.5 ETH] |  </span>
+        <span className="footer-item">Total Poured: [25.3 ETH] |  </span>
+        <span className="footer-item">Minted: [1333] |  </span>
+        <span className="footer-item">Potions: [25312] |  </span>
+        <span className="footer-item">Burned: [300M HGMS] |</span>
+      </div>
+
+      {modalContent}
 
     </body>
     

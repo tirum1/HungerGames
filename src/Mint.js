@@ -1,7 +1,7 @@
 import styled, { keyframes } from 'styled-components';
 import React, { Component, useState } from 'react';
 import {ethers, BigNumber} from 'ethers';
-import NFT0066FF from './NFT0066FF.json';
+import GnomesCollective from './assets/ABI/GnomesCollective.json';
 import"./App.css";
 import { Box, Button, Flex, Input, Text, Link} from '@chakra-ui/react';
 import clickSound from "./assets/sound/hover.mp3";
@@ -11,7 +11,7 @@ import { Buffer } from "buffer/";
 
 window.Buffer = window.Buffer || Buffer;
 
-const NFT0066FFAddress = "0xeE594e309a4f49932e0421dA11AFd0a580EcB084"
+const GnomesCollectiveAddress = "0x086A19cEB20911FE4f5DeB1Fd5368C5dbd749a4D"
 
 const Container = styled.div`
   display: flex;
@@ -163,14 +163,14 @@ class Mint extends Component {
           const provider = new ethers.providers.Web3Provider(ethereum);
           const signer = provider.getSigner();
           const contract = new ethers.Contract(
-            NFT0066FFAddress,
-            NFT0066FF.abi,
+            GnomesCollectiveAddress,
+            GnomesCollective.abi,
             signer
           );
       
           const quantity = this.state.mintAmount;
       
-          const price = await contract.price();
+          const price = await contract.cost();
           let requiredEth = price.mul(quantity);
       
           const owner = await contract.owner();

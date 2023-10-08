@@ -119,6 +119,32 @@
   line-height: 35px; 
 }
 
+
+/* Top Footer */
+.top-footer {
+  height: 35px;
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  background: linear-gradient(rgba(0, 0, 0, 0.9), rgba(0, 0, 0, 0.8), rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0)); /* Fades into the background */
+  backdrop-filter: blur(5px); /* Adjust the blur radius as needed */
+  color: white;
+  text-align: center;
+  font-family: 'Pixels'; 
+  font-size: 36px;
+  padding-top: 0px;
+  line-height: 20px;
+  z-index: 150;
+
+  transition: color 0.3s; 
+}
+
+.footer-item:hover {
+  color: #FF5733; /* Change the color to your desired hover color */
+  cursor: pointer; 
+}
+
 .overlay {
   opacity: 1;
   width: 70%;
@@ -166,5 +192,70 @@ input[type="number"] {
 
 }
 
+/* Add this CSS to your application's global styles or a CSS file */
+
+/* Overlay style to darken the background */
+.queuemodal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+/* Modal content style */
+.queuemodal-content {
+  background-color: white;
+  border-radius: 5px;
+  padding: 20px;
+  width: 400px;
+  box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.2);
+}
+@keyframes blink {
+  0% { opacity: 1; }
+  50% { opacity: 0; }
+  100% { opacity: 1; }
+}
+
+.blinking {
+  animation: blink 1s infinite;
+}
 
 
+/* Close button style */
+.queuemodal-content button {
+  background-color: #ff5252;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  padding: 10px 20px;
+  cursor: pointer;
+}
+
+/* Table style */
+.queuemodal-content table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 20px;
+}
+
+/* Table header style */
+.queuemodal-content th {
+  background-color: #f2f2f2;
+  text-align: left;
+  padding: 10px;
+}
+
+/* Table row style */
+.queuemodal-content tr {
+  border-bottom: 1px solid #ddd;
+}
+
+/* Table cell style */
+.queuemodal-content td {
+  padding: 10px;
+}
