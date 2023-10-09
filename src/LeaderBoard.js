@@ -229,14 +229,16 @@ class LeaderBoard extends React.Component {
       async fetchContractValues() {
         console.log("[fetchContractValues] Function start");
     
-        try {
-            const { contract } = this.state;
-            if (!contract) {
-                console.error("[fetchContractValues] Contract instance not available in state");
-                return;
-            }
-            console.log("[fetchContractValues] Contract instance fetched from state");
+        const { contract } = this.state;
     
+        // Check if the contract is available in the state
+        if (!contract) {
+            console.error("[fetchContractValues] Contract instance not available in state");
+            return;
+        }
+        console.log("[fetchContractValues] Contract instance fetched from state");
+    
+        try {
             console.log("[fetchContractValues] Fetching queue count...");
             const queueCount = await contract.queuecounter();
             console.log(`[fetchContractValues] Queue count fetched: ${queueCount}`);
@@ -268,9 +270,10 @@ class LeaderBoard extends React.Component {
             });
     
         } catch (error) {
-            console.error("[fetchContractValues] Error fetching contract values:", error);
+            console.error("[fetchContractValues] Error inside try-catch:", error);
         }
     }
+    
     
     
       async componentDidMount() {
