@@ -197,7 +197,9 @@ class LeaderBoard extends React.Component {
         this.state = {
           contract: null,  // Make sure to initialize contract in state
           contractValues: [], 
-          list: []
+          list: [],
+          currentPage: 1,
+          itemsPerPage: 15, 
         }
         this._clickAllTime = this._clickAllTime.bind(this);
         this._clickRecent = this._clickRecent.bind(this);
@@ -280,6 +282,22 @@ class LeaderBoard extends React.Component {
         })
         .catch(err => console.log('fetch error : ', err))
     }
+    handleNextPage = () => {
+        const { currentPage } = this.state;
+        this.setState({
+            currentPage: currentPage + 1
+        });
+    }
+    
+    handlePreviousPage = () => {
+        const { currentPage } = this.state;
+        if (currentPage > 1) {
+            this.setState({
+                currentPage: currentPage - 1
+            });
+        }
+    }
+    
     componentWillUnmount() {
 
         if (this.fetchContractValuesInterval) {
@@ -297,27 +315,32 @@ class LeaderBoard extends React.Component {
         this.setState({ list: sorted });
       }
       render() {
-        const { contractValues } = this.state;
+        const { currentPage, itemsPerPage, contractValues } = this.state;
         const aliveEntities = contractValues?.aliveEntities || [];
-
-    const mappedAliveEntities = aliveEntities
-        .filter(entityId => entityId !== 0)  // Skip entity with ID=0
-        .map((entityId, index) => ({
-            rank: index + 1,
-            entityId: entityId,  // Pass entityId down
-            username: `NFT ${entityId}`, 
-            recent: 0, 
-            alltime: 0, 
-        }));
     
+        const mappedAliveEntities = aliveEntities
+            .filter(entityId => entityId !== 0)  // Skip entity with ID=0
+            .map((entityId, index) => ({
+                rank: index + 1,
+                entityId: entityId,  // Pass entityId down
+                username: `NFT ${entityId}`, 
+                recent: 0, 
+                alltime: 0, 
+            }));
+    
+        const startIndex = (currentPage - 1) * itemsPerPage;
+        const endIndex = startIndex + itemsPerPage;
+        const currentItems = mappedAliveEntities.slice(startIndex, endIndex);
+    
+        // Now render the component...
         return (
             <Overlay>
                 <Container>
                     <LeaderboardHeader contractValues={this.state.contractValues} />
                     <ColumnHeader onClickAll={this._clickAllTime} onClick={this._clickRecent}/>
-                    {mappedAliveEntities.map(entity => (
+                    {currentItems.map(entity => (
                         <User 
-                            key={entity.rank}
+                            key={entity.entityId}
                             rank={entity.rank}
                             entityId={entity.entityId} // Make sure to pass entityId here
                             username={entity.username}
@@ -325,10 +348,17 @@ class LeaderBoard extends React.Component {
                             alltime={entity.alltime}
                         />
                     ))}
+                    <div>
+                        {this.state.currentPage > 1 && 
+                            <button onClick={this.handlePreviousPage}>Previous</button>}
+                        {currentItems.length === this.state.itemsPerPage && 
+                            <button onClick={this.handleNextPage}>Next</button>}
+                    </div>
                 </Container>
             </Overlay>
         );      
     }
+    
     
     
       
