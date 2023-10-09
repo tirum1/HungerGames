@@ -8,6 +8,7 @@ import battleGnomesAbi from './assets/ABI/BattleContract.json';
 import GCAbi from "./assets/ABI/GnomesCollective.json";
 import Web3 from 'web3';
 import {ethers} from 'ethers';
+import LeaderboardModal from './LeaderBoard'; // 
 
 // Check if MetaMask is installed and injects the provider
 
@@ -213,14 +214,6 @@ transition: background-color 0.2s ease;
   color: white;
   }
 }`;
-const AccountText = styled.p`
-  position: absolute;
-  top: 40px;
-  left: 50%;
-  transform: translateX(-50%);
-  font-size: 16px; /* Adjust the font size as needed */
-  color: #333; /* Adjust the color as needed */
-`;
 
 const ButtonElement = styled.button`
   background-color: #833929;
@@ -238,6 +231,29 @@ const ButtonElement = styled.button`
     color: white;
   }
 `;
+
+const sortNFTs = (nftsData) => {
+  return nftsData.sort((a, b) => {
+    // Sort by Alive status (Alive NFTs first).
+    if (a.isAlive && !b.isAlive) return -1;
+    if (!a.isAlive && b.isAlive) return 1;
+
+    // If both NFTs are Alive, sort by RoundWins (higher RoundWins first).
+    if (a.isAlive && b.isAlive) {
+      if (a.roundWins > b.roundWins) return -1;
+      if (a.roundWins < b.roundWins) return 1;
+    }
+
+    // If both NFTs have the same RoundWins, sort by BattleWins (higher BattleWins first).
+    if (a.isAlive && b.isAlive && a.roundWins === b.roundWins) {
+      if (a.battleWins > b.battleWins) return -1;
+      if (a.battleWins < b.battleWins) return 1;
+    }
+
+    // If all criteria are the same, maintain the current order.
+    return 0;
+  });
+};
 
 class Fight extends Component {
   constructor(props) {
@@ -418,7 +434,7 @@ class Fight extends Component {
 
   async fetchUserNFTs() {
     const { isConnected, networkId, supportedNetworkId } = this.state;
-
+  
     if (!isConnected || networkId !== supportedNetworkId) return;
   
     const accounts = await this.web3.eth.getAccounts();
@@ -426,19 +442,30 @@ class Fight extends Component {
     const provider = new ethers.providers.Web3Provider(window.ethereum);
     const signer = provider.getSigner();
     const contract = new ethers.Contract(GnomesCollectiveAddress, GCAbi.abi, signer);
-    
+  
     try {
       const nftIdsBigNumber = await contract.walletOfOwner(connectedAccount);
       console.log("NFT IDs fetched from contract:", connectedAccount, nftIdsBigNumber);
   
-     
-      const nftIds = nftIdsBigNumber.map(id => id.toString());
+      // Convert the fetched data into the desired format
+      const nftData = nftIdsBigNumber.map((id) => ({
+        id: id.toString(),
+        // Add other properties like isAlive, roundWins, battleWins, etc.
+        // You should fetch these properties from your contract or another data source.
+        isAlive: true, // Example value
+        roundWins: 0, // Example value
+        battleWins: 0, // Example value
+      }));
   
-      this.setState({ userNFTs: nftIds });
-  } catch (error) {
+      // Sort the NFT data
+      const sortedNFTs = sortNFTs(nftData);
+  
+      this.setState({ userNFTs: sortedNFTs });
+    } catch (error) {
       console.error('Error fetching NFT IDs:', error);
+    }
   }
-  }
+  
   
   
   totalPages = () => {
@@ -494,9 +521,9 @@ class Fight extends Component {
     this.setState(prevState => ({ isQueueModalOpen: !prevState.isQueueModalOpen }));
   }
 
-toggleLeaderboardModal = () => {
-  //
-}
+  toggleLeaderboardModal = () => {
+    //
+  }
 handleNetwork = async () => {
     const { ethereum } = window;
     if (!ethereum) {
@@ -615,69 +642,63 @@ handleDev(){
 
     return (
       <div>
-        {this.state.selectedAccount && !this.state.isSwitchButton ? (<div>
-        <QueueButtonElement onClick={this.handleQueueClick} onMouseEnter={this.HoverOverPlay}>Queue</QueueButtonElement>
-        <LeaderboardButtonElement onClick={this.handleLeaderboard} onMouseEnter={this.HoverOverPlay}>Leaderboard</LeaderboardButtonElement>
-        <DevButtonElement onClick={this.handleDev} onMouseEnter={this.HoverOverPlay}>DEV</DevButtonElement>
+      {this.state.selectedAccount && !this.state.isSwitchButton ? (
+        <div>
+          <QueueButtonElement onClick={this.handleQueueClick} onMouseEnter={this.HoverOverPlay}>
+            Queue
+          </QueueButtonElement>
+          <LeaderboardButtonElement onClick={this.handleLeaderboard} onMouseEnter={this.HoverOverPlay}>
+            Leaderboard
+          </LeaderboardButtonElement>
+          <DevButtonElement onClick={this.handleDev} onMouseEnter={this.HoverOverPlay}>
+            DEV
+          </DevButtonElement>
         </div>
-      ) : (<div>
-        <ConnectButtonElement onClick={this.state.selectedAccount ? this.handleNetwork : this.connectAccount}>{this.state.selectedAccount ? "Switch Network" : "Connect"}</ConnectButtonElement>
+      ) : (
+        <div>
+          <ConnectButtonElement
+            onClick={this.state.selectedAccount ? this.handleNetwork : this.connectAccount}
+          >
+            {this.state.selectedAccount ? "Switch Network" : "Connect"}
+          </ConnectButtonElement>
         </div>
       )}
-        {this.state.isQueueModalOpen && (
-          <NFTModalOverlay>
-          <NFTModalContent>
-              <h2>Gnomes</h2>
-              
-                            <StyledUl>                   
-                            {currentNFTs.map(nftId => (
-                            // Incorrect location for console.log
-                            <StyledLi key={nftId}>ID: {nftId}</StyledLi>
-                          ))}
-              </StyledUl>
-                <div className="pagination-controls">
-              <button onClick={this.goToPreviousPage} disabled={this.state.currentPage === 1}>
-                  Previous
-              </button>
-              <button onClick={this.goToNextPage} disabled={this.state.currentPage === this.totalPages()}>
-                  Next
-              </button>
-          </div>
 
-              <button onClick={this.toggleQueueModal}>Close</button>
-              <button onClick={this.sendToBattle}>Send to Battle</button>
-          </NFTModalContent>
-          </NFTModalOverlay>
-                )}
-                 {this.state.isDevModalOn && (
-            <DEVModalOverlay>
-            <DEVModalContent>
-              <h2 style={{ fontSize: '20px', marginBottom: '10px' }}>Smart Contract Values</h2>
-              <div style={{ fontSize: '16px', lineHeight: '1.4', marginBottom: '20px' }}>
-                {this.renderContractData().map((item, index) => (
-                  <div key={index} style={{ marginBottom: '10px' }}>
-                    {item}
-                  </div>
-                ))}
-              </div>
-              <button onClick={this.toggleDevModal} style={{ fontSize: '16px' }}>Close</button>
-            </DEVModalContent>
-          </DEVModalOverlay>
-          
-                )}
-                 <BackButtonContainer>
-                  <ButtonElement
-                    className="shake"
-                    onClick={() => {
-                      this.clickPlay();
-                      this.props.onButtonClick('LandingPage');
-                    }}
-                    onMouseEnter={this.HoverOverPlay}
-                  >
-                    Back
-                  </ButtonElement>
-                </BackButtonContainer>
-              </div>
+      {this.state.isDevModalOn && (
+        <DEVModalOverlay>
+          <DEVModalContent>
+            <h2 style={{ fontSize: '20px', marginBottom: '10px' }}>Smart Contract Values</h2>
+            <div style={{ fontSize: '16px', lineHeight: '1.4', marginBottom: '20px' }}>
+              {this.renderContractData().map((item, index) => (
+                <div key={index} style={{ marginBottom: '10px' }}>
+                  {item}
+                </div>
+              ))}
+            </div>
+            <button onClick={this.toggleDevModal} style={{ fontSize: '16px' }}>Close</button>
+          </DEVModalContent>
+        </DEVModalOverlay>
+      )}
+
+      {currentNFTs.map((nft, index) => (
+        <div key={index}>
+          {/* Render NFT data, e.g., nft.id, nft.isAlive, nft.roundWins, etc. */}
+        </div>
+      ))}
+
+      <BackButtonContainer>
+        <ButtonElement
+          className="shake"
+          onClick={() => {
+            this.clickPlay();
+            this.props.onButtonClick('LandingPage');
+          }}
+          onMouseEnter={this.HoverOverPlay}
+        >
+          Back
+        </ButtonElement>
+      </BackButtonContainer>
+    </div>
             );
           }
         }

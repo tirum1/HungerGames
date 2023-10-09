@@ -1,7 +1,6 @@
 
 import React, { Component } from 'react';
 import styled, { keyframes }  from 'styled-components';
-import NFTImage from './assets/background/1.png';
 import clickSound from "./assets/sound/hover.mp3";
 import {Howl,Howler} from "howler";
 import HoverSound from "./assets/sound/click-21156.mp3";
@@ -12,6 +11,20 @@ import SwordStill from './assets/Items/Sword Still.png';
 import SwordButton from './assets/Items/Sword Button.gif';
 import SwordDown from './assets/Items/Sword Pressed.png';
 
+const size = {
+  mobile: '480px',
+  tablet: '768px',
+  laptop: '1024px',
+  desktop: '1200px'
+};
+
+const device = {
+  mobile: `(max-width: ${size.mobile})`,
+  tablet: `(max-width: ${size.tablet})`,
+  laptop: `(max-width: ${size.laptop})`,
+  desktop: `(max-width: ${size.desktop})`,
+  tv: `(min-width: ${parseInt(size.desktop) + 1}px)`
+};
 
 
 const Container = styled.div`
@@ -20,93 +33,85 @@ const Container = styled.div`
   align-items: center;
   justify-content: center;
   height: 100vh;
+  @media ${device.mobile} {
+    align-items: center;
+  }
 `;
 const MintButtonContainer = styled.div`
   position: absolute;
   top: 50vh; /* Adjust the vertical position as needed */
   left: 45vw; /* Adjust the value as needed */
   transform: translate(-50%, -50%);
-`;
-const radiantGlow = keyframes`
-  0% {
-    background-color: #833929;
+  /* For viewport widths between 0px and 320px */
+  @media (max-width: 320px) {
+    margin: 10px;
+    top: 70vh;
+    left: 50vw;
+    width: 80px;
+    height: 80px;
   }
-  50% {
-    background-color: #a3563d;
+  
+  @media (min-width: 321px) and (max-width: 10000px) {
+    margin: 10px;
+    top: 60vh;
+    left: 25vw;
+    width: 80px;
+    height: 80px;
   }
-  100% {
-    background-color: #833929;
-  }
-`;
 
+`;
 const ShopButtonContainer = styled.div`
   position: absolute;
   top: 50vh; /* Adjust the vertical position as needed */
   left: 65vw; /* Adjust the value as needed */
   transform: translate(-50%, -50%);
+  @media (max-width: 320px) {
+    margin: 10px;
+    top: 55vh;
+    left: 50vw;
+    width: 80px;
+    height: 80px;
+  }
+  
+  /* For viewport widths between 321px and 480px */
+  @media (min-width: 321px) and (max-width: 10000px) {
+    margin: 10px;
+    top: 60vh;
+    left: 70vw;
+    width: 80px;
+    height: 80px;
+  }
 `;
 const Title = styled.h1`
   position: absolute;
   top: 25vh;
-  left: 32vw;
-  font-size: calc(2vh + 2vw);
+  left: 50%; /* Center the title horizontally */
+  transform: translateX(-50%); /* Center the title horizontally */
+  font-size: calc(1.8vh + 1.8vw);
   font-weight: bold;
   color: #000; /* Updated color to black */
   
   &:hover {
     color: red;
   }
-  // For left value
-  @media (min-width: 2560px) {
-    left: 34%;
-  }
-  @media (min-width: 1440px) and (max-width: 2559px) {
-    left: 32%;
-  }
-  @media (min-width: 1024px) and (max-width: 1439px) {
-    left: 40%;
-  }
-  @media (min-width: 844px) and (max-width: 1023px) {
-    left: 42%;
-  }
-  @media (min-width: 768px) and (max-width: 843px) {
-    left: 42%;
-  }
-  @media (min-width: 500px) and (max-width: 767px) {
-    left: 42%;
-  }
-  @media (min-width: 425px) and (max-width: 499px) {
-    left: 38%;
-  }
-  @media (min-width: 390px) and (max-width: 424px) {
-    left: 15%;
-    top: 30%;
-  }
-  @media (min-width: 375px) and (max-width: 389px) {
-    left: 35%;
-  }
-  @media (min-width: 320px) and (max-width: 374px) {
-    left: 32%;
+
+  @media (max-width: 320px) {
+  display: none;
   }
 
-
+  @media (min-width: 321px) and (max-width: 768px)  {
+    top: 25vh;
+    left: 50%; /* Center the title horizontally on tablets */
+    transform: translateX(-50%); /* Center the title horizontally */
+    font-size: calc(1.1vh + 1.1vw);
+  }
 `;
 
-const Description = styled.p`
-  font-size: 16px;
-  color: #000;
-  margin-bottom: 20px;
-  text-align: center;
-
-  &:hover {
-    color: red;
-  }
-`;
 const Text = styled.p`
   position: absolute;
   top: 35vh;
   left: 32vw;
-  font-size: calc(1vh + 1vw);
+  font-size: 24px;
   color: #fff;
   margin-bottom: 20px;
   text-align: center;
@@ -114,13 +119,19 @@ const Text = styled.p`
   &:hover {
     color: red;
   }
+
+  @media ${device.tablet} {
+    top: 70vh;
+    left: 37vw;
+  }
+
 
 `;
 const BATTLEText = styled.p`
   position: absolute;
   top: 35vh;
   left: 60vw;
-  font-size: calc(1vh + 1vw);
+  font-size: 24px;
   color: #fff;
   margin-bottom: 20px;
   text-align: center;
@@ -128,64 +139,46 @@ const BATTLEText = styled.p`
   &:hover {
     color: red;
   }
-
-`;
-const NFTText = styled.p`
-  position: absolute;
-  top: 35vh;
-  left: 32vw;
-  font-size: calc(1vh + 1vw);
-  color: #fff;
-  margin-bottom: 20px;
-  text-align: center;
-
-  &:hover {
-    color: red;
+  @media ${device.tablet} {
+    top: 80vh;
+    left: 37vw;
   }
-
-`;
-const shadowAnimation = keyframes`
-  0% {
-    box-shadow: 0px 0px 50px rgba(0, 0, 0, 0.3);
-  }
-  50% {
-    box-shadow: 0px 0px 70px rgba(0, 255, 0, 0.5);
-  }
-  100% {
-    box-shadow: 0px 0px 50px rgba(0, 0, 0, 0.3);
-  }
-`;
-const ImageContainer = styled.div`
-position: absolute;
-top: 30vh;
-left: 40vw;
-  width: calc(14vw + 14vh);
-  max-width: calc(20vw + 20vh);
-  height: auto;
-  max-height: auto;
-  border: 2px solid #000;
-  animation: ${shadowAnimation} 3s infinite alternate; /* Apply the animation to the shadow only */
-`;
-const Image = styled.img`
-  max-width: 100%;
-  height: auto;
-  border: 2px solid #0000;
-  box-shadow: 0px 0px 180px rgba(0, 102, 255, 0.3);
 `;
 const SwordElement = styled.div`
   position: absolute;
-  top: 50vh; 
-  left: 35vw;
-  width: 60px; /* Adjust as needed */
-  height: 50px; /* Adjust as needed */
   transform: translate(-50%, -50%);
   cursor: pointer;
   transition: transform 0.2s;
-  
   img {
-    width: 100%; 
+    width: 100%;
     height: auto;
   }
+
+  /* For viewport widths between 0px and 320px */
+  @media (min-width: 0px) and (max-width: 320px) {
+    margin: 10px;
+    top: 25vh;
+    left: 50vw;
+    width: 80px;
+    height: 80px;
+  }
+  
+  /* For viewport widths between 321px and 480px */
+  @media (min-width: 321px) and (max-width: 1200px) {
+    margin: 10px;
+    top: 40vh;
+    left: 25vw;
+    width: 80px;
+    height: 80px;
+  }
+  @media (min-width: 1201px) {
+    margin: 10px;
+    top: 40vh;
+    left: 25vw;
+    width: 80px;
+    height: 80px;
+  }
+
 `;
 
 const BookElement = styled.div`
@@ -198,11 +191,30 @@ const BookElement = styled.div`
   cursor: pointer;
   transition: transform 0.2s;
   
-
   img {
     width: 100%; 
     height: auto;
   }
+
+  /* For viewport widths between 0px and 320px */
+  @media (min-width: 0px) and (max-width: 320px) {
+    margin: 10px;
+    top: 40vh;
+    left: 50vw;
+    width: 80px;
+    height: 80px;
+  }
+  
+  @media (min-width: 321px) and (max-width: 10000px) {
+    margin: 10px;
+    top: 40vh;
+    left: 70vw;
+    width: 80px;
+    height: 80px;
+  }
+  
+
+  
 `;
 const HGMSCopyIcon = styled.span`
   cursor: pointer;
@@ -215,6 +227,13 @@ const HGMSCopyIcon = styled.span`
     opacity: 0.8;
     color: Blue;
   }
+  @media (min-width: 0px) and (max-width: 320px) {
+    display: none;
+  }
+  @media (min-width: 321px) and (max-width: 10000px) {
+    display: none; /* Hide the title on mobile screens */
+  }
+
 `;
 const BATTLECopyIcon = styled.span`
   cursor: pointer;
@@ -227,20 +246,13 @@ const BATTLECopyIcon = styled.span`
     opacity: 0.8;
     color: Blue;
   }
-`;
-const NFTCopyIcon = styled.span`
-  cursor: pointer;
-  font-size: 24px; 
-  position: absolute;
-  top: 35vh;
-  left: 32vw;
-
-  &:hover {
-    opacity: 0.8;
-    color: Blue;
+  @media (min-width: 0px) and (max-width: 320px) {
+    display: none;
+  }
+  @media (min-width: 321px) and (max-width: 10000px) {
+    display: none; /* Hide the title on mobile screens */
   }
 `;
-
 const ButtonElement = styled.button`
   background-color: #833929;
   border-radius: 5px;
@@ -255,6 +267,9 @@ const ButtonElement = styled.button`
     background-color: #ff5252;
     box-shadow: 0px 2px 2px 1px #FFFF00;
     color: white;
+  }
+  @media ${device.mobile} {
+    margin: 10px;
   }
 `;
 
@@ -339,7 +354,7 @@ handleFightMouseUp = () => {
 navigateFight = () => {
   const { onButtonClick } = this.props;
   if (typeof onButtonClick === 'function') {
-    onButtonClick('Fight'); 
+    onButtonClick('LeaderBoard'); 
   }
 };
 

@@ -138,6 +138,47 @@
   z-index: 150;
 
   transition: color 0.3s; 
+
+@media (max-width: 480px) {
+  .footer-item:not(:first-child) {
+      display: none; /* This hides all footer items on mobile except the first one */
+  }
+}
+@media (min-width: 481px) and (max-width: 768px) {
+  .footer-item {
+      display: none; /* Hide all footer items on tablet */
+  }
+  .footer-item:first-child,
+  .footer-item:nth-child(2) {
+      display: inline; /* Show only the first and second items on tablet */
+  }
+}
+@media (min-width: 769px) and (max-width: 1024px) {
+  .footer-item {
+      display: none; /* Hide all footer items on small laptop screens */
+  }
+  .footer-item:first-child,
+  .footer-item:nth-child(2),
+  .footer-item:nth-child(3) {
+      display: inline; /* Show the first, second, and third items on small laptop screens */
+  }
+}
+@media (min-width: 1025px) and (max-width: 1200px) {
+  .footer-item {
+      display: none; /* Hide all footer items on large screens and desktops */
+  }
+  .footer-item:first-child,
+  .footer-item:nth-child(2),
+  .footer-item:nth-child(3),
+  .footer-item:nth-child(4) {
+      display: inline; /* Show the first four items on large screens and desktops */
+  }
+}
+@media (min-width: 1201px) {
+  .footer-item {
+      display: inline; /* Show all footer items on TV and extra large screens */
+  }
+}
 }
 
 .footer-item:hover {

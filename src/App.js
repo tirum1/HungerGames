@@ -4,7 +4,7 @@ import "./App.css";
 import Mint from "./Mint";
 import Read from './Read'; 
 import Shop from './Shop'; 
-import Stake from './Stake'; 
+import LeaderBoard from './LeaderBoard'; 
 import Fight from './Fight'; 
 import { Flex } from "@chakra-ui/react";
 import { Howl } from "howler";
@@ -17,9 +17,21 @@ import TelegramLogo from './assets/social-media-icons/tg.png';
 import OpenSeaLogo from './assets/social-media-icons/opensea.png';
 import EtherScan from './assets/social-media-icons/etherscan.png';
 import HGLogo from './assets/social-media-icons/HG.png';
-import PatternImage from './assets/background/Pattern.png'; 
 import LoadingAnimation from "./assets/Items/Caldero.gif"
 
+const size = {
+  mobile: '480px',
+  tablet: '768px',
+  laptop: '1024px',
+  desktop: '1200px'
+};
+const device = {
+  mobile: `(max-width: ${size.mobile})`,
+  tablet: `(max-width: ${size.tablet})`,
+  laptop: `(max-width: ${size.laptop})`,
+  desktop: `(max-width: ${size.desktop})`,
+  tv: `(min-width: ${parseInt(size.desktop) + 1}px)`
+};
 const TwitterLogoContainer = styled.div`
   position: absolute;
   top: 35px; /* Adjust the vertical position as needed */
@@ -66,6 +78,14 @@ const HGLogoContainer = styled.div`
 
   &:hover {
     transform: translateX(-10px); /* Move the logo to the left on hover */
+  }
+  @media ${device.mobile} {
+    img {
+      width: calc(6vh + 6vw); /* Adjust the width as needed */
+      height: calc(3vh + 3vw); /* Adjust the height as needed */
+    }
+    right: calc(.4vh + .4vw);
+    top: 37px
   }
 `;
 const TelegramLogoContainer = styled.div`
@@ -140,49 +160,6 @@ const EtherScanLogoContainer = styled.div`
     transform: translateX(-10px); /* Move the logo to the left on hover */
   }
 }`;
-const OverlayPattern = styled.div`
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background-image: url(${PatternImage}); 
-  opacity: 0.5; 
-  pointer-events: none; 
-`;
-const TextElement = styled(Text)`
-  font-size: 38px;
-  text-shadow: 0 10px #000000;
-
-  &:hover{
-    color:red;
- }
-
-  @media (max-width: 50vw) {
-    font-size: 24px;
-  }
-`;
-const ButtonElement = styled.button`
-background-color: #D6517D;
-border-radius: 5px;
-box-shadow: 0px 2px 2px 1px #0F0F0F;
-color: black;
-cursor: pointer;
-font-family: inherit;
-padding: 10px;
-margin: 0 15px;
-transition: background-color 0.2s ease;
-&:hover {
-  background-color: #ff5252;
-  box-shadow: 0px 2px 2px 1px #FFFF00;
-  color: white;
-}
-`;
-const blink = keyframes`
-0% { opacity: 1; }
-50% { opacity: 0; }
-100% { opacity: 1; }
-`;
 const LoadingGIFContainer = styled.div`
 position: fixed;
 top: 50vh;
@@ -387,27 +364,16 @@ useEffect(() => {
             
           )}
           
-          {currentComponent === 'Fight' && (
-         <Fight
+          {currentComponent === 'LeaderBoard' && (
+         <LeaderBoard
         accounts={accounts}
         setAccounts={setAccounts}
-        setModalContent={setModalContent}
         onButtonClick={(pageName) => {
         handlePageChange(pageName);
         }}
     />
           )}
 
-          {currentComponent === 'Stake' && (
-            <Stake
-              accounts={accounts}
-              setAccounts={setAccounts}
-              onButtonClick={(pageName) => {
-                handlePageChange(pageName);
-              }}
-            />
-            
-          )}
 
 
         </div>
