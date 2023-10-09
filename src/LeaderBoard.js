@@ -227,14 +227,17 @@ class LeaderBoard extends React.Component {
         }
       }
       async fetchContractValues() {
+        console.log("DEBUG1");
         try {
+            console.log("DEBUG2");
             const { contract } = this.state;
     
-            if (!contract) {
-                console.error("Contract is not initialized yet");
-                return;
-            }
-    
+            // if (!contract) {
+            //     console.log("DEBUG3");
+            //     console.error("Contract is not initialized yet");
+            //     return;
+            // }
+            console.log("DEBUG4");
             const queueCount = await contract.queuecounter();
             let aliveEntities = [];
     
@@ -246,7 +249,7 @@ class LeaderBoard extends React.Component {
             }
     
             const roundsCount = await contract.roundsCount();
-    
+            console.log("DEBUG4");
             this.setState({
                 contractValues: {
                     queueCount: queueCount.toString(),
