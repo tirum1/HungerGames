@@ -216,6 +216,23 @@ const RefreshButton = styled.button`
         background-color: #ff5252;
     }
 `; 
+const ConnectButtonElement = styled.button`
+  position: absolute;
+  bottom: 50%; /* Adjust this value to move it higher or lower */
+  left: 50%;
+  transform: translateX(-50%);
+  margin: 20px;
+  padding: 10px 20px;
+  background-color: #833929;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+
+  &:hover {
+    background-color: #ff5252;
+  }
+`;
 
 
 const UserRow = styled(Row)`
@@ -281,10 +298,36 @@ class LeaderBoard extends React.Component {
           currentPage: 1,
           itemsPerPage: 15, 
           isLoading: false,
+          isConnected: false,
         }
         this._clickAllTime = this._clickAllTime.bind(this);
         this._clickRecent = this._clickRecent.bind(this);
       }
+      connectWallet = async () => {
+        if (!window.ethereum) {
+          console.log("MetaMask is not installed or not connected");
+          return;
+        }
+      
+        try {
+          const accounts = await window.ethereum.request({
+            method: "eth_requestAccounts",
+          });
+      
+          if (accounts.length === 0) {
+            console.log("User denied account access");
+            return;
+          }
+
+          this.setState({ isConnected: true });
+
+          this.setState({ selectedAccount: accounts[0] });
+
+        } catch (error) {
+          console.error(error);
+        }
+      };
+      
     async initializeEthereum() {
         const { ethereum } = window;
         if (!ethereum) {
@@ -444,42 +487,50 @@ class LeaderBoard extends React.Component {
         // Now render the component...
         return (
             <Overlay>
-                {isLoading ? (
+              {!this.state.isConnected ? (
+                <ConnectButtonElement onClick={this.connectWallet}>
+                  Connect MetaMask Wallet
+                </ConnectButtonElement>
+              ) : (
+                <>
+                  {this.state.isLoading ? (
                     <LoadingGIFContainer>
-                        <img src={LoadingAnimation} alt="Loading..." />
+                      <img src={LoadingAnimation} alt="Loading..." />
                     </LoadingGIFContainer>
-                ) : (
+                  ) : (
                     <Container>
-                        <LeaderboardHeader contractValues={this.state.contractValues} />
-                        <ColumnHeader onClickAll={this._clickAllTime} onClick={this._clickRecent} />
-                        {currentItems.map(entity => (
-                            <User 
-                                key={entity.entityId}
-                                rank={entity.rank}
-                                entityId={entity.entityId} 
-                                username={entity.username}
-                                recent={entity.recent}
-                                alltime={entity.alltime}
-                            />
-                        ))}
-                        <div>
-                            {this.state.currentPage > 1 && 
-                                <PrevButton onClick={this.handlePreviousPage}>Previous</PrevButton>}
-                            {currentItems.length === this.state.itemsPerPage && 
-                                <NextButton onClick={this.handleNextPage}>Next</NextButton>}
-        
-                            <BackButton onClick={this.handleBackClick}>
-                                Back
-                            </BackButton>
-        
-                            <RefreshButton onClick={this.handleRefreshClick}>
-                                Refresh
-                            </RefreshButton>
-                        </div>
+                      <LeaderboardHeader contractValues={this.state.contractValues} />
+                      <ColumnHeader onClickAll={this._clickAllTime} onClick={this._clickRecent} />
+                      {currentItems.map(entity => (
+                        <User
+                          key={entity.entityId}
+                          rank={entity.rank}
+                          entityId={entity.entityId}
+                          username={entity.username}
+                          recent={entity.recent}
+                          alltime={entity.alltime}
+                        />
+                      ))}
+                      <div>
+                        {this.state.currentPage > 1 && (
+                          <PrevButton onClick={this.handlePreviousPage}>Previous</PrevButton>
+                        )}
+                        {currentItems.length === this.state.itemsPerPage && (
+                          <NextButton onClick={this.handleNextPage}>Next</NextButton>
+                        )}
+          
+                        <BackButton onClick={this.handleBackClick}>Back</BackButton>
+          
+                        <RefreshButton onClick={this.handleRefreshClick}>Refresh</RefreshButton>
+                      </div>
                     </Container>
-                )}
+                  )}
+                </>
+              )}
             </Overlay>
-        );
+          );
+          
+          
           
     }
     
