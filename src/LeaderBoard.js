@@ -1,5 +1,5 @@
 import React from 'react';
-import styled from 'styled-components';
+import styled, { keyframes } from 'styled-components';
 import PropTypes from 'prop-types';
 import { ethers } from 'ethers';
 import battleGnomesAbi from './assets/ABI/BattleContract.json';
@@ -19,7 +19,24 @@ const Container = styled.div`
     padding: 0;
   }
 `;
-
+const glowAnimation = keyframes`
+  0% {
+    text-shadow: 0 0 10px rgba(255, 255, 255, 0.5); /* Start with a subtle glow */
+  }
+  50% {
+    text-shadow: 0 0 20px rgba(255, 255, 255, 0.8); /* Increase the glow */
+  }
+  100% {
+    text-shadow: 0 0 10px rgba(255, 255, 255, 0.5); /* Return to subtle glow */
+  }
+`;
+const LoadingText = styled.p`
+  font-size: 18px;
+  font-weight: bold;
+  color: yellow; /* Adjust the color to your preference */
+  margin: 20px 0; /* Add margin to move it lower */
+  animation: ${glowAnimation} 1.5s linear infinite; /* Apply the animation */
+`;
 const LeadHeader = styled.div`
   display: flex;           // Flexbox container
   align-items: center;     // Vertical centering
@@ -27,7 +44,7 @@ const LeadHeader = styled.div`
 
   width: 100%;
   height: 70px;
-  background: #000; // Use the exact color
+  background: #401632; // Use the exact color
   border-radius: 5px 5px 0 0;
 
   .gameRoundLabel {
@@ -47,7 +64,7 @@ const Row = styled.div`
   flex-direction: row;
   flex-wrap: nowrap;
   align-items: center;
-  background: #FEFEFE;  // Use the exact color
+  background: #8f2b6e;  // Use the exact color
   width: 100%;
   height: 100%;
   margin: 0;
@@ -96,14 +113,7 @@ const Column = styled.div`
   }
 `;
 
-const Image = styled.img`
-  float: left;
-  width: 40px;
-  height: 40px;
-  border-radius: 50%;
-  border: 2px solid #00A8E8; // Use the exact color
-  margin-right: 10px;
-`;
+
 const Overlay = styled.div`
   position: fixed; // This will cover the whole screen
   top: 0;
@@ -160,62 +170,107 @@ const HeaderColumn = styled.div`
   user-select: ${props => (props.interactive ? "none" : "default")};
   font-size: 14px; // Reduced from 15px as an example.
 `;
-const BackButton = styled.button`
-    margin: 20px;
-    padding: 10px 20px;
-    background-color: #833929;
-    color: white;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-    position: absolute;
-    bottom: 20px;  // Adjust this value to move it higher or lower
-    left: 50%;
-    transform: translateX(-50%);  // Centers the button horizontally
-    &:hover {
-        background-color: #ff5252;
-    }
+const ButtonContainer = styled.div`
+  position: relative;
 `;
 
+const BackButton = styled.button`
+  position: absolute;
+  bottom: 60px;
+  left: 50%;
+  transform: translateX(-50%);
+  margin: 20px;
+  padding: 10px 20px;
+  background-color: #833929;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  z-index: 1; /* Ensure the "Back" button is above the leaderboard */
+  
+  &:hover {
+    background-color: #ff5252;
+  }
+`;
+
+
 const NextButton = styled.button`
-    margin: 20px;
-    padding: 10px 20px;
-    background-color: #833929;
-    color: white;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-    
-    &:hover {
-        background-color: #ff5252;
-    }
+  position: absolute;
+  bottom: 60px; /* Adjust this value to move it higher or lower */
+  left: 60%; /* Position "Next" button */
+  transform: translateX(-50%);
+  margin: 20px;
+  padding: 10px 20px;
+  background-color: #833929;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  z-index: 1; /* Ensure the buttons are above the leaderboard */
+
+  &:hover {
+    background-color: #ff5252;
+  }
+
+  @media (max-width: 1440px) {
+    left: 70%; /* Adjust this value for the specific breakpoint */
+    bottom: 180px;
+  }
+
+  @media (max-width: 768px) {
+    left: 80%; /* Adjust this value for another breakpoint */
+  }
 `;
+
 const PrevButton = styled.button`
-    margin: 20px;
-    padding: 10px 20px;
-    background-color: #833929;
-    color: white;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-    
-    &:hover {
-        background-color: #ff5252;
-    }
+  position: absolute;
+  bottom: 60px; /* Adjust this value to move it higher or lower */
+  left: 50%; /* Position "Prev" button */
+  transform: translateX(-50%);
+  margin: 20px;
+  padding: 10px 20px;
+  background-color: #833929;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  z-index: 1; /* Ensure the buttons are above the leaderboard */
+
+  &:hover {
+    background-color: #ff5252;
+  }
+
+  @media (max-width: 1440px) {
+    left: 30%; /* Adjust this value for the specific breakpoint */
+    bottom: 180px;
+  }
+
+  @media (max-width: 768px) {
+    left: 20%; /* Adjust this value for another breakpoint */
+  }
 `;
+
+
 const RefreshButton = styled.button`
-    margin: 20px;
-    padding: 10px 20px;
-    background-color: #833929;
-    color: white;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-    
-    &:hover {
-        background-color: #ff5252;
-    }
-`; 
+  position: absolute;
+  bottom: 120px; /* Adjust this value to move it higher or lower */
+  left: 50%;     /* Center horizontally */
+  transform: translateX(-50%);
+  margin: 20px;
+  padding: 10px 20px;
+  background-color: #833929;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  z-index: 1; /* Ensure the "Refresh" button is above the leaderboard */
+  
+  &:hover {
+    background-color: #ff5252;
+  }
+`;
+
+
 const ConnectButtonElement = styled.button`
   position: absolute;
   bottom: 50%; /* Adjust this value to move it higher or lower */
@@ -296,9 +351,10 @@ class LeaderBoard extends React.Component {
           contractValues: [], 
           list: [],
           currentPage: 1,
-          itemsPerPage: 12, 
+          itemsPerPage: 10, 
           isLoading: false,
           isConnected: false,
+          loadingPercentage: 0,
         }
         this.fetchContractValues = this.fetchContractValues.bind(this);
         this._clickAllTime = this._clickAllTime.bind(this);
@@ -353,9 +409,10 @@ class LeaderBoard extends React.Component {
       }
 
       async fetchContractValues() {
+        
         console.log("[fetchContractValues] Function start");
         this.setState({ isLoading: true });
-    
+   
         try {
             if (!this.state) {
                 throw new Error("[fetchContractValues] State is not defined");
@@ -372,7 +429,7 @@ class LeaderBoard extends React.Component {
             console.log("[fetchContractValues] Fetching queue count...");
             const queueCount = await contract.queuecounter();
             console.log(`[fetchContractValues] Queue count fetched: ${queueCount}`);
-    
+            
             let aliveEntities = [];
             console.log("[fetchContractValues] Checking for alive entities...");
     
@@ -381,6 +438,7 @@ class LeaderBoard extends React.Component {
                 if (!isDead) {
                     aliveEntities.push(i);
                 }
+                this.setState({ loadingPercentage: ((i + 1) / queueCount) * 100 });
             }
             console.log(`[fetchContractValues] Total alive entities found: ${aliveEntities.length}`);
     
@@ -498,6 +556,7 @@ class LeaderBoard extends React.Component {
                         {isLoading ? (
                             <LoadingGIFContainer>
                                 <img src={LoadingAnimation} alt="Loading..." />
+                                <LoadingText>{this.state.loadingPercentage.toFixed(2)}%</LoadingText>
                             </LoadingGIFContainer>
                         ) : (
                             <Container>
@@ -520,9 +579,9 @@ class LeaderBoard extends React.Component {
                                     {currentItems.length === this.state.itemsPerPage && (
                                         <NextButton onClick={this.handleNextPage}>Next</NextButton>
                                     )}
-    
+ 
                                     <BackButton onClick={this.handleBackClick}>Back</BackButton>
-    
+
                                     <RefreshButton onClick={this.handleRefreshClick}>Refresh</RefreshButton>
                                 </div>
                             </Container>
