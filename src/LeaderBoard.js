@@ -226,9 +226,13 @@ class LeaderBoard extends React.Component {
           console.error("Error initializing Ethereum:", error);
         }
       }
-      async fetchContractValues() {
+
+      fetchContractValues = async () => {
         console.log("[fetchContractValues] Function start");
-    
+        if (!this.state) {
+            console.error("[fetchContractValues] State is not defined");
+            return;
+        }        
         const { contract } = this.state;
     
         // Check if the contract is available in the state
