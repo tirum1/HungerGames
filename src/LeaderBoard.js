@@ -264,10 +264,8 @@ class LeaderBoard extends React.Component {
     
       async componentDidMount() {
         await this.initializeEthereum();
-        if (this.state.contract) {
             await this.fetchContractValues();
             this.fetchContractValuesInterval = setInterval(this.fetchContractValues, 5000);
-        }
       const fetchInit = {
         method: 'GET',
         mode: 'cors'
