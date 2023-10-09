@@ -227,19 +227,22 @@ class LeaderBoard extends React.Component {
         }
       }
       async fetchContractValues() {
-        console.log("DEBUG1");
-        try {
-            console.log("DEBUG2");
-            const { contract } = this.state;
+        console.log("[fetchContractValues] Function start");
     
-            // if (!contract) {
-            //     console.log("DEBUG3");
-            //     console.error("Contract is not initialized yet");
-            //     return;
-            // }
-            console.log("DEBUG4");
+        try {
+            const { contract } = this.state;
+            if (!contract) {
+                console.error("[fetchContractValues] Contract instance not available in state");
+                return;
+            }
+            console.log("[fetchContractValues] Contract instance fetched from state");
+    
+            console.log("[fetchContractValues] Fetching queue count...");
             const queueCount = await contract.queuecounter();
+            console.log(`[fetchContractValues] Queue count fetched: ${queueCount}`);
+    
             let aliveEntities = [];
+            console.log("[fetchContractValues] Checking for alive entities...");
     
             for (let i = 0; i < queueCount; i++) {
                 const isDead = await contract.dead(i);
@@ -247,9 +250,12 @@ class LeaderBoard extends React.Component {
                     aliveEntities.push(i); // or any other data you want to save for this entity
                 }
             }
+            console.log(`[fetchContractValues] Total alive entities found: ${aliveEntities.length}`);
     
+            console.log("[fetchContractValues] Fetching rounds count...");
             const roundsCount = await contract.roundsCount();
-            console.log("DEBUG4");
+            console.log(`[fetchContractValues] Rounds count fetched: ${roundsCount}`);
+    
             this.setState({
                 contractValues: {
                     queueCount: queueCount.toString(),
@@ -257,13 +263,15 @@ class LeaderBoard extends React.Component {
                     roundsCount: roundsCount.toString()
                 }
             }, () => {
+                console.log("[fetchContractValues] State updated with fetched values");
                 console.log("Contract values fetched:", this.state.contractValues);
             });
     
         } catch (error) {
-            console.error("Error fetching contract values:", error);
+            console.error("[fetchContractValues] Error fetching contract values:", error);
         }
     }
+    
     
       async componentDidMount() {
         await this.initializeEthereum();
