@@ -192,8 +192,8 @@ const AliveEntitiesList = ({ entities }) => {
   };
   
 class LeaderBoard extends React.Component {
-    constructor() {
-        super();
+    constructor(props) {
+        super(props);
         this.state = {
           contract: null,  // Make sure to initialize contract in state
           contractValues: [], 
