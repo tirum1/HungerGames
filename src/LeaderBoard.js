@@ -407,19 +407,27 @@ class LeaderBoard extends React.Component {
     }
     
     
-      async componentDidMount() {
+    async componentDidMount() {
         await this.initializeEthereum();
         await this.fetchContractValues();
-        if(!this.state.isLoading){this.contractValuesInterval = setInterval(this.fetchContractValues, 5000);}
-
-      const fetchInit = {
-        method: 'GET',
-        mode: 'cors'
-      };
-      
-       }
-       componentWillUnmount() {
-        clearInterval(this.contractValuesInterval); // Clear the interval when the component unmounts
+        
+        if (this.intervalStarted) {
+            this.contractValuesInterval = setInterval(() => {
+                if (this.state.isLoading) {
+                    this.fetchContractValues();
+                }
+            }, 5000);
+            this.intervalStarted = true;
+        }
+    
+        const fetchInit = {
+            method: 'GET',
+            mode: 'cors'
+        };
+    }
+    
+    componentWillUnmount() {
+        clearInterval(this.contractValuesInterval);
     }
     handleNextPage = () => {
         const { currentPage } = this.state;
