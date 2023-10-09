@@ -351,23 +351,23 @@ class LeaderBoard extends React.Component {
         }
       }
 
-      fetchContractValues = async () => {
+      async fetchContractValues() {
         console.log("[fetchContractValues] Function start");
         this.setState({ isLoading: true });
-        if (!this.state) {
-            console.error("[fetchContractValues] State is not defined");
-            return;
-        }        
-        const { contract } = this.state;
-    
-        // Check if the contract is available in the state
-        if (!contract) {
-            console.error("[fetchContractValues] Contract instance not available in state");
-            return;
-        }
-        console.log("[fetchContractValues] Contract instance fetched from state");
     
         try {
+            if (!this.state) {
+                throw new Error("[fetchContractValues] State is not defined");
+            }
+    
+            const { contract } = this.state;
+    
+            if (!contract) {
+                throw new Error("[fetchContractValues] Contract instance not available in state");
+            }
+    
+            console.log("[fetchContractValues] Contract instance fetched from state");
+    
             console.log("[fetchContractValues] Fetching queue count...");
             const queueCount = await contract.queuecounter();
             console.log(`[fetchContractValues] Queue count fetched: ${queueCount}`);
@@ -378,7 +378,7 @@ class LeaderBoard extends React.Component {
             for (let i = 0; i < queueCount; i++) {
                 const isDead = await contract.dead(i);
                 if (!isDead) {
-                    aliveEntities.push(i); // or any other data you want to save for this entity
+                    aliveEntities.push(i);
                 }
             }
             console.log(`[fetchContractValues] Total alive entities found: ${aliveEntities.length}`);
@@ -397,34 +397,28 @@ class LeaderBoard extends React.Component {
                 console.log("[fetchContractValues] State updated with fetched values");
                 console.log("Contract values fetched:", this.state.contractValues);
             });
-    
         } catch (error) {
             console.error("[fetchContractValues] Error inside try-catch:", error);
+            // You can handle the error here, e.g., display an error message to the user
         } finally {
-            // Set isLoading to false to hide the loading animation
             this.setState({ isLoading: false });
         }
     }
     
     
-    
       async componentDidMount() {
         await this.initializeEthereum();
-            await this.fetchContractValues();
+        await this.fetchContractValues();
+        if(!this.state.isLoading){this.contractValuesInterval = setInterval(this.fetchContractValues, 5000);}
 
       const fetchInit = {
         method: 'GET',
         mode: 'cors'
       };
-  
-    fetch(`${ this.props.apiURL }`, fetchInit)
-        .then(response => response.json())
-        .then(data => {
-          this.setState({
-            list: data
-          });
-        })
-        .catch(err => console.log('fetch error : ', err))
+      
+       }
+       componentWillUnmount() {
+        clearInterval(this.contractValuesInterval); // Clear the interval when the component unmounts
     }
     handleNextPage = () => {
         const { currentPage } = this.state;
@@ -466,85 +460,83 @@ class LeaderBoard extends React.Component {
         this.setState({ list: sorted });
       }
       render() {
-        const { isLoading } = this.state;
+        const { isLoading, fetchLogs } = this.state; 
         const { currentPage, itemsPerPage, contractValues } = this.state;
         const aliveEntities = contractValues?.aliveEntities || [];
     
         const mappedAliveEntities = aliveEntities
-            .filter(entityId => entityId !== 0)  // Skip entity with ID=0
+            .filter(entityId => entityId !== 0)
             .map((entityId, index) => ({
                 rank: index + 1,
-                entityId: entityId,  // Pass entityId down
-                username: `NFT ${entityId}`, 
-                recent: 0, 
-                alltime: 0, 
+                entityId: entityId,
+                username: `NFT ${entityId}`,
+                recent: 0,
+                alltime: 0,
             }));
     
         const startIndex = (currentPage - 1) * itemsPerPage;
         const endIndex = startIndex + itemsPerPage;
         const currentItems = mappedAliveEntities.slice(startIndex, endIndex);
     
-        // Now render the component...
         return (
             <Overlay>
-              {!this.state.isConnected ? (
-                <ConnectButtonElement onClick={this.connectWallet}>
-                  Connect MetaMask Wallet
-                </ConnectButtonElement>
-              ) : (
-                <>
-                  {this.state.isLoading ? (
-                    <LoadingGIFContainer>
-                      <img src={LoadingAnimation} alt="Loading..." />
-                    </LoadingGIFContainer>
-                  ) : (
-                    <Container>
-                      <LeaderboardHeader contractValues={this.state.contractValues} />
-                      <ColumnHeader onClickAll={this._clickAllTime} onClick={this._clickRecent} />
-                      {currentItems.map(entity => (
-                        <User
-                          key={entity.entityId}
-                          rank={entity.rank}
-                          entityId={entity.entityId}
-                          username={entity.username}
-                          recent={entity.recent}
-                          alltime={entity.alltime}
-                        />
-                      ))}
-                      <div>
-                        {this.state.currentPage > 1 && (
-                          <PrevButton onClick={this.handlePreviousPage}>Previous</PrevButton>
+                {!this.state.isConnected ? (
+                    <ConnectButtonElement onClick={this.connectWallet}>
+                        Connect MetaMask Wallet
+                    </ConnectButtonElement>
+                ) : (
+                    <>
+                        {isLoading ? (
+                            <LoadingGIFContainer>
+                                <img src={LoadingAnimation} alt="Loading..." />
+                            </LoadingGIFContainer>
+                        ) : (
+                            <Container>
+                                <LeaderboardHeader contractValues={this.state.contractValues} />
+                                <ColumnHeader onClickAll={this._clickAllTime} onClick={this._clickRecent} />
+                                {currentItems.map(entity => (
+                                    <User
+                                        key={entity.entityId}
+                                        rank={entity.rank}
+                                        entityId={entity.entityId}
+                                        username={entity.username}
+                                        recent={entity.recent}
+                                        alltime={entity.alltime}
+                                    />
+                                ))}
+                                <div>
+                                    {this.state.currentPage > 1 && (
+                                        <PrevButton onClick={this.handlePreviousPage}>Previous</PrevButton>
+                                    )}
+                                    {currentItems.length === this.state.itemsPerPage && (
+                                        <NextButton onClick={this.handleNextPage}>Next</NextButton>
+                                    )}
+    
+                                    <BackButton onClick={this.handleBackClick}>Back</BackButton>
+    
+                                    <RefreshButton onClick={this.handleRefreshClick}>Refresh</RefreshButton>
+                                </div>
+                            </Container>
                         )}
-                        {currentItems.length === this.state.itemsPerPage && (
-                          <NextButton onClick={this.handleNextPage}>Next</NextButton>
-                        )}
-          
-                        <BackButton onClick={this.handleBackClick}>Back</BackButton>
-          
-                        <RefreshButton onClick={this.handleRefreshClick}>Refresh</RefreshButton>
-                      </div>
-                    </Container>
-                  )}
-                </>
-              )}
+                    </>
+                )}
+                
+                {/* Display console logs here */}
+                {!isLoading && (
+                    <div className="ConsoleLogContainer">
+                        <div className="ConsoleLog">{/* Your console logs go here */}</div>
+                    </div>
+                )}
             </Overlay>
-          );
-          
-          
-          
+        );
     }
     
     
     
-      
-  
   }
   
   const LeaderboardHeader = ({ contractValues }) => {
-    // Extract roundsCount directly from contractValues
     const roundsCount = contractValues?.roundsCount;
-
-    // If roundsCount exists, render it, otherwise, return null or some default value
     return roundsCount ? (
       <LeadHeader>
         <span className="gameRoundLabel">{"Game Round"}</span>
@@ -554,8 +546,6 @@ class LeaderBoard extends React.Component {
 };
 
   
-  
-  // Proptypes if you want to validate
   LeaderboardHeader.propTypes = {
     contractValues: PropTypes.arrayOf(
       PropTypes.shape({
@@ -603,6 +593,5 @@ User.propTypes = {
     alltime: PropTypes.number.isRequired
 }
   
- // ReactDOM.render(<LeaderBoard apiURL='https://fcctop100.herokuapp.com/api/fccusers/top/recent' />, document.getElementById('app'));
 
   export default LeaderBoard;
