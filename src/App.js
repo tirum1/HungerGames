@@ -365,7 +365,7 @@ useEffect(() => {
           )}
           
           {currentComponent === 'LeaderBoard' && (
-         <LeaderBoard
+         <Fight
         accounts={accounts}
         setAccounts={setAccounts}
         onButtonClick={(pageName) => {
