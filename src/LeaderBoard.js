@@ -3,6 +3,7 @@ import styled from 'styled-components';
 import PropTypes from 'prop-types';
 import { ethers } from 'ethers';
 import battleGnomesAbi from './assets/ABI/BattleContract.json';
+import LoadingAnimation from "./assets/Items/Caldero.gif"
 
 const BattleGnomesAddress = "0x067aFf85dB2B8F10e3C459a1091c43692218319B";
 
@@ -128,7 +129,30 @@ const HeaderRow = styled.div`
   border-bottom: 1px solid rgba(0,0,0,.2);
 `;
 
+const LoadingGIFContainer = styled.div`
+position: fixed;
+top: 50vh;
+left: 50%;
+transform: translate(-50%, -50%);
+width: 150px;  // You can adjust as needed
+height: 150px; // You can adjust as needed
+text-align: center;  // Added for aligning text
+z-index: 300;
 
+img {
+  width: 100%;
+  height: 100%;
+  display: block; // Makes the image a block element to push the text to the next line
+  margin: 0 auto; // Centers the image
+}
+
+p {
+  margin-top: 10px; // Space between the image and text
+  font-size: 48px;
+  font-weight: bold;
+  color: #ffffff;  // Assuming you want white text
+
+`;
 const HeaderColumn = styled.div`
   flex: 1;
   text-align: center;
@@ -136,6 +160,62 @@ const HeaderColumn = styled.div`
   user-select: ${props => (props.interactive ? "none" : "default")};
   font-size: 14px; // Reduced from 15px as an example.
 `;
+const BackButton = styled.button`
+    margin: 20px;
+    padding: 10px 20px;
+    background-color: #833929;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    position: absolute;
+    bottom: 20px;  // Adjust this value to move it higher or lower
+    left: 50%;
+    transform: translateX(-50%);  // Centers the button horizontally
+    &:hover {
+        background-color: #ff5252;
+    }
+`;
+
+const NextButton = styled.button`
+    margin: 20px;
+    padding: 10px 20px;
+    background-color: #833929;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    
+    &:hover {
+        background-color: #ff5252;
+    }
+`;
+const PrevButton = styled.button`
+    margin: 20px;
+    padding: 10px 20px;
+    background-color: #833929;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    
+    &:hover {
+        background-color: #ff5252;
+    }
+`;
+const RefreshButton = styled.button`
+    margin: 20px;
+    padding: 10px 20px;
+    background-color: #833929;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    
+    &:hover {
+        background-color: #ff5252;
+    }
+`; 
 
 
 const UserRow = styled(Row)`
@@ -200,6 +280,7 @@ class LeaderBoard extends React.Component {
           list: [],
           currentPage: 1,
           itemsPerPage: 15, 
+          isLoading: false,
         }
         this._clickAllTime = this._clickAllTime.bind(this);
         this._clickRecent = this._clickRecent.bind(this);
@@ -229,6 +310,7 @@ class LeaderBoard extends React.Component {
 
       fetchContractValues = async () => {
         console.log("[fetchContractValues] Function start");
+        this.setState({ isLoading: true });
         if (!this.state) {
             console.error("[fetchContractValues] State is not defined");
             return;
@@ -275,6 +357,9 @@ class LeaderBoard extends React.Component {
     
         } catch (error) {
             console.error("[fetchContractValues] Error inside try-catch:", error);
+        } finally {
+            // Set isLoading to false to hide the loading animation
+            this.setState({ isLoading: false });
         }
     }
     
@@ -283,7 +368,7 @@ class LeaderBoard extends React.Component {
       async componentDidMount() {
         await this.initializeEthereum();
             await this.fetchContractValues();
-            this.fetchContractValuesInterval = setInterval(this.fetchContractValues, 5000);
+
       const fetchInit = {
         method: 'GET',
         mode: 'cors'
@@ -303,6 +388,13 @@ class LeaderBoard extends React.Component {
         this.setState({
             currentPage: currentPage + 1
         });
+    }
+    handleBackClick = () => {
+        this.props.onButtonClick('LandingPage');
+    }
+    
+    handleRefreshClick = () => {
+        this.fetchContractValues();  // Assuming fetchContractValues is the method you want to call
     }
     
     handlePreviousPage = () => {
@@ -331,6 +423,7 @@ class LeaderBoard extends React.Component {
         this.setState({ list: sorted });
       }
       render() {
+        const { isLoading } = this.state;
         const { currentPage, itemsPerPage, contractValues } = this.state;
         const aliveEntities = contractValues?.aliveEntities || [];
     
@@ -351,28 +444,43 @@ class LeaderBoard extends React.Component {
         // Now render the component...
         return (
             <Overlay>
-                <Container>
-                    <LeaderboardHeader contractValues={this.state.contractValues} />
-                    <ColumnHeader onClickAll={this._clickAllTime} onClick={this._clickRecent}/>
-                    {currentItems.map(entity => (
-                        <User 
-                            key={entity.entityId}
-                            rank={entity.rank}
-                            entityId={entity.entityId} // Make sure to pass entityId here
-                            username={entity.username}
-                            recent={entity.recent}
-                            alltime={entity.alltime}
-                        />
-                    ))}
-                    <div>
-                        {this.state.currentPage > 1 && 
-                            <button onClick={this.handlePreviousPage}>Previous</button>}
-                        {currentItems.length === this.state.itemsPerPage && 
-                            <button onClick={this.handleNextPage}>Next</button>}
-                    </div>
-                </Container>
+                {isLoading ? (
+                    <LoadingGIFContainer>
+                        <img src={LoadingAnimation} alt="Loading..." />
+                    </LoadingGIFContainer>
+                ) : (
+                    <Container>
+                        <LeaderboardHeader contractValues={this.state.contractValues} />
+                        <ColumnHeader onClickAll={this._clickAllTime} onClick={this._clickRecent} />
+                        {currentItems.map(entity => (
+                            <User 
+                                key={entity.entityId}
+                                rank={entity.rank}
+                                entityId={entity.entityId} 
+                                username={entity.username}
+                                recent={entity.recent}
+                                alltime={entity.alltime}
+                            />
+                        ))}
+                        <div>
+                            {this.state.currentPage > 1 && 
+                                <PrevButton onClick={this.handlePreviousPage}>Previous</PrevButton>}
+                            {currentItems.length === this.state.itemsPerPage && 
+                                <NextButton onClick={this.handleNextPage}>Next</NextButton>}
+        
+                            <BackButton onClick={this.handleBackClick}>
+                                Back
+                            </BackButton>
+        
+                            <RefreshButton onClick={this.handleRefreshClick}>
+                                Refresh
+                            </RefreshButton>
+                        </div>
+                    </Container>
+                )}
             </Overlay>
-        );      
+        );
+          
     }
     
     
