@@ -199,7 +199,7 @@ class LeaderBoard extends React.Component {
           contractValues: [], 
           list: [],
           currentPage: 1,
-          itemsPerPage: 10, 
+          itemsPerPage: 15, 
         }
         this._clickAllTime = this._clickAllTime.bind(this);
         this._clickRecent = this._clickRecent.bind(this);
