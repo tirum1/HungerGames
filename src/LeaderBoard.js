@@ -296,7 +296,7 @@ class LeaderBoard extends React.Component {
           contractValues: [], 
           list: [],
           currentPage: 1,
-          itemsPerPage: 15, 
+          itemsPerPage: 12, 
           isLoading: false,
           isConnected: false,
         }
