@@ -300,6 +300,7 @@ class LeaderBoard extends React.Component {
           isLoading: false,
           isConnected: false,
         }
+        this.fetchContractValues = this.fetchContractValues.bind(this);
         this._clickAllTime = this._clickAllTime.bind(this);
         this._clickRecent = this._clickRecent.bind(this);
       }
