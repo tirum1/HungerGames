@@ -3,20 +3,117 @@ import styled, { keyframes } from 'styled-components';
 import PropTypes from 'prop-types';
 import { ethers } from 'ethers';
 import battleGnomesAbi from './assets/ABI/BattleContract.json';
-import LoadingAnimation from "./assets/Items/Caldero.gif"
+import TokenABI from "./assets/ABI/HungerGames.json";
+import LoadingAnimation from "./assets/Items/Caldero.gif";
 
-const BattleGnomesAddress = "0x067aFf85dB2B8F10e3C459a1091c43692218319B";
+const BattleGnomesAddress = "0x88Fb968343039B79c91914933E91f14C015Bdb42";
+const TokenAddress = "0xc15BBa4a915dd9b0ccf24A5d34401D7A500c614E";
 
-const Container = styled.div`
-  width: 550px;
-  margin: 80px auto;
+const BackButton = styled.button`
+  position: absolute;
+  bottom: 60px;
+  left: 50%;
+  transform: translateX(-50%);
+  margin: 20px;
+  padding: 10px 20px;
+  background-color: #833929;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  z-index: 1; /* Ensure the "Back" button is above the leaderboard */
+  
+  &:hover {
+    background-color: #ff5252;
+  }
+`;
+const NextButton = styled.button`
+  position: absolute;
+  bottom: 60px; /* Adjust this value to move it higher or lower */
+  left: 60%; /* Position "Next" button */
+  transform: translateX(-50%);
+  margin: 20px;
+  padding: 10px 20px;
+  background-color: #833929;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  z-index: 1; /* Ensure the buttons are above the leaderboard */
 
-  @media (max-width: 550px) {
-    width: 100%;
+  &:hover {
+    background-color: #ff5252;
   }
 
-  @media (max-width: 540px) {
-    padding: 0;
+  @media (max-width: 1440px) {
+    left: 70%; /* Adjust this value for the specific breakpoint */
+    bottom: 180px;
+  }
+
+  @media (max-width: 768px) {
+    left: 80%; /* Adjust this value for another breakpoint */
+  }
+`;
+const PrevButton = styled.button`
+  position: absolute;
+  bottom: 60px; /* Adjust this value to move it higher or lower */
+  left: 50%; /* Position "Prev" button */
+  transform: translateX(-50%);
+  margin: 20px;
+  padding: 10px 20px;
+  background-color: #833929;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  z-index: 1; /* Ensure the buttons are above the leaderboard */
+
+  &:hover {
+    background-color: #ff5252;
+  }
+
+  @media (max-width: 1440px) {
+    left: 30%; /* Adjust this value for the specific breakpoint */
+    bottom: 180px;
+  }
+
+  @media (max-width: 768px) {
+    left: 20%; /* Adjust this value for another breakpoint */
+  }
+`;
+const RefreshButton = styled.button`
+  position: absolute;
+  bottom: 120px; /* Adjust this value to move it higher or lower */
+  left: 50%;     /* Center horizontally */
+  transform: translateX(-50%);
+  margin: 20px;
+  padding: 10px 20px;
+  background-color: #833929;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  z-index: 1; /* Ensure the "Refresh" button is above the leaderboard */
+  
+  &:hover {
+    background-color: #ff5252;
+  }
+`;
+const ConnectButtonElement = styled.button`
+  position: absolute;
+  bottom: 50%; /* Adjust this value to move it higher or lower */
+  left: 50%;
+  transform: translateX(-50%);
+  margin: 20px;
+  padding: 10px 20px;
+  background-color: #833929;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+
+  &:hover {
+    background-color: #ff5252;
   }
 `;
 const glowAnimation = keyframes`
@@ -28,6 +125,18 @@ const glowAnimation = keyframes`
   }
   100% {
     text-shadow: 0 0 10px rgba(255, 255, 255, 0.5); /* Return to subtle glow */
+  }
+`;
+const Container = styled.div`
+  width: 550px;
+  margin: 80px auto;
+
+  @media (max-width: 550px) {
+    width: 100%;
+  }
+
+  @media (max-width: 540px) {
+    padding: 0;
   }
 `;
 const LoadingText = styled.p`
@@ -56,9 +165,6 @@ const LeadHeader = styled.div`
     font-size: 18px;  // Adjust as needed
   }
 `;
-
-
-
 const Row = styled.div`
   display: flex;
   flex-direction: row;
@@ -102,7 +208,6 @@ const Row = styled.div`
     }
   }
 `;
-
 const Column = styled.div`
   padding-left: ${props => (props.rank ? "6px" : "0px")};
 
@@ -112,8 +217,6 @@ const Column = styled.div`
     user-select: ${props => (props.recent || props.alltime ? "none" : "default")};
   }
 `;
-
-
 const Overlay = styled.div`
   position: fixed; // This will cover the whole screen
   top: 0;
@@ -123,12 +226,10 @@ const Overlay = styled.div`
   background-color: rgba(0, 0, 0, 0.5); // Black with 50% opacity
   z-index: -1; // Place it behind the content
 `;
-
 const NameLink = styled.a`
   padding-top: 15px;
   vertical-align: middle;
 `;
-
 const HeaderRow = styled.div`
   display: flex;
   justify-content: space-between;
@@ -138,7 +239,6 @@ const HeaderRow = styled.div`
   text-align: center;
   border-bottom: 1px solid rgba(0,0,0,.2);
 `;
-
 const LoadingGIFContainer = styled.div`
 position: fixed;
 top: 50vh;
@@ -170,134 +270,17 @@ const HeaderColumn = styled.div`
   user-select: ${props => (props.interactive ? "none" : "default")};
   font-size: 14px; // Reduced from 15px as an example.
 `;
-const ButtonContainer = styled.div`
-  position: relative;
-`;
-
-const BackButton = styled.button`
-  position: absolute;
-  bottom: 60px;
-  left: 50%;
-  transform: translateX(-50%);
-  margin: 20px;
-  padding: 10px 20px;
-  background-color: #833929;
-  color: white;
-  border: none;
-  border-radius: 5px;
-  cursor: pointer;
-  z-index: 1; /* Ensure the "Back" button is above the leaderboard */
-  
-  &:hover {
-    background-color: #ff5252;
-  }
-`;
-
-
-const NextButton = styled.button`
-  position: absolute;
-  bottom: 60px; /* Adjust this value to move it higher or lower */
-  left: 60%; /* Position "Next" button */
-  transform: translateX(-50%);
-  margin: 20px;
-  padding: 10px 20px;
-  background-color: #833929;
-  color: white;
-  border: none;
-  border-radius: 5px;
-  cursor: pointer;
-  z-index: 1; /* Ensure the buttons are above the leaderboard */
-
-  &:hover {
-    background-color: #ff5252;
-  }
-
-  @media (max-width: 1440px) {
-    left: 70%; /* Adjust this value for the specific breakpoint */
-    bottom: 180px;
-  }
-
-  @media (max-width: 768px) {
-    left: 80%; /* Adjust this value for another breakpoint */
-  }
-`;
-
-const PrevButton = styled.button`
-  position: absolute;
-  bottom: 60px; /* Adjust this value to move it higher or lower */
-  left: 50%; /* Position "Prev" button */
-  transform: translateX(-50%);
-  margin: 20px;
-  padding: 10px 20px;
-  background-color: #833929;
-  color: white;
-  border: none;
-  border-radius: 5px;
-  cursor: pointer;
-  z-index: 1; /* Ensure the buttons are above the leaderboard */
-
-  &:hover {
-    background-color: #ff5252;
-  }
-
-  @media (max-width: 1440px) {
-    left: 30%; /* Adjust this value for the specific breakpoint */
-    bottom: 180px;
-  }
-
-  @media (max-width: 768px) {
-    left: 20%; /* Adjust this value for another breakpoint */
-  }
-`;
-
-
-const RefreshButton = styled.button`
-  position: absolute;
-  bottom: 120px; /* Adjust this value to move it higher or lower */
-  left: 50%;     /* Center horizontally */
-  transform: translateX(-50%);
-  margin: 20px;
-  padding: 10px 20px;
-  background-color: #833929;
-  color: white;
-  border: none;
-  border-radius: 5px;
-  cursor: pointer;
-  z-index: 1; /* Ensure the "Refresh" button is above the leaderboard */
-  
-  &:hover {
-    background-color: #ff5252;
-  }
-`;
-
-
-const ConnectButtonElement = styled.button`
-  position: absolute;
-  bottom: 50%; /* Adjust this value to move it higher or lower */
-  left: 50%;
-  transform: translateX(-50%);
-  margin: 20px;
-  padding: 10px 20px;
-  background-color: #833929;
-  color: white;
-  border: none;
-  border-radius: 5px;
-  cursor: pointer;
-
-  &:hover {
-    background-color: #ff5252;
-  }
-`;
-
 
 const UserRow = styled(Row)`
   text-align: center;
+  justify-content: space-between;
 `;
 
 const UserColumn = styled(Column)`
   &.name {
     text-align: left;
-    font-size: 14px; 
+    font-size: 14px;
+
     @media (max-width: 540px) {
       text-align: center;
 
@@ -308,15 +291,38 @@ const UserColumn = styled(Column)`
     }
   }
 
-  img {
-    float: left;
-    width: 40px;
-    height: 40px;
-    border-radius: 50%;
-    border: 2px solid #00A8E8;
-    margin-right: 10px;
+  &.round-wins {
+    text-align: right;
+    font-size: 14px;
+    flex: 1;
+    padding-right: 40px; /* Increase padding-right to add more space */
   }
 `;
+
+const UserPotionColumn = styled(Column)`
+  &.name {
+    text-align: left;
+    font-size: 14px;
+
+    @media (max-width: 540px) {
+      text-align: center;
+
+      a {
+        display: block;
+        padding-top: 4px;
+      }
+    }
+  }
+
+  &.round-wins {
+    text-align: center;
+    font-size: 14px;
+    flex: 1;
+    padding-right: 40px; /* Increase padding-right to add more space */
+  }
+`;
+
+
 const AliveEntitiesList = ({ entities }) => {
     if (!entities || entities.length === 0) {
       return <div>No alive entities found.</div>;
@@ -351,10 +357,12 @@ class LeaderBoard extends React.Component {
           contractValues: [], 
           list: [],
           currentPage: 1,
-          itemsPerPage: 10, 
+          itemsPerPage: 10,
           isLoading: false,
           isConnected: false,
           loadingPercentage: 0,
+          entityIdWithRoundWins: {},
+          entityIdPotionsUsed: {},
         }
         this.fetchContractValues = this.fetchContractValues.bind(this);
         this._clickAllTime = this._clickAllTime.bind(this);
@@ -384,7 +392,7 @@ class LeaderBoard extends React.Component {
           console.error(error);
         }
       };
-      
+
     async initializeEthereum() {
         const { ethereum } = window;
         if (!ethereum) {
@@ -396,69 +404,83 @@ class LeaderBoard extends React.Component {
           await ethereum.enable();
           const provider = new ethers.providers.Web3Provider(ethereum);
           const signer = provider.getSigner();
-          const contract = new ethers.Contract(
+
+          const BattleContract = new ethers.Contract(
             BattleGnomesAddress,
             battleGnomesAbi.abi,
             signer
           );
       
-          this.setState({ contract });
+          const TokenContract = new ethers.Contract(
+            TokenAddress,
+            TokenABI.abi,
+            signer
+          );
+
+          this.setState({ BattleContract });
+          this.setState({ TokenContract });
         } catch (error) {
           console.error("Error initializing Ethereum:", error);
         }
       }
 
       async fetchContractValues() {
-        
         console.log("[fetchContractValues] Function start");
         this.setState({ isLoading: true });
-   
+    
         try {
-            if (!this.state) {
-                throw new Error("[fetchContractValues] State is not defined");
+            const { BattleContract } = this.state;
+            const { TokenContract } = this.state;
+    
+            if (!BattleContract) {
+                throw new Error("[fetchContractValues] Battle Contract instance not available in state");
             }
-    
-            const { contract } = this.state;
-    
-            if (!contract) {
-                throw new Error("[fetchContractValues] Contract instance not available in state");
+            if (!TokenContract) {
+                throw new Error("[fetchContractValues] Token Contract instance not available in state");
             }
     
             console.log("[fetchContractValues] Contract instance fetched from state");
     
-            console.log("[fetchContractValues] Fetching queue count...");
-            const queueCount = await contract.queuecounter();
-            console.log(`[fetchContractValues] Queue count fetched: ${queueCount}`);
-            
-            let aliveEntities = [];
-            console.log("[fetchContractValues] Checking for alive entities...");
+            console.log("[fetchContractValues] Fetching alive entities...");
+            const aliveEntities = await BattleContract.getAliveByID();
+            const totalEntities = aliveEntities.length;
     
-            for (let i = 0; i < queueCount; i++) {
-                const isDead = await contract.dead(i);
-                if (!isDead) {
-                    aliveEntities.push(i);
-                }
-                this.setState({ loadingPercentage: ((i + 1) / queueCount) * 100 });
+            // Fetch entityIdWithRoundWins
+            const entityIdWithRoundWins = {};
+            const entityIdPotionsUsed = {};
+    
+            for (let i = 0; i < totalEntities; i++) {
+                const entityId = aliveEntities[i];
+                const potionsUsed = await TokenContract.potionsUsed(entityId);
+                const roundWins = await BattleContract.roundWinsOfNFT(entityId);
+                entityIdWithRoundWins[entityId] = roundWins;
+                entityIdPotionsUsed[entityId] = potionsUsed;
+    
+                const loadingPercentage = ((i + 1) / totalEntities) * 100;
+                this.setState({ loadingPercentage });
             }
-            console.log(`[fetchContractValues] Total alive entities found: ${aliveEntities.length}`);
+    
+            console.log(`[fetchContractValues] Total alive entities found: ${totalEntities}`);
     
             console.log("[fetchContractValues] Fetching rounds count...");
-            const roundsCount = await contract.roundsCount();
+            const roundsCount = await BattleContract.roundsCount();
             console.log(`[fetchContractValues] Rounds count fetched: ${roundsCount}`);
     
             this.setState({
                 contractValues: {
-                    queueCount: queueCount.toString(),
+                    nonDead: totalEntities.toString(),
                     aliveEntities: aliveEntities,
-                    roundsCount: roundsCount.toString()
-                }
+                    roundsCount: roundsCount.toString(),
+                },
+                entityIdWithRoundWins,
+                entityIdPotionsUsed,
             }, () => {
                 console.log("[fetchContractValues] State updated with fetched values");
                 console.log("Contract values fetched:", this.state.contractValues);
             });
+    
         } catch (error) {
             console.error("[fetchContractValues] Error inside try-catch:", error);
-            // You can handle the error here, e.g., display an error message to the user
         } finally {
             this.setState({ isLoading: false });
         }
@@ -493,6 +515,7 @@ class LeaderBoard extends React.Component {
             currentPage: currentPage + 1
         });
     }
+
     handleBackClick = () => {
         this.props.onButtonClick('LandingPage');
     }
@@ -511,6 +534,7 @@ class LeaderBoard extends React.Component {
     }
     
     componentWillUnmount() {
+
 
         if (this.fetchContractValuesInterval) {
           clearInterval(this.fetchContractValuesInterval);
@@ -532,15 +556,20 @@ class LeaderBoard extends React.Component {
         const aliveEntities = contractValues?.aliveEntities || [];
     
         const mappedAliveEntities = aliveEntities
-            .filter(entityId => entityId !== 0)
-            .map((entityId, index) => ({
-                rank: index + 1,
-                entityId: entityId,
-                username: `NFT ${entityId}`,
-                recent: 0,
-                alltime: 0,
-            }));
-    
+        .filter(entityId => entityId !== 0)
+        .map((entityId, index) => ({
+          rank: index + 1,
+          entityId: entityId,
+          username: `NFT ${entityId}`,
+          recent: 0, // You can customize the display of recent here if needed
+          alltime: 0, // You can customize the display of alltime here if needed
+          roundWins: this.state.entityIdWithRoundWins[entityId] ? this.state.entityIdWithRoundWins[entityId].toString() : "0",
+          potionsUsed: this.state.entityIdPotionsUsed[entityId] ? this.state.entityIdPotionsUsed[entityId].toString() : "0",
+        }));
+      
+      
+      
+      
         const startIndex = (currentPage - 1) * itemsPerPage;
         const endIndex = startIndex + itemsPerPage;
         const currentItems = mappedAliveEntities.slice(startIndex, endIndex);
@@ -563,27 +592,24 @@ class LeaderBoard extends React.Component {
                                 <LeaderboardHeader contractValues={this.state.contractValues} />
                                 <ColumnHeader onClickAll={this._clickAllTime} onClick={this._clickRecent} />
                                 {currentItems.map(entity => (
-                                    <User
-                                        key={entity.entityId}
-                                        rank={entity.rank}
-                                        entityId={entity.entityId}
-                                        username={entity.username}
-                                        recent={entity.recent}
-                                        alltime={entity.alltime}
-                                    />
-                                ))}
-                                <div>
-                                    {this.state.currentPage > 1 && (
-                                        <PrevButton onClick={this.handlePreviousPage}>Previous</PrevButton>
-                                    )}
-                                    {currentItems.length === this.state.itemsPerPage && (
-                                        <NextButton onClick={this.handleNextPage}>Next</NextButton>
-                                    )}
- 
-                                    <BackButton onClick={this.handleBackClick}>Back</BackButton>
+                                  <User
+                                  entityId={entity.entityId}
+                                  username={entity.username}
+                                  roundWins={entity.roundWins} 
+                                  potionsUsed={entity.potionsUsed}
+                                />
+                              ))}
+                                           <div>
+              {this.state.currentPage > 1 && (
+                <PrevButton onClick={this.handlePreviousPage}>Previous</PrevButton>
+              )}
+              {currentItems.length === this.state.itemsPerPage && (
+                <NextButton onClick={this.handleNextPage}>Next</NextButton>
+              )}
 
-                                    <RefreshButton onClick={this.handleRefreshClick}>Refresh</RefreshButton>
-                                </div>
+              <BackButton onClick={this.handleBackClick}>Back</BackButton>
+              <RefreshButton onClick={this.handleRefreshClick}>Refresh</RefreshButton>
+            </div>
                             </Container>
                         )}
                     </>
@@ -627,8 +653,8 @@ class LeaderBoard extends React.Component {
 const ColumnHeader = ({ onClick, onClickAll }) => (
     <HeaderRow>
       <HeaderColumn><h4>#</h4></HeaderColumn>
-      <HeaderColumn interactive onClick={onClick}><h4>Potions Used</h4></HeaderColumn>
-      <HeaderColumn interactive onClick={onClickAll}><h4>Round Wins</h4></HeaderColumn>
+      <HeaderColumn interactive onClick={onClick}><h4>Round Wins</h4></HeaderColumn>
+      <HeaderColumn interactive onClick={onClickAll}><h4>Potions Used</h4></HeaderColumn>
     </HeaderRow>
   );
   
@@ -638,28 +664,34 @@ ColumnHeader.propTypes = {
     onClickAll: PropTypes.func
 }
 
-  
-const User = ({ rank, entityId, username, recent, alltime }) => {
+const User = ({ entityId, username, roundWins, potionsUsed }) => {
     return (
-        <UserRow>
-            <UserColumn className="name">
-                <NameLink href={`https://testnets.opensea.io/de-DE/assets/goerli/0x3acacdfbf7fe223d42031a2cd185e232d911405f/${entityId}`} target="_blank">
-                    {username}
-                </NameLink>
-            </UserColumn>
-        </UserRow>
+      <UserRow>
+        <UserColumn className="name">
+          <NameLink href={`https://testnets.opensea.io/de-DE/assets/goerli/0x3acacdfbf7fe223d42031a2cd185e232d911405f/${entityId}`} target="_blank">
+            {username}
+          </NameLink>
+        </UserColumn>
+        <UserColumn className="round-wins">
+          {roundWins.toString()}
+        </UserColumn>
+        <UserPotionColumn className="round-wins">
+          {potionsUsed.toString()}
+        </UserPotionColumn>
+      </UserRow>
     );
-}
-
-
+  };
+  
   
 User.propTypes = {
     rank: PropTypes.number.isRequired,
-    img: PropTypes.string.isRequired,
+    entityId: PropTypes.number.isRequired,
     username: PropTypes.string.isRequired,
     recent: PropTypes.number.isRequired,
-    alltime: PropTypes.number.isRequired
-}
+    alltime: PropTypes.number.isRequired,
+    roundWins: PropTypes.number.isRequired, 
+  };
+  
   
 
   export default LeaderBoard;

@@ -11,6 +11,7 @@
 
 # production
 /build
+/TGBOT
 .env
 # misc
 .DS_Store

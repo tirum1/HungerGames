@@ -2,23 +2,35 @@ import React, { Component } from 'react';
 import styled, { keyframes } from 'styled-components';
 import { Howl, Howler } from 'howler';
 import HoverSound from './assets/sound/click-21156.mp3';
-import backgroundImage from './assets/background/Unbenannt-3.png';
-import XTRAIMAGE from './assets/Items/1.png';
-import SKIPIMAGE from './assets/Items/2.png';
-import BOOSTIMAGE from './assets/Items/3.png';
-import VIMAGE from './assets/Items/4.png';
 import clickSound from './assets/sound/hover.mp3';
 import "./App.css";
 import Web3 from 'web3';
 import {ethers} from 'ethers';
 import hgmsTokenAbi from './assets/ABI/HungerGames.json';
-import battleGnomesAbi from './assets/ABI/HungerGames.json';
 import GCAbi from "./assets/ABI/GnomesCollective.json";
+import FirstPotion from './assets/Items/Potion 1 HD.gif';
+import FirstPotionStill from './assets/Items/Potion 1 HD-0 STILL.png';
+import FirstPotionPressed from './assets/Items/Potion 1 HD-8 PRESSED.png';
+import SecondPotion from './assets/Items/Potion 2 HD.gif';
+import SecondPotionStill from './assets/Items/Potion 2 HD-0 STILL.png';
+import SecondPotionPressed from './assets/Items/Potion 2 HD-8 PRESSED.png';
+import ThirdPotion from './assets/Items/Potion 3 HD.gif';
+import ThirdPotionStill from './assets/Items/Potion 3 HD-0 STILL.png';
+import ThirdPotionPressed from './assets/Items/Potion 3 HD-8 PRESSED.png';
 
-
-const hgmsTokenAddress = '0x6E62C622c7035d4CE1f36Bd977478A85C614d0E6'; 
+const hgmsTokenAddress = '0xc15BBa4a915dd9b0ccf24A5d34401D7A500c614E'; 
 const GnomesCollectiveAddress = "0x086A19cEB20911FE4f5DeB1Fd5368C5dbd749a4D";
-const BattleGnomesAbi = "0x2EBfe8cfDeB403423eac15016CEdd459a7BF1fB1";
+
+
+const Overlay = styled.div`
+  position: fixed; // This will cover the whole screen
+  top: 0;
+  left: 0;
+  width: 100vw; // Full width
+  height: 100vh; // Full height
+  background-color: rgba(0, 0, 0, 0.5); // Black with 50% opacity
+  z-index: -1; // Place it behind the content
+`;
 
 const ModalOverlay = styled.div`
   position: fixed;
@@ -98,7 +110,32 @@ const ModalContent = styled.div`
   transform: translate(-50%, -50%);
   box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.2);
   z-index: 1001;
+
+  h2 {
+    font-size: 24px; /* Adjust the heading font size as needed */
+  }
+
+  label {
+    font-size: 16px; /* Adjust the label font size as needed */
+  }
+
+  input {
+    font-size: 16px; /* Adjust the input font size as needed */
+  }
+
+  .button-container {
+    text-align: center;
+
+    .cancel-button {
+      font-size: 18px; /* Adjust the cancel button font size as needed */
+    }
+
+    .deposit-button {
+      font-size: 18px; /* Adjust the deposit button font size as needed */
+    }
+  }
 `;
+
 const BackButtonContainer = styled.div`
   position: absolute;
   top: 80vh;
@@ -122,44 +159,7 @@ const ButtonElement = styled.button`
     color: white;
     }
   }`;
-  const IncButtonElement = styled.button`
-  background-color: #833929;
-  border-radius: 5px;
-  position: absolute;
-  top: 50vh;
-  left: 55.5vw;
-  box-shadow: 0px 2px 2px 1px #0f0f0f;
-  color: black;
-  cursor: pointer;
-  font-family: inherit;
-  padding: calc(0.7vw + 0.7vh);
-  transition: background-color 0.2s ease;
 
-  &:hover {
-    background-color: #ff5252;
-    box-shadow: 0px 2px 2px 1px #ffff00;
-    color: white;
-    }
-  }`;
-  const DecButtonElement = styled.button`
-  background-color: #833929;
-  border-radius: 5px;
-  position: absolute;
-  top: 50vh;
-  left: 37.5%;
-  box-shadow: 0px 2px 2px 1px #0f0f0f;
-  color: black;
-  cursor: pointer;
-  font-family: inherit;
-  padding: calc(0.7vw + 0.7vh);
-  transition: background-color 0.2s ease;
-
-  &:hover {
-    background-color: #ff5252;
-    box-shadow: 0px 2px 2px 1px #ffff00;
-    color: white;
-    }
-  }`;
   const DepButtonElement = styled.button`
   background-color: #833929;
   border-radius: 5px;
@@ -202,7 +202,7 @@ const ButtonElement = styled.button`
   background-color: #833929;
   border-radius: 5px;
   position: absolute;
-  top: 70vh;
+  top: 72vh;
   left: 18%;
   box-shadow: 0px 2px 2px 1px #0f0f0f;
   color: black;
@@ -217,30 +217,7 @@ const ButtonElement = styled.button`
     color: white;
     }
   }`;
-  const Image = styled.img`
-  width: calc(50vw + 50vh); /* Adjust the size as needed */
-  height: calc(22vw + 22vh);
-  box-shadow: 0px 0px 20px rgba(0, 0, 0, 0.3);
-  position: relative; /* Add relative positioning to the image container */
-`;
-const ItemImage = styled.img`
-  width: calc(5vw + 5vh); /* Adjust the size as needed */
-  height: calc(5vw + 5vh);
-  box-shadow: 0px 0px 20px rgba(0, 0, 0, 0.3);
-  position: absolute; /* Use absolute positioning */
-  top: 45%; /* Position at the top */
-  left: 45%; /* Position at the left */
-  animation: itemImageAnimation 3s infinite alternate; /* Apply the animation */
 
-  @keyframes itemImageAnimation {
-    0% {
-      box-shadow: 0px 0px 60px rgba(0, 0, 0, 2);
-    }
-    100% {
-      box-shadow: 0px 0px 180px rgba(255, 165, 0, 2); /* Adjust shadow color and size as needed */
-    }
-  }
-`;
 const blurAnimation = keyframes`
   0% {
     text-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
@@ -249,138 +226,6 @@ const blurAnimation = keyframes`
   100% {
     text-shadow: 0 0 0px rgba(0, 0, 0, 0);
     filter: blur(0px);
-  }
-`;
-const Text = styled.p`
-font-size: calc(.6vh + .6vw);
-  color: #fff;
-  margin-bottom: 20px;
-  text-align: center;
-  position: absolute;
-  z-index: 1;
-  top: 25%;
-  left: 17%;
-  &:hover {
-    color: red;
-  }
-`;
-const DescText = styled.p`
-font-size: calc(.6vh + .6vw);
-  color: #fff;
-  margin-bottom: 20px;
-  text-align: center;
-  position: absolute;
-  z-index: 1;
-  top: 50%;
-  left: 65%;
-  white-space: pre-line;
-
-  &:hover {
-    color: red;
-  }
-`;
-const TextHGMS = styled.p`
-  font-size: calc(.5vh + .5vw);
-  color: #fff;
-  margin-bottom: 20px;
-  text-align: center;
-  position: absolute;
-  z-index: 1;
-  top: 30%;
-  left: 17%;
-  &:hover {
-    color: red;
-  }
-`;
-const TextETH = styled.p`
-font-size: calc(.5vh + .5vw);
-  color: #fff;
-  margin-bottom: 20px;
-  text-align: center;
-  position: absolute;
-  z-index: 1;
-  top: 35%;
-  left: 17%;
-  &:hover {
-    color: red;
-  }
-`;
-const TextPOTIONS = styled.p`
-font-size: calc(.5vh + .5vw);
-  color: #fff;
-  margin-bottom: 20px;
-  text-align: center;
-  position: absolute;
-  z-index: 1;
-  top: 40%;
-  left: 17%;
-  &:hover {
-    color: red;
-  }
-`;
-const TextSKIP = styled.p`
-font-size: calc(.5vh + .5vw);
-  color: #fff;
-  margin-bottom: 20px;
-  text-align: center;
-  position: absolute;
-  z-index: 1;
-  top: 45%;
-  left: 17%;
-  &:hover {
-    color: red;
-  }
-`;
-const TextBOOST = styled.p`
-font-size: calc(.5vh + .5vw);
-  color: #fff;
-  margin-bottom: 20px;
-  text-align: center;
-  position: absolute;
-  z-index: 1;
-  top: 50%;
-  left: 17%;
-  &:hover {
-    color: red;
-  }
-`;
-const TextV = styled.p`
-font-size: calc(.5vh + .5vw);
-  color: #fff;
-  margin-bottom: 20px;
-  text-align: center;
-  position: absolute;
-  z-index: 1;
-  top: 55%;
-  left: 17%;
-  &:hover {
-    color: red;
-  }
-`;
-const Text2 = styled.p`
-  font-size: calc(1vh + 1vw);
-  color: #fff;
-  margin-bottom: 20px;
-  text-align: center;
-  position: absolute;
-  z-index: 1;
-  top: 65%;
-  left: 40%;
-  &:hover {
-    color: red;
-  }
-`;
-const PriceText = styled.p`
-  font-size: calc(1vh + 1vw);
-  color: #fff;
-  text-align: center;
-  position: absolute;
-  z-index: 1;
-  top: 30%;
-  left: 42%;
-  white-space: pre-line;
-  &:hover {
-    color: red;
   }
 `;
 const Title = styled.h1`
@@ -414,9 +259,7 @@ const Title = styled.h1`
     }
   }
 `;
-const ImageContainer = styled.div`
-  position: relative;
-`;
+
 const NFTModalOverlay = styled.div`
   display: flex;
   justify-content: center;
@@ -434,6 +277,117 @@ const StyledLi = styled.li`
   top: 150px;
 `;
 
+const SecondPotionTitle = styled.h3`
+font-size: calc(1vh + 1vw);
+color: #000; /* Updated color to black */
+margin: 15px auto; /* Center the title horizontally */
+position: absolute; /* Use absolute positioning */
+top: 25%; /* Place the title at the vertical center */
+left: 55%; /* Place the title at the horizontal center */
+transform: translate(-50%, -50%); /* Center the title precisely */
+z-index: 1; /* Ensure the title is on top of the image */
+text-shadow: 0 0 10px rgba(0, 0, 0, 0.8);
+filter: blur(5px);
+animation: ${blurAnimation} 2s linear alternate infinite, glowTitle 2s linear infinite;
+
+}
+`;
+
+const ThirdPotionTitle = styled.h3`
+font-size: calc(1vh + 1vw);
+color: #000; /* Updated color to black */
+margin: 15px auto; /* Center the title horizontally */
+position: absolute; /* Use absolute positioning */
+top: 51%; /* Place the title at the vertical center */
+left: 45%; /* Place the title at the horizontal center */
+transform: translate(-50%, -50%); /* Center the title precisely */
+z-index: 1; /* Ensure the title is on top of the image */
+text-shadow: 0 0 10px rgba(0, 0, 0, 0.8);
+filter: blur(5px);
+animation: ${blurAnimation} 2s linear alternate infinite, glowTitle 2s linear infinite;
+
+}
+`;
+
+const FirstPotionElement = styled.div`
+  position: absolute;
+  transform: translate(-50%, -50%);
+  cursor: pointer;
+  transition: transform 0.2s;
+  top: 40vh;
+  left: 45vw;
+  width: 100px;
+  height: 100px;
+  img {
+    width: 100%;
+    height: auto;
+  }
+
+  &:hover {
+    background-color: rgba(22, 225, 188, 0.4); /* Transparent #16e1bc (50% opacity) */
+
+    box-shadow: 0px 5px 6px 3px #16e1bc;
+    color: white;
+    }
+
+`;
+const FirstPotionTitle = styled.h3`
+font-size: calc(1vh + 1vw);
+color: #000; /* Updated color to black */
+margin: 15px auto; /* Center the title horizontally */
+position: absolute; /* Use absolute positioning */
+top: 25%; /* Place the title at the vertical center */
+left: 45%; /* Place the title at the horizontal center */
+transform: translate(-50%, -50%); /* Center the title precisely */
+z-index: 1; /* Ensure the title is on top of the image */
+text-shadow: 0 0 10px rgba(0, 0, 0, 0.8);
+filter: blur(5px);
+animation: ${blurAnimation} 2s linear alternate infinite, glowTitle 2s linear infinite;
+
+
+}
+`;
+const SecondPotionElement = styled.div`
+  position: absolute;
+  transform: translate(-50%, -50%);
+  cursor: pointer;
+  transition: transform 0.2s;
+  top: 40vh;
+  left: 55vw;
+  width: 100px;
+  height: 100px;
+  img {
+    width: 100%;
+    height: auto;
+  }
+  &:hover {
+    background-color: rgba(234, 242, 87, 0.4); /* Transparent color with 50% opacity */
+
+    box-shadow: 0px 5px 6px 3px #eaf257;
+    color: white;
+    }
+`;
+const ThirdPotionElement = styled.div`
+  position: absolute;
+  transform: translate(-50%, -50%);
+  cursor: pointer;
+  transition: transform 0.2s;
+  top: 65vh;
+  left: 45vw;
+  width: 100px;
+  height: 100px;
+  img {
+    width: 100%;
+    height: auto;
+  }
+
+
+  &:hover {
+    background-color: rgba(195, 67, 92, 0.5); /* Transparent #c3435c (50% opacity) */
+    box-shadow: 0px 5px 6px 3px #c3435c;
+    color: white;
+    }
+`;
 const NFTModalContent = styled.div`
   width: 15vw;  
   height: 50vh;
@@ -476,7 +430,12 @@ class Shop extends Component {
         isApplyModalOpen: false,
         userNFTs: [],
         currentPage: 1,
-        nftsPerPage: 10 
+        nftsPerPage: 10,
+        FirstPotionImage: FirstPotionStill,
+        SecondPotionImage: SecondPotionStill,
+        ThirdPotionImage: ThirdPotionStill,
+        isMouseDown: false,
+        mousedownTime: 0, 
     };
     this.hgmsAmountRef = React.createRef();
     this.ethAmountRef = React.createRef();
@@ -568,7 +527,133 @@ async fetchUserNFTs() {
     console.error('Error fetching NFT IDs:', error);
 }
 }
+handleFirstPotionMouseDown = () => {
+  this.setState({ 
+      FirstPotionImage: FirstPotion,
+      mousedownTime: Date.now()
+  });
 
+  if (this.FirstPotionTimeout) {
+      clearTimeout(this.FirstPotionTimeout);
+  }
+
+  this.FirstPotionTimeout = setTimeout(() => {
+      if (this.state.FirstPotionImage === FirstPotion) {
+          this.setState({ FirstPotionImage: FirstPotionPressed });
+      }
+  }, 700);
+};
+
+handleFirstPotionMouseUp = () => {
+  if (this.FirstPotionTimeout) {
+      clearTimeout(this.FirstPotionTimeout);
+  }
+
+  const elapsedTime = Date.now() - this.state.mousedownTime;
+
+  if (elapsedTime < 900) {
+      this.setState({ FirstPotionImage: FirstPotion });
+      setTimeout(() => {
+          this.setState({ FirstPotionImage: FirstPotionStill });
+          this.navigateFight();
+      }, 900 - elapsedTime);
+  } else {
+      this.setState({ FirstPotionImage: FirstPotionStill });
+      this.navigateFight();
+  }
+};
+
+navigateFirstPotionFight = () => {
+  const { onButtonClick } = this.props;
+  if (typeof onButtonClick === 'function') {
+    onButtonClick(''); 
+  }
+};
+
+handleSecondPotionMouseDown = () => {
+  this.setState({ 
+      SecondPotionImage: SecondPotion,
+      mousedownTime: Date.now()
+  });
+
+  if (this.SecondPotionTimeout) {
+      clearTimeout(this.SecondPotionTimeout);
+  }
+
+  this.fightTimeout = setTimeout(() => {
+      if (this.state.SecondPotionImage === SecondPotion) {
+          this.setState({ SecondPotionImage: SecondPotionPressed });
+      }
+  }, 700);
+};
+
+handleSecondPotionMouseUp = () => {
+  if (this.SecondPotionTimeout) {
+      clearTimeout(this.SecondPotionTimeout);
+  }
+
+  const elapsedTime = Date.now() - this.state.mousedownTime;
+
+  if (elapsedTime < 900) {
+      this.setState({ SecondPotionImage: SecondPotion });
+      setTimeout(() => {
+          this.setState({ SecondPotionImage: SecondPotionStill });
+          this.navigateFight();
+      }, 900 - elapsedTime);
+  } else {
+      this.setState({ SecondPotionImage: SecondPotionStill });
+      this.navigateFight();
+  }
+};
+
+navigateSecondPotionFight = () => {
+  const { onButtonClick } = this.props;
+  if (typeof onButtonClick === 'function') {
+    onButtonClick(''); 
+  }
+};
+handleThirdPotionMouseDown = () => {
+  this.setState({ 
+      ThirdPotionImage: ThirdPotion,
+      mousedownTime: Date.now()
+  });
+
+  if (this.ThirdPotionTimeout) {
+      clearTimeout(this.ThirdPotionTimeout);
+  }
+
+  this.ThirdPotionTimeout = setTimeout(() => {
+      if (this.state.ThirdPotionImage === ThirdPotion) {
+          this.setState({ fightImage: ThirdPotionPressed });
+      }
+  }, 700);
+};
+
+handleThirdPotionMouseUp = () => {
+  if (this.ThirdPotionTimeout) {
+      clearTimeout(this.ThirdPotionTimeout);
+  }
+
+  const elapsedTime = Date.now() - this.state.mousedownTime;
+
+  if (elapsedTime < 900) {
+      this.setState({ ThirdPotionImage: ThirdPotion });
+      setTimeout(() => {
+          this.setState({ ThirdPotionImage: ThirdPotionStill });
+          this.navigateFight();
+      }, 900 - elapsedTime);
+  } else {
+      this.setState({ ThirdPotionImage: ThirdPotionStill });
+      this.navigateFight();
+  }
+};
+
+navigateThirdPotionFight = () => {
+  const { onButtonClick } = this.props;
+  if (typeof onButtonClick === 'function') {
+    onButtonClick(''); 
+  }
+};
 totalPages = () => {
   return Math.ceil(this.state.userNFTs.length / this.state.nftsPerPage);
 }
@@ -756,17 +841,30 @@ goToPreviousPage = () => {
         clearInterval(this.fetchBalanceInterval);
     }
 
-   handleMultipleActions = async () => {
+    handleMultipleActions = async () => {
+      // Get the values from the input fields and set them to 0 if empty
+      const hgmsAmount = parseFloat(this.hgmsAmountRef.current.value) || 0;
+      const ethAmount = parseFloat(this.ethAmountRef.current.value) || 0;
+    
+      // Now, you have the values either as valid numbers or 0 if the input was empty or not a number
+      // You can use hgmsAmount and ethAmount as needed in your logic
+    
+      // Example: You can log the values for testing
+      console.log('HGMS Amount:', hgmsAmount);
+      console.log('ETH Amount:', ethAmount);
+    
+      // Close the modal
       this.toggleDepositModal();
-      this.handleConfirm();
-    }
+    
+      // Call the handleConfirm function with the modified values
+      this.handleConfirm(hgmsAmount, ethAmount);
+    };
+    
 
-    handleConfirm = async () => {
-      const HGMSAmount = this.hgmsAmountRef.current.value;
-      const ETHAmount = this.ethAmountRef.current.value;
-      
+    handleConfirm = async (HGMSAmount, ETHAmount) => {
       await this.confirmTransaction(HGMSAmount, ETHAmount);
-  }
+    };
+    
 
 render() {
     const { isConnected, isSwitchButton } = this.state;
@@ -777,8 +875,8 @@ render() {
     console.log(currentNFTs);
     return (
       <div>
+        <Overlay>
         <Title>SHOP</Title>
-        <Image src={backgroundImage} alt="Image Description" />
         
         {isConnected && !isSwitchButton ? (<div>
         <BalButtonElement onClick={this.handleBalance} onMouseEnter={this.HoverOverPlay}>Balance</BalButtonElement>
@@ -791,99 +889,31 @@ render() {
       )}
 
 
-        {this.state.currentItem === "XTRA" && (
-        <div>
-            <ItemImage src={XTRAIMAGE} />
-            <Text2>XTRA POTION</Text2>
-            <PriceText>15k $HGMS {"\n"} 0.001 $ETH</PriceText>
-            <IncButtonElement
-            onClick={() => {
-                this.clickPlay();
-                this.handleIncrement();
-            }}
-            onMouseEnter={this.HoverOverPlay}
-            >
-            {">"}
-            </IncButtonElement>
-            <DecButtonElement
-            onClick={() => {
-                this.clickPlay();
-                this.handleDecrement();
-            }}
-            onMouseEnter={this.HoverOverPlay}
-            >
-            {"<"}
-            </DecButtonElement>
-            <DescText>Anti Death</DescText>
-        </div>
-        )}
+          <FirstPotionTitle>SKIP</FirstPotionTitle>
+          <FirstPotionElement 
+              onMouseDown={this.handleFirstPotionMouseDown}
+              onMouseUp={this.handleFirstPotionMouseUp}
+              onMouseEnter={this.HoverOverPlay}>
+              <img src={this.state.FirstPotionImage} alt="FirstPotion" />
+          </FirstPotionElement>
+          <SecondPotionTitle>V</SecondPotionTitle>
+          <SecondPotionElement 
+              onMouseDown={this.handleSecondPotionMouseDown}
+              onMouseUp={this.handleSecondPotionMouseUp}
+              onMouseEnter={this.HoverOverPlay}>
+              <img src={this.state.SecondPotionImage} alt="SecondPotion" />
+          </SecondPotionElement>
+          <ThirdPotionTitle>XTRA</ThirdPotionTitle>
+          <ThirdPotionElement 
+              onMouseDown={this.handleThirdPotionMouseDown}
+              onMouseUp={this.handleThirdPotionMouseUp}
+              onMouseEnter={this.HoverOverPlay}>
+              <img src={this.state.ThirdPotionImage} alt="ThirdPotion" />
+          </ThirdPotionElement>
 
-        {this.state.currentItem === "SKIP" && (
-        <div>
-            <ItemImage src={SKIPIMAGE} />
-            <Text2>SKIP POTION</Text2>
-            <PriceText>10k $HGMS {"\n"} 0 $ETH</PriceText>
-            <IncButtonElement onClick={() => {
-            this.clickPlay();
-            this.handleIncrement();
-            }}
-            onMouseEnter={this.HoverOverPlay}
-            >{">"}</IncButtonElement>
-            <DecButtonElement onClick={() => {
-            this.clickPlay();
-            this.handleDecrement();
-            }}
-            onMouseEnter={this.HoverOverPlay}
-            >{"<"}</DecButtonElement>
-            <DescText>Skip Fight</DescText>
-        </div>
-        )}
 
-        {this.state.currentItem === "BOOST" && (
-        <div>
-            <ItemImage src={BOOSTIMAGE} />
-            <Text2>BOOST POTION</Text2>
-            <PriceText>5k $HGMS {"\n"} 0 $ETH</PriceText>
-            <IncButtonElement onClick={() => {
-            this.clickPlay();
-            this.handleIncrement();
-            }}
-            onMouseEnter={this.HoverOverPlay}
-            >{">"}</IncButtonElement>
-            <DecButtonElement onClick={() => {
-            this.clickPlay();
-            this.handleDecrement();
-            }}
-            onMouseEnter={this.HoverOverPlay}
-            >{"<"}</DecButtonElement>
-            <DescText>Boost 2 Random Stats</DescText>
-        </div>
-        )}
 
-        {this.state.currentItem === "V" && (
-        <div>
-            <ItemImage src={VIMAGE} />
-            <Text2>V POTION</Text2>
-            <PriceText>20k $HGMS {"\n"} 0.002 $ETH</PriceText>
-            <IncButtonElement onClick={() => {
-            this.clickPlay();
-            this.handleIncrement();
-            }}
-            onMouseEnter={this.HoverOverPlay}
-            >{">"}</IncButtonElement>
-            <DecButtonElement onClick={() => {
-            this.clickPlay();
-            this.handleDecrement();
-            }}
-            onMouseEnter={this.HoverOverPlay}
-            >{"<"}</DecButtonElement>
-            <DescText>
-            Boost All Stats & 
-            {"\n"} 
-            Anti Skip
-            </DescText>
-        </div>
-        )}
+
         {this.state.isDepositModalOpen && (
         <ModalOverlay>
             <ModalContent>
@@ -980,7 +1010,6 @@ render() {
         </NFTModalOverlay>
         )}
 
-
                 <BackButtonContainer>
                   <ButtonElement
                     className="shake"
@@ -993,7 +1022,9 @@ render() {
                     Back
                   </ButtonElement>
                 </BackButtonContainer>
+                </Overlay>
                 </div>
+                
             );
           }
 }

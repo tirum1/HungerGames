@@ -10,6 +10,7 @@ import BookDown from './assets/Items/Book Pressed.png';
 import SwordStill from './assets/Items/Sword Still.png';
 import SwordButton from './assets/Items/Sword Button.gif';
 import SwordDown from './assets/Items/Sword Pressed.png';
+import CoinSpin from "./assets/Items/Coin HD.gif";
 
 const size = {
   mobile: '480px',
@@ -60,28 +61,7 @@ const MintButtonContainer = styled.div`
   }
 
 `;
-const ShopButtonContainer = styled.div`
-  position: absolute;
-  top: 50vh; /* Adjust the vertical position as needed */
-  left: 65vw; /* Adjust the value as needed */
-  transform: translate(-50%, -50%);
-  @media (max-width: 320px) {
-    margin: 10px;
-    top: 55vh;
-    left: 50vw;
-    width: 80px;
-    height: 80px;
-  }
-  
-  /* For viewport widths between 321px and 480px */
-  @media (min-width: 321px) and (max-width: 10000px) {
-    margin: 10px;
-    top: 60vh;
-    left: 70vw;
-    width: 80px;
-    height: 80px;
-  }
-`;
+
 const Title = styled.h1`
   position: absolute;
   top: 25vh;
@@ -180,7 +160,20 @@ const SwordElement = styled.div`
   }
 
 `;
+const CoinButtonContainer = styled.div`
+  position: absolute;
+  top: 50vh; /* Adjust the vertical position as needed */
+  left: 65vw; /* Adjust the value as needed */
+  transform: translate(-50%, -50%);
+  cursor: pointer;
+  transition: transform 0.2s;
+  img {
+    width: 60px; /* Set the width to the desired size */
+    height: auto; /* Automatically adjust the height */
+  }
 
+  /* Add media queries here if needed */
+`;
 const BookElement = styled.div`
   position: absolute;
   top: 50vh; 
@@ -469,15 +462,6 @@ copyBATTLEAddress = async () => {
             </ButtonElement>
           </MintButtonContainer>
 
-          <ShopButtonContainer>
-            <ButtonElement onClick={() => {
-                            this.handleShop();
-                            this.clickPlay();
-                          }} 
-              onMouseEnter={this.HoverOverPlay}>
-              Shop
-            </ButtonElement>
-          </ShopButtonContainer>
 
           <SwordElement 
               onMouseDown={this.handleFightMouseDown}
@@ -485,6 +469,9 @@ copyBATTLEAddress = async () => {
               onMouseEnter={this.HoverOverPlay}>
               <img src={this.state.fightImage} alt="Fight" />
           </SwordElement>
+          <CoinButtonContainer onClick={this.handleShop}>
+            <img src={CoinSpin} alt="Shop" />
+          </CoinButtonContainer>
           <BookElement 
               onMouseDown={this.handleBookMouseDown}
               onMouseUp={this.handleBookMouseUp}
