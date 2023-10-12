@@ -92,7 +92,6 @@ const Image = styled.img`
   border-radius: 50%; /* To make the image circular */
 `;
 
-
 const BackButtonContainer = styled.div`
 position: absolute;
 top: 80vh;
@@ -189,6 +188,6 @@ class Read extends Component {
     }
   }
   
-  export default Read;
+  export default Stake;
   
   
