@@ -7,7 +7,7 @@ import TokenABI from "./assets/ABI/HungerGames.json";
 import LoadingAnimation from "./assets/Items/Caldero.gif";
 
 const BattleGnomesAddress = "0x4C1Bb6da61490F9323b1c46E878562f705f6DcAa";
-const TokenAddress = "0xf0EdC294b19c8e55Cc112af24E220e177852C9AB";
+const TokenAddress = "0x4C1Bb6da61490F9323b1c46E878562f705f6DcAa";
 
 const BackButton = styled.button`
   position: absolute;
