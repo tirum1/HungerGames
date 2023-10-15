@@ -11,7 +11,7 @@ import { Buffer } from "buffer/";
 
 window.Buffer = window.Buffer || Buffer;
 
-const GnomesCollectiveAddress = "0x086A19cEB20911FE4f5DeB1Fd5368C5dbd749a4D"
+const GnomesCollectiveAddress = "0x2391C069B5262E5c1aC2dfD84b09743a91657239"
 
 const Container = styled.div`
   display: flex;

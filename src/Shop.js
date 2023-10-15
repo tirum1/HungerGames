@@ -18,8 +18,8 @@ import ThirdPotion from './assets/Items/Potion 3 HD.gif';
 import ThirdPotionStill from './assets/Items/Potion 3 HD-0 STILL.png';
 import ThirdPotionPressed from './assets/Items/Potion 3 HD-8 PRESSED.png';
 
-const hgmsTokenAddress = '0xf0EdC294b19c8e55Cc112af24E220e177852C9AB'; 
-const GnomesCollectiveAddress = "0x086A19cEB20911FE4f5DeB1Fd5368C5dbd749a4D";
+const hgmsTokenAddress = '0x080Ae24ef8DEA644FFdCEEa2b293e61347FD295A'; 
+const GnomesCollectiveAddress = "0x2391C069B5262E5c1aC2dfD84b09743a91657239";
 
 
 const Overlay = styled.div`
