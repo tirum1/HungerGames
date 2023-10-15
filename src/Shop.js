@@ -18,7 +18,7 @@ import ThirdPotion from './assets/Items/Potion 3 HD.gif';
 import ThirdPotionStill from './assets/Items/Potion 3 HD-0 STILL.png';
 import ThirdPotionPressed from './assets/Items/Potion 3 HD-8 PRESSED.png';
 
-const hgmsTokenAddress = '0xc15BBa4a915dd9b0ccf24A5d34401D7A500c614E'; 
+const hgmsTokenAddress = '0xf0EdC294b19c8e55Cc112af24E220e177852C9AB'; 
 const GnomesCollectiveAddress = "0x086A19cEB20911FE4f5DeB1Fd5368C5dbd749a4D";
 
 
@@ -698,27 +698,14 @@ goToPreviousPage = () => {
     }
     async confirmTransaction(HGMS, ETH) {
       try {
-  
           const accounts = await this.web3.eth.getAccounts();
           const connectedAccount = accounts[0];
           const provider = new ethers.providers.Web3Provider(window.ethereum);
           const signer = provider.getSigner();
           const contract = new ethers.Contract(hgmsTokenAddress, hgmsTokenAbi.abi, signer);
   
-  
           const depositTx = await contract.depositToShop(HGMS, ETH * 1000000000, { value: ethers.utils.parseEther(ETH.toString()), from: connectedAccount });
           await depositTx.wait(); 
-  
-          
-          const NEWHGMSbalanceBigNumber = await contract.hgmsShopBalances(connectedAccount);
-          const NEWETHbalanceBigNumber = await contract.ethShopBalances(connectedAccount);
-  
-          const NEWHGMSbalanceInFullUnits = parseFloat(ethers.utils.formatUnits(NEWHGMSbalanceBigNumber, 9));
-          const NEWETHbalanceInFullUnits = parseFloat(ethers.utils.formatUnits(NEWETHbalanceBigNumber, 0));
-          const NEWHGMSbalanceInMillions = (NEWHGMSbalanceInFullUnits / 1000000).toFixed(2);
-          console.log(typeof NEWHGMSbalanceBigNumber, NEWHGMSbalanceBigNumber);
-
-
   
       } catch (error) {
           console.error('Error depositing:', error);
