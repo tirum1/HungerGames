@@ -18,7 +18,7 @@ import ThirdPotion from './assets/Items/Potion 3 HD.gif';
 import ThirdPotionStill from './assets/Items/Potion 3 HD-0 STILL.png';
 import ThirdPotionPressed from './assets/Items/Potion 3 HD-8 PRESSED.png';
 
-const hgmsTokenAddress = '0xb5967b0f8c22ec9d1f393558b0c166f2a85bb9d5'; 
+const hgmsTokenAddress = '0x50747c6A27a8185b822265af11111021e04AF51a'; 
 const GnomesCollectiveAddress = "0x2391C069B5262E5c1aC2dfD84b09743a91657239";
 
 
