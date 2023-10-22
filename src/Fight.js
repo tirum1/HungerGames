@@ -13,7 +13,7 @@ import LeaderboardModal from './LeaderBoard'; //
 // Check if MetaMask is installed and injects the provider
 
 const GnomesCollectiveAddress = "0x086A19cEB20911FE4f5DeB1Fd5368C5dbd749a4D";
-const BattleGnomesAddress = "0x9e5439DbBDE0E76F050F356852501394DD940770";
+const BattleGnomesAddress = "0xe306cB8DCeA669d9De206BE116468d5a8AbB6bDb";
 
 
 // Overlay for darkening the background
