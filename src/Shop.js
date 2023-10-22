@@ -829,22 +829,16 @@ goToPreviousPage = () => {
     }
 
     handleMultipleActions = async () => {
-      // Get the values from the input fields and set them to 0 if empty
       const hgmsAmount = parseFloat(this.hgmsAmountRef.current.value) || 0;
       const ethAmount = parseFloat(this.ethAmountRef.current.value) || 0;
-    
-      // Now, you have the values either as valid numbers or 0 if the input was empty or not a number
-      // You can use hgmsAmount and ethAmount as needed in your logic
-    
-      // Example: You can log the values for testing
-      console.log('HGMS Amount:', hgmsAmount);
-      console.log('ETH Amount:', ethAmount);
-    
-      // Close the modal
+
       this.toggleDepositModal();
-    
-      // Call the handleConfirm function with the modified values
-      this.handleConfirm(hgmsAmount, ethAmount);
+      const isConfirmed = window.confirm("DEPOSITS ARE NOT WITHDRAWABLE AT THE CURRENT STATE. Are you sure you want to proceed?");
+  
+      if (isConfirmed) {
+        this.handleConfirm(hgmsAmount, ethAmount);
+      }
+
     };
     
 
