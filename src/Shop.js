@@ -833,7 +833,7 @@ goToPreviousPage = () => {
       const ethAmount = parseFloat(this.ethAmountRef.current.value) || 0;
 
       this.toggleDepositModal();
-      const isConfirmed = window.confirm("DEPOSITS ARE NOT WITHDRAWABLE AT THE CURRENT STATE. Are you sure you want to proceed?");
+      const isConfirmed = window.confirm("DEPOSITS ARE NOT WITHDRAWABLE. Are you sure you want to proceed?");
   
       if (isConfirmed) {
         this.handleConfirm(hgmsAmount, ethAmount);
