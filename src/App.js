@@ -161,28 +161,28 @@ const EtherScanLogoContainer = styled.div`
   }
 }`;
 const LoadingGIFContainer = styled.div`
-position: fixed;
-top: 50vh;
-left: 50%;
-transform: translate(-50%, -50%);
-width: 150px;  // You can adjust as needed
-height: 150px; // You can adjust as needed
-text-align: center;  // Added for aligning text
-z-index: 300;
+  position: fixed;
+  top: 50vh;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 150px;  // You can adjust as needed
+  height: 150px; // You can adjust as needed
+  text-align: center;  // Added for aligning text
+  z-index: 300;
 
-img {
-  width: 100%;
-  height: 100%;
-  display: block; // Makes the image a block element to push the text to the next line
-  margin: 0 auto; // Centers the image
-}
+  img {
+    width: 100%;
+    height: 100%;
+    display: block; // Makes the image a block element to push the text to the next line
+    margin: 0 auto; // Centers the image
+  }
 
-p {
-  margin-top: 10px; // Space between the image and text
-  font-size: 48px;
-  font-weight: bold;
-  color: #ffffff;  // Assuming you want white text
-
+  p {
+    margin-top: 10px; // Space between the image and text
+    font-size: 32px; // Font size in pixels
+    font-weight: bold;
+    color: #ffffff;  // Assuming you want white text
+  }
 `;
 
 function App() {
