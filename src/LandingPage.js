@@ -11,7 +11,9 @@ import SwordStill from './assets/Items/Sword Still.png';
 import SwordButton from './assets/Items/Sword Button.gif';
 import SwordDown from './assets/Items/Sword Pressed.png';
 import CoinSpin from "./assets/Items/Coin HD.gif";
-
+import MintStill from './assets/Items/Pickaxe HD-0 STILL.png';
+import MintButton from './assets/Items/Pickaxe HD.gif';
+import MintDown from './assets/Items/Pickaxe HD-9 PRESSED.png';
 
 const size = {
   mobile: '480px',
@@ -19,7 +21,6 @@ const size = {
   laptop: '1024px',
   desktop: '1200px'
 };
-
 const device = {
   mobile: `(max-width: ${size.mobile})`,
   tablet: `(max-width: ${size.tablet})`,
@@ -27,8 +28,6 @@ const device = {
   desktop: `(max-width: ${size.desktop})`,
   tv: `(min-width: ${parseInt(size.desktop) + 1}px)`
 };
-
-
 const Container = styled.div`
   display: flex;
   flex-direction: column;
@@ -39,30 +38,6 @@ const Container = styled.div`
     align-items: center;
   }
 `;
-const MintButtonContainer = styled.div`
-  position: absolute;
-  top: 50vh; /* Adjust the vertical position as needed */
-  left: 45vw; /* Adjust the value as needed */
-  transform: translate(-50%, -50%);
-  /* For viewport widths between 0px and 320px */
-  @media (max-width: 320px) {
-    margin: 10px;
-    top: 70vh;
-    left: 50vw;
-    width: 80px;
-    height: 80px;
-  }
-  
-  @media (min-width: 321px) and (max-width: 10000px) {
-    margin: 10px;
-    top: 60vh;
-    left: 25vw;
-    width: 80px;
-    height: 80px;
-  }
-
-`;
-
 const Title = styled.h1`
   position: absolute;
   top: 25vh;
@@ -87,7 +62,6 @@ const Title = styled.h1`
     font-size: calc(1.1vh + 1.1vw);
   }
 `;
-
 const Text = styled.p`
   position: absolute;
   top: 35vh;
@@ -161,10 +135,27 @@ const SwordElement = styled.div`
   }
 
 `;
+const MintElement = styled.div`
+  position: absolute;
+  transform: translate(-50%, -50%);
+  cursor: pointer;
+  transition: transform 0.2s;
+  margin: 10px;
+  top: 65vh;
+  left: 49.5vw;
+  width: 80px;
+  height: 80px;
+  img {
+    width: 100%;
+    height: auto;
+  }
+
+
+`;
 const CoinButtonContainer = styled.div`
   position: absolute;
-  top: 50vh; /* Adjust the vertical position as needed */
-  left: 65vw; /* Adjust the value as needed */
+  top: 45vh; /* Adjust the vertical position as needed */
+  left: 50vw; /* Adjust the value as needed */
   transform: translate(-50%, -50%);
   cursor: pointer;
   transition: transform 0.2s;
@@ -273,6 +264,7 @@ class LandingPage extends Component {
     this.state = {
         fightImage: SwordStill,
         readImage: BookStill,
+        mintImage: MintStill,
         
         isMouseDown: false,
         mousedownTime: 0,
@@ -294,12 +286,6 @@ class LandingPage extends Component {
   clickPlay = () => {
       this.click.play();
   }
-  handleMint = () => {
-    const { onButtonClick } = this.props;
-    if (typeof onButtonClick === 'function') {
-      onButtonClick('Mint');
-    }
-  };
 
   componentWillUnmount() {
     if (this.fightTimeout) {
@@ -345,14 +331,55 @@ handleFightMouseUp = () => {
   }
 };
 
-navigateFight = () => {
-  const { onButtonClick } = this.props;
-  if (typeof onButtonClick === 'function') {
-    onButtonClick('LeaderBoard'); 
+// navigateFight = () => {
+//   const { onButtonClick } = this.props;
+//   if (typeof onButtonClick === 'function') {
+//     onButtonClick('LeaderBoard'); 
+//   }
+// };
+
+handleMintMouseDown = () => {
+  this.setState({ 
+      fightImage: MintButton,
+      mousedownTime: Date.now()
+  });
+
+  if (this.fightTimeout) {
+      clearTimeout(this.fightTimeout);
+  }
+
+  this.fightTimeout = setTimeout(() => {
+      if (this.state.mintImage === MintButton) {
+          this.setState({ mintImage: MintDown });
+      }
+  }, 700);
+};
+
+handleMintMouseUp = () => {
+  if (this.fightTimeout) {
+      clearTimeout(this.fightTimeout);
+  }
+
+  const elapsedTime = Date.now() - this.state.mousedownTime;
+
+  if (elapsedTime < 900) {
+      this.setState({ mintImage: MintButton });
+      setTimeout(() => {
+          this.setState({ mintImage: MintStill });
+          this.navigateMint();
+      }, 900 - elapsedTime);
+  } else {
+      this.setState({ mintImage: MintStill });
+      this.navigateMint();
   }
 };
 
-
+navigateMint = () => {
+  const { onButtonClick } = this.props;
+  if (typeof onButtonClick === 'function') {
+    onButtonClick('Mint');
+  }
+};
 
 handleBookMouseDown = () => {
   this.setState({ 
@@ -454,7 +481,7 @@ copyBATTLEAddress = async () => {
             <BATTLECopyIcon onClick={this.copyBATTLEAddress}>BATTLECONTRACT</BATTLECopyIcon>
           )}
 
-          <MintButtonContainer>
+          {/* <MintButtonContainer>
             <ButtonElement onClick={() => {
                             this.handleMint();
                             this.clickPlay();
@@ -462,7 +489,7 @@ copyBATTLEAddress = async () => {
               onMouseEnter={this.HoverOverPlay}>
               Mint
             </ButtonElement>
-          </MintButtonContainer>
+          </MintButtonContainer> */}
 
 
           {/* <SwordElement 
@@ -474,6 +501,12 @@ copyBATTLEAddress = async () => {
           <CoinButtonContainer onClick={this.handleShop}>
             <img src={CoinSpin} alt="Shop" />
           </CoinButtonContainer>
+          <MintElement 
+              onMouseDown={this.handleMintMouseDown}
+              onMouseUp={this.handleMintMouseUp}
+              onMouseEnter={this.HoverOverPlay}>
+              <img src={this.state.mintImage} alt="Mint" />
+          </MintElement>
           {/* <BookElement 
               onMouseDown={this.handleBookMouseDown}
               onMouseUp={this.handleBookMouseUp}
