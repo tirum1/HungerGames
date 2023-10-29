@@ -315,7 +315,7 @@ useEffect(() => {
             </a>
           </TelegramLogoContainer>
           <OpenSeaLogoContainer>
-            <a href="https://testnets.opensea.io/collection/gnomescollective-1">
+            <a href="https://opensea.io/collection/gnomes-collective">
               <img src={OpenSeaLogo} alt="Twitter Logo" />
             </a>
           </OpenSeaLogoContainer>
