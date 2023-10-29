@@ -827,7 +827,9 @@ goToPreviousPage = () => {
         clearInterval(this.checkNetworkInterval);
         clearInterval(this.fetchBalanceInterval);
     }
-
+    handleInputChange = (event) => {
+      event.target.value = event.target.value.replace(',', '.');
+    }
     handleMultipleActions = async () => {
       const hgmsAmount = parseFloat(this.hgmsAmountRef.current.value) || 0;
       const ethAmount = parseFloat(this.ethAmountRef.current.value) || 0;
@@ -906,6 +908,7 @@ render() {
                 id="hgmsAmount"
                 className="form-control"
                 ref={this.hgmsAmountRef}
+                onChange={this.handleInputChange}
                 />
             </div>
             <div className="form-group">
@@ -915,6 +918,7 @@ render() {
                 id="ethAmount"
                 className="form-control"
                 ref={this.ethAmountRef}
+                onChange={this.handleInputChange}
                 />
             </div>
             <div className="button-container">
