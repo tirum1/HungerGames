@@ -14,7 +14,7 @@ import CoinSpin from "./assets/Items/Coin HD.gif";
 import MintStill from './assets/Items/Pickaxe HD-0 STILL.png';
 import MintButton from './assets/Items/Pickaxe HD.gif';
 import MintDown from './assets/Items/Pickaxe HD-9 PRESSED.png';
-
+//LANDING
 const size = {
   mobile: '480px',
   tablet: '768px',
