@@ -11,7 +11,7 @@ import { Buffer } from "buffer/";
 
 window.Buffer = window.Buffer || Buffer;
 
-const GnomesCollectiveAddress = "0xF447E3a627F924EA8b064724001C484fEB39F6f9"
+const GnomesCollectiveAddress = "0x6742eE08d1ac25f72d741708E37AD69C9e7F4b22"
 
 const Container = styled.div`
   display: flex;
@@ -123,7 +123,7 @@ class Mint extends Component {
   isConnected: Boolean(this.props.accounts[0]),
   isSwitchButton: false, 
   networkId: null,
-  supportedNetworkId: 5,
+  supportedNetworkId: 1,
   }
   this.hoverover = new Howl({ src: HoverSound,
     volume: 0.5

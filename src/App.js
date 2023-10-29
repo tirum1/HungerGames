@@ -304,7 +304,7 @@ useEffect(() => {
           </HGLogoContainer>
   
           <TwitterLogoContainer>
-            <a href="https://twitter.com/YourTwitterHandle">
+            <a href="https://twitter.com/HungerGamesERC">
               <img src={TwitterLogo} alt="Twitter Logo" />
             </a>
           </TwitterLogoContainer>
@@ -320,7 +320,7 @@ useEffect(() => {
             </a>
           </OpenSeaLogoContainer>
           <EtherScanLogoContainer>
-            <a href="https://goerli.etherscan.io/address/0xeE594e309a4f49932e0421dA11AFd0a580EcB084">
+            <a href="https://etherscan.io/address/0x3511910cd2c60a77a7f095ce3c5d8ae1fbf680cd">
               <img src={EtherScan} alt="Twitter Logo" />
             </a>
           </EtherScanLogoContainer>
