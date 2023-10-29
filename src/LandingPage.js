@@ -453,6 +453,7 @@ copyBATTLEAddress = async () => {
           ) : (
             <BATTLECopyIcon onClick={this.copyBATTLEAddress}>BATTLECONTRACT</BATTLECopyIcon>
           )}
+
           <MintButtonContainer>
             <ButtonElement onClick={() => {
                             this.handleMint();
@@ -464,22 +465,22 @@ copyBATTLEAddress = async () => {
           </MintButtonContainer>
 
 
-          <SwordElement 
+          {/* <SwordElement 
               onMouseDown={this.handleFightMouseDown}
               onMouseUp={this.handleFightMouseUp}
               onMouseEnter={this.HoverOverPlay}>
               <img src={this.state.fightImage} alt="Fight" />
-          </SwordElement>
+          </SwordElement> */}
           <CoinButtonContainer onClick={this.handleShop}>
             <img src={CoinSpin} alt="Shop" />
           </CoinButtonContainer>
-          <BookElement 
+          {/* <BookElement 
               onMouseDown={this.handleBookMouseDown}
               onMouseUp={this.handleBookMouseUp}
               onMouseEnter={this.HoverOverPlay}>
               <img src={this.state.readImage} alt="Book" />
 
-          </BookElement>
+          </BookElement> */}
 
         </Container>
       </div>
