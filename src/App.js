@@ -180,8 +180,9 @@ const LoadingGIFContainer = styled.div`
   p {
     margin-top: 10px; // Space between the image and text
     font-size: 32px; // Font size in pixels
+    font-family: 'Pixels', sans-serif; // Specify the "Pixels" font
     font-weight: bold;
-    color: #ffffff;  // Assuming you want white text
+    color: #000000;  // Assuming you want white text
   }
 `;
 
