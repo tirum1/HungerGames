@@ -382,11 +382,11 @@ useEffect(() => {
           ©2023 HungerGames. Devved by Dev.
         </div>
         <div className="top-footer">
-        <span className="footer-item">| Prizepool: [10.5 ETH] |  </span>
+        <span className="footer-item">| Prizepool: [??? ETH] |  </span>
         {/* <span className="footer-item">Total Poured: [25.3 ETH] |  </span> */}
-        <span className="footer-item">Minted: [1333] |  </span>
+        <span className="footer-item">Minted: [???] |  </span>
         {/* <span className="footer-item">Potions: [25312] |  </span> */}
-        <span className="footer-item">Burned: [300M HGMS] |</span>
+        <span className="footer-item">Burned: [??? HGMS] |</span>
       </div>
 
       {modalContent}
