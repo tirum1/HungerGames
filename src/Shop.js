@@ -21,7 +21,6 @@ import ThirdPotionPressed from './assets/Items/Potion 3 HD-8 PRESSED.png';
 const hgmsTokenAddress = '0x3511910Cd2c60a77a7f095Ce3c5d8AE1fBf680cd'; 
 const GnomesCollectiveAddress = "0x6742eE08d1ac25f72d741708E37AD69C9e7F4b22";
 
-
 const Overlay = styled.div`
   position: fixed; // This will cover the whole screen
   top: 0;
@@ -415,7 +414,7 @@ class Shop extends Component {
         isConnected: Boolean(this.props.accounts[0]),
         isSwitchButton: false, 
         networkId: null,
-        supportedNetworkId: 5,
+        supportedNetworkId: 1,
         isDepositModalOpen: false,
         isBalanceModalOpen: false,
         isApplyModalOpen: false,
