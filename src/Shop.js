@@ -17,6 +17,9 @@ import SecondPotionPressed from './assets/Items/Potion 2 HD-8 PRESSED.png';
 import ThirdPotion from './assets/Items/Potion 3 HD.gif';
 import ThirdPotionStill from './assets/Items/Potion 3 HD-0 STILL.png';
 import ThirdPotionPressed from './assets/Items/Potion 3 HD-8 PRESSED.png';
+import FourthPotion from './assets/Items/Potion 4 HD.gif';
+import FourthPotionStill from './assets/Items/Potion 4 HD-0 STILL.png';
+import FourthPotionPressed from './assets/Items/Potion 4 HD-8 PRESSED.png';
 
 const hgmsTokenAddress = '0x3511910Cd2c60a77a7f095Ce3c5d8AE1fBf680cd'; 
 const GnomesCollectiveAddress = "0x6742eE08d1ac25f72d741708E37AD69C9e7F4b22";
@@ -177,6 +180,10 @@ const ButtonElement = styled.button`
     box-shadow: 0px 2px 2px 1px #ffff00;
     color: white;
     }
+    @media (max-width: 610px) {
+      top: 70%;
+    }
+      
   }`;
   const BalButtonElement = styled.button`
   background-color: #833929;
@@ -196,6 +203,10 @@ const ButtonElement = styled.button`
     box-shadow: 0px 2px 2px 1px #ffff00;
     color: white;
     }
+    @media (max-width: 610px) {
+      top: 75vh;
+    }
+      
   }`;
   const ApplyButtonElement = styled.button`
   background-color: #833929;
@@ -214,6 +225,9 @@ const ButtonElement = styled.button`
     background-color: #ff5252;
     box-shadow: 0px 2px 2px 1px #ffff00;
     color: white;
+    }
+    @media (max-width: 610px) {
+      top: 80vh;
     }
   }`;
 
@@ -288,7 +302,16 @@ z-index: 1; /* Ensure the title is on top of the image */
 text-shadow: 0 0 10px rgba(0, 0, 0, 0.8);
 filter: blur(5px);
 animation: ${blurAnimation} 2s linear alternate infinite, glowTitle 2s linear infinite;
-
+@media (max-width: 1024px) {
+  top: 30%;
+  }
+@media (max-width: 768px) {
+    top: 33%;
+  }
+  @media (max-width: 610px) {
+    left: 60%;
+  }
+    
 }
 `;
 
@@ -304,10 +327,69 @@ z-index: 1; /* Ensure the title is on top of the image */
 text-shadow: 0 0 10px rgba(0, 0, 0, 0.8);
 filter: blur(5px);
 animation: ${blurAnimation} 2s linear alternate infinite, glowTitle 2s linear infinite;
+@media (max-width: 1024px) {
+  top: 55%;
+  }
+  @media (max-width: 768px) {
+    top: 58%;
+  }
+  @media (max-width: 610px) {
+    left: 40%;
+  }
+    
+}
+`;
+const FourthPotionTitle = styled.h3`
+font-size: calc(1vh + 1vw);
+color: #000; /* Updated color to black */
+margin: 15px auto; /* Center the title horizontally */
+position: absolute; /* Use absolute positioning */
+top: 51%; /* Place the title at the vertical center */
+left: 55%; /* Place the title at the horizontal center */
+transform: translate(-50%, -50%); /* Center the title precisely */
+z-index: 1; /* Ensure the title is on top of the image */
+text-shadow: 0 0 10px rgba(0, 0, 0, 0.8);
+filter: blur(5px);
+animation: ${blurAnimation} 2s linear alternate infinite, glowTitle 2s linear infinite;
+@media (max-width: 1024px) {
+top: 55%;
+}
+@media (max-width: 768px) {
+  top: 58%;
+  left: 56%
+}
+@media (max-width: 610px) {
+  left: 60%;
+}
+  
 
 }
 `;
 
+const FirstPotionTitle = styled.h3`
+font-size: calc(1vh + 1vw);
+color: #000; /* Updated color to black */
+margin: 15px auto; /* Center the title horizontally */
+position: absolute; /* Use absolute positioning */
+top: 25%; /* Place the title at the vertical center */
+left: 45%; /* Place the title at the horizontal center */
+transform: translate(-50%, -50%); /* Center the title precisely */
+z-index: 1; /* Ensure the title is on top of the image */
+text-shadow: 0 0 10px rgba(0, 0, 0, 0.8);
+filter: blur(5px);
+animation: ${blurAnimation} 2s linear alternate infinite, glowTitle 2s linear infinite;
+@media (max-width: 1024px) {
+  top: 30%;
+  }
+  @media (max-width: 768px) {
+    top: 33%;
+  }
+  @media (max-width: 610px) {
+    left: 40%;
+  }
+    
+}
+`;
 const FirstPotionElement = styled.div`
   position: absolute;
   transform: translate(-50%, -50%);
@@ -328,23 +410,18 @@ const FirstPotionElement = styled.div`
     box-shadow: 0px 5px 6px 3px #16e1bc;
     color: white;
     }
+    @media (max-width: 1024px) {
+      width: 80px; /* Adjust the width for screens up to 1024px */
+      height: 80px; /* Adjust the height for screens up to 1024px */
+    }
+    @media (max-width: 768px) {
+      width: 60px; /* Adjust the width for screens up to 1024px */
+      height: 60px; /* Adjust the height for screens up to 1024px */
+    }
+    @media (max-width: 610px) {
+      left: 40vw; /* Adjust the width for screens up to 1024px */
+    }
 
-`;
-const FirstPotionTitle = styled.h3`
-font-size: calc(1vh + 1vw);
-color: #000; /* Updated color to black */
-margin: 15px auto; /* Center the title horizontally */
-position: absolute; /* Use absolute positioning */
-top: 25%; /* Place the title at the vertical center */
-left: 45%; /* Place the title at the horizontal center */
-transform: translate(-50%, -50%); /* Center the title precisely */
-z-index: 1; /* Ensure the title is on top of the image */
-text-shadow: 0 0 10px rgba(0, 0, 0, 0.8);
-filter: blur(5px);
-animation: ${blurAnimation} 2s linear alternate infinite, glowTitle 2s linear infinite;
-
-
-}
 `;
 const SecondPotionElement = styled.div`
   position: absolute;
@@ -364,6 +441,17 @@ const SecondPotionElement = styled.div`
 
     box-shadow: 0px 5px 6px 3px #eaf257;
     color: white;
+    }
+    @media (max-width: 1024px) {
+      width: 80px; /* Adjust the width for screens up to 1024px */
+      height: 80px; /* Adjust the height for screens up to 1024px */
+    }
+    @media (max-width: 768px) {
+      width: 60px; /* Adjust the width for screens up to 1024px */
+      height: 60px; /* Adjust the height for screens up to 1024px */
+    }
+    @media (max-width: 610px) {
+      left: 60vw; /* Adjust the width for screens up to 1024px */
     }
 `;
 const ThirdPotionElement = styled.div`
@@ -386,6 +474,49 @@ const ThirdPotionElement = styled.div`
     box-shadow: 0px 5px 6px 3px #c3435c;
     color: white;
     }
+    @media (max-width: 1024px) {
+      width: 80px; /* Adjust the width for screens up to 1024px */
+      height: 80px; /* Adjust the height for screens up to 1024px */
+    }
+    @media (max-width: 768px) {
+      width: 60px; /* Adjust the width for screens up to 1024px */
+      height: 60px; /* Adjust the height for screens up to 1024px */
+    }
+    @media (max-width: 610px) {
+      left: 40vw; /* Adjust the width for screens up to 1024px */
+    }
+`;
+const FourthPotionElement = styled.div`
+  position: absolute;
+  transform: translate(-50%, -50%);
+  cursor: pointer;
+  transition: transform 0.2s;
+  top: 65vh;
+  left: 55vw;
+  width: 100px;
+  height: 100px;
+  img {
+    width: 100%;
+    height: auto;
+  }
+
+  &:hover {
+    background-color: rgba(195, 67, 92, 0.5); /* Transparent #c3435c (50% opacity) */
+    box-shadow: 0px 5px 6px 3px #94cc47;
+    color: white;
+  }
+
+  @media (max-width: 1024px) {
+    width: 80px; /* Adjust the width for screens up to 1024px */
+    height: 80px; /* Adjust the height for screens up to 1024px */
+  }
+  @media (max-width: 768px) {
+    width: 60px; /* Adjust the width for screens up to 1024px */
+    height: 60px; /* Adjust the height for screens up to 1024px */
+  }
+  @media (max-width: 610px) {
+    left: 60vw; /* Adjust the width for screens up to 1024px */
+  }
 `;
 const NFTModalContent = styled.div`
   width: 15vw;  
@@ -433,6 +564,7 @@ class Shop extends Component {
         FirstPotionImage: FirstPotionStill,
         SecondPotionImage: SecondPotionStill,
         ThirdPotionImage: ThirdPotionStill,
+        FourthPotionImage: FourthPotionStill,
         isMouseDown: false,
         mousedownTime: 0, 
     };
@@ -648,6 +780,48 @@ handleThirdPotionMouseUp = () => {
 };
 
 navigateThirdPotionFight = () => {
+  const { onButtonClick } = this.props;
+  if (typeof onButtonClick === 'function') {
+    onButtonClick(''); 
+  }
+};
+handleFourthPotionMouseDown = () => {
+  this.setState({ 
+      FourthPotionImage: FourthPotion,
+      mousedownTime: Date.now()
+  });
+
+  if (this.FourthPotionTimeout) {
+      clearTimeout(this.FourthPotionTimeout);
+  }
+
+  this.FourthPotionTimeout = setTimeout(() => {
+      if (this.state.FourthPotionImage === FourthPotion) {
+          this.setState({ fightImage: FourthPotionPressed });
+      }
+  }, 700);
+};
+
+handleFourthPotionMouseUp = () => {
+  if (this.FourthPotionTimeout) {
+      clearTimeout(this.FourthPotionTimeout);
+  }
+
+  const elapsedTime = Date.now() - this.state.mousedownTime;
+
+  if (elapsedTime < 900) {
+      this.setState({ FourthPotionImage: FourthPotion });
+      setTimeout(() => {
+          this.setState({ FourthPotionImage: FourthPotionStill });
+          this.navigateFight();
+      }, 900 - elapsedTime);
+  } else {
+      this.setState({ FourthPotionImage: FourthPotionStill });
+      this.navigateFight();
+  }
+};
+
+navigateFourthPotionFight = () => {
   const { onButtonClick } = this.props;
   if (typeof onButtonClick === 'function') {
     onButtonClick(''); 
@@ -892,7 +1066,13 @@ render() {
               onMouseEnter={this.HoverOverPlay}>
               <img src={this.state.ThirdPotionImage} alt="ThirdPotion" />
           </ThirdPotionElement>
-
+          <FourthPotionTitle>BOOST</FourthPotionTitle>
+          <FourthPotionElement 
+              onMouseDown={this.handleFourthPotionMouseDown}
+              onMouseUp={this.handleFourthPotionMouseUp}
+              onMouseEnter={this.HoverOverPlay}>
+              <img src={this.state.FourthPotionImage} alt="FourthPotion" />
+          </FourthPotionElement>
 
 
 
